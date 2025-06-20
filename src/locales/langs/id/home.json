@@ -1,4 +1,15 @@
 {
+  "letter": {
+    "guest": "Tamu",
+    "dear": "Kepada",
+    "you-are-invited": "Anda diundang ke pernikahan kami",
+    "to": "untuk",
+    "invitation-title": "Mengundang Anda untuk berbagi kebahagiaan di hari pernikahan kami",
+    "invitation-quote": "Kau mengubah duniaku sejak pertama kali kita bertemu...",
+    "click-to-open-hover": "Klik untuk membuka undangan",
+    "click-to-open": "Ketuk undangan untuk membuka",
+    "opening-the-invitation": "Membuka undangan..."
+  },
   "closing-message": {
     "title": "Kami Tidak Sabar untuk Merayakan",
     "quote": "Kehadiran Anda dalam hidup kami adalah berkah, dan memiliki Anda merayakan hari istimewa ini bersama kami akan membuat kebahagiaan kami sempurna. Terima kasih telah menjadi bagian dari kisah cinta kami.",

@@ -1,4 +1,15 @@
 {
+  "letter": {
+    "guest": "Guest",
+    "dear": "Dear",
+    "you-are-invited": "You are invited to our wedding",
+    "to": "to",
+    "invitation-title": "Inviting you to share in the joy of our wedding day",
+    "invitation-quote": "You changed my world the moment I met you...",
+    "click-to-open-hover": "Click to open the invitation",
+    "click-to-open": "Click the invitation to open",
+    "opening-the-invitation": "Opening the invitation..."
+  },
   "closing-message": {
     "title": " We Can't Wait to Celebrate",
     "quote": "Your presence in our lives has been a blessing, and having you celebrate this special day with us would make our joy complete. Thank you for being part of our love story.",

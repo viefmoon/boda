@@ -16,7 +16,10 @@ export const LetterAnimation = ({
 }: LetterAnimationProps) => {
   const { t } = useTranslation('home');
   const searchParams = useSearchParams();
-  const toName = searchParams.get('to');
+
+  const toName =
+    searchParams.get('to') || searchParams.get('toName') || t('letter.guest');
+
   const [isOpening, setIsOpening] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -79,13 +82,13 @@ export const LetterAnimation = ({
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-md mx-auto">
               {toName ? (
                 <>
-                  Untuk{' '}
+                  {t('letter.dear')}{' '}
                   <span className="font-medium text-rose-600">{toName}</span>
                   <br />
-                  Anda diundang ke pernikahan kami
+                  {t('letter.you-are-invited')}
                 </>
               ) : (
-                'Anda diundang ke pernikahan kami'
+                t('letter.you-are-invited')
               )}
             </p>
           </motion.div>
@@ -151,7 +154,7 @@ export const LetterAnimation = ({
                     initial={{ y: 0, opacity: 0, scale: 0.8 }}
                     animate={{ y: -40, opacity: 1, scale: 1 }}
                     transition={{ duration: 1, delay: 0.5 }}
-                    className="absolute top-8 left-1/2 -translate-x-1/2 w-72 h-48 sm:w-80 sm:h-52 bg-gradient-to-br from-yellow-50 to-white rounded-lg shadow-xl border border-rose-200"
+                    className="absolute top-8 left-1/2 -translate-x-1/2 w-72 h-54 sm:w-80 sm:h-58 bg-gradient-to-br from-yellow-50 to-white rounded-lg shadow-xl border border-rose-200"
                   >
                     <div className="p-6 sm:p-8 h-full flex flex-col justify-center text-center">
                       <div className="text-rose-500 text-2xl sm:text-3xl mb-4">
@@ -159,7 +162,7 @@ export const LetterAnimation = ({
                       </div>
                       {toName && (
                         <p className="text-sm sm:text-base text-gray-600 mb-2">
-                          Untuk:{' '}
+                          {t('letter.to')}:{' '}
                           <span className="font-medium text-rose-600">
                             {toName}
                           </span>
@@ -169,12 +172,10 @@ export const LetterAnimation = ({
                         {coupleName}
                       </h3>
                       <p className="text-sm sm:text-base text-gray-600 mb-4">
-                        Mengundang Anda untuk berbagi kebahagiaan di hari
-                        pernikahan kami
+                        {t('letter.invitation-title')}
                       </p>
                       <div className="text-xs sm:text-sm text-gray-500 font-serif italic">
-                        &ldquo;Dan di antara tanda-tanda-Nya ialah Dia
-                        menciptakan untukmu pasangan-pasangan...&rdquo;
+                        &ldquo;{t('letter.invitation-quote')}&rdquo;
                       </div>
                     </div>
                   </motion.div>
@@ -233,8 +234,8 @@ export const LetterAnimation = ({
               className="text-sm sm:text-base text-gray-600 font-medium"
             >
               {isHovered
-                ? 'Klik untuk membuka undangan'
-                : 'Ketuk amplop untuk membuka'}
+                ? t('letter.click-to-open-hover')
+                : t('letter.click-to-open')}
             </motion.p>
             <div className="flex justify-center mt-4">
               <motion.div
@@ -272,7 +273,7 @@ export const LetterAnimation = ({
                 className="w-12 h-12 border-4 border-rose-200 border-t-rose-500 rounded-full mx-auto mb-4"
               />
               <p className="text-gray-600 text-lg font-medium">
-                Membuka undangan...
+                {t('letter.opening-the-invitation')}
               </p>
             </div>
           </motion.div>

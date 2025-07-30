@@ -1,7 +1,7 @@
 import { NAVIGATION_ANIMATIONS } from '@/constants/navigation';
 import type { NavigationSection } from '@/types/navigation';
 import { motion, AnimatePresence } from 'motion/react';
-import { useTranslation } from 'react-i18next';
+import * as Icons from 'lucide-react';
 
 // NavigationButton Component for better code organization
 interface NavigationButtonProps {
@@ -17,7 +17,6 @@ export function NavigationButton({
   isActive,
   onClick,
 }: NavigationButtonProps) {
-  const { t } = useTranslation('home');
 
   const baseClasses =
     'relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 group overflow-hidden cursor-pointer';
@@ -70,7 +69,10 @@ export function NavigationButton({
         transition={NAVIGATION_ANIMATIONS.icon.transition}
         whileHover={NAVIGATION_ANIMATIONS.icon.hover}
       >
-        {section.icon}
+        {(() => {
+          const IconComponent = Icons[section.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
+          return IconComponent ? <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" /> : null;
+        })()}
       </motion.span>
 
       {/* Label with Slide Animation */}
@@ -80,10 +82,7 @@ export function NavigationButton({
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3, delay: 0.1 * index }}
       >
-        {
-          // @ts-expect-error - err
-          t(section.labelKey)
-        }
+        {section.label}
       </motion.span>
 
       {/* Active Indicator Dot with Pulse */}

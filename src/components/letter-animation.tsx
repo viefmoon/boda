@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'next/navigation';
+import { Heart, Mail, Sparkles, Hand } from 'lucide-react';
 
 interface LetterAnimationProps {
   onOpen: () => void;
@@ -14,11 +14,10 @@ export const LetterAnimation = ({
   onOpen,
   coupleName,
 }: LetterAnimationProps) => {
-  const { t } = useTranslation('home');
   const searchParams = useSearchParams();
 
   const toName =
-    searchParams.get('to') || searchParams.get('toName') || t('letter.guest');
+    searchParams.get('to') || searchParams.get('toName') || 'Invitado Especial';
 
   const [isOpening, setIsOpening] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -62,7 +61,7 @@ export const LetterAnimation = ({
               left: `${10 + i * 15}%`,
             }}
           >
-            💕
+            <Heart className="w-6 h-6 text-rose-400 fill-current" />
           </motion.div>
         ))}
       </div>
@@ -77,18 +76,18 @@ export const LetterAnimation = ({
             className="mb-8 sm:mb-12"
           >
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-4">
-              {t('hero.welcome')}
+              ¡Bienvenido!
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-md mx-auto">
               {toName ? (
                 <>
-                  {t('letter.dear')}{' '}
+                  Querido/a{' '}
                   <span className="font-medium text-rose-600">{toName}</span>
                   <br />
-                  {t('letter.you-are-invited')}
+                  Estás invitado/a a nuestra boda
                 </>
               ) : (
-                t('letter.you-are-invited')
+                'Estás invitado/a a nuestra boda'
               )}
             </p>
           </motion.div>
@@ -130,7 +129,7 @@ export const LetterAnimation = ({
                   }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="text-white text-xl font-bold">💌</div>
+                  <Mail className="w-6 h-6 text-white" />
                 </motion.div>
 
                 {/* Envelope Flap */}
@@ -157,12 +156,12 @@ export const LetterAnimation = ({
                     className="absolute top-8 left-1/2 -translate-x-1/2 w-72 h-54 sm:w-80 sm:h-58 bg-gradient-to-br from-yellow-50 to-white rounded-lg shadow-xl border border-rose-200"
                   >
                     <div className="p-6 sm:p-8 h-full flex flex-col justify-center text-center">
-                      <div className="text-rose-500 text-2xl sm:text-3xl mb-4">
-                        💕
+                      <div className="text-rose-500 mb-4">
+                        <Heart className="w-8 h-8 sm:w-10 sm:h-10 mx-auto fill-current" />
                       </div>
                       {toName && (
                         <p className="text-sm sm:text-base text-gray-600 mb-2">
-                          {t('letter.to')}:{' '}
+                          Para:{' '}
                           <span className="font-medium text-rose-600">
                             {toName}
                           </span>
@@ -172,10 +171,10 @@ export const LetterAnimation = ({
                         {coupleName}
                       </h3>
                       <p className="text-sm sm:text-base text-gray-600 mb-4">
-                        {t('letter.invitation-title')}
+                        Te invitamos a celebrar nuestra unión
                       </p>
                       <div className="text-xs sm:text-sm text-gray-500 font-serif italic">
-                        &ldquo;{t('letter.invitation-quote')}&rdquo;
+                        &ldquo;Donde hay amor, hay vida&rdquo;
                       </div>
                     </div>
                   </motion.div>
@@ -203,9 +202,9 @@ export const LetterAnimation = ({
                           repeat: Infinity,
                           repeatDelay: 2,
                         }}
-                        className="absolute top-1/2 left-1/2 text-yellow-400 text-sm pointer-events-none"
+                        className="absolute top-1/2 left-1/2 text-yellow-400 pointer-events-none"
                       >
-                        ✨
+                        <Sparkles className="w-4 h-4" />
                       </motion.div>
                     ))}
                   </>
@@ -234,8 +233,8 @@ export const LetterAnimation = ({
               className="text-sm sm:text-base text-gray-600 font-medium"
             >
               {isHovered
-                ? t('letter.click-to-open-hover')
-                : t('letter.click-to-open')}
+                ? '¡Haz clic para abrir!'
+                : 'Haz clic en el sobre para abrir'}
             </motion.p>
             <div className="flex justify-center mt-4">
               <motion.div
@@ -250,7 +249,7 @@ export const LetterAnimation = ({
                 }}
                 className="text-2xl"
               >
-                👆
+                <Hand className="w-8 h-8 text-gray-600" />
               </motion.div>
             </div>
           </motion.div>
@@ -273,7 +272,7 @@ export const LetterAnimation = ({
                 className="w-12 h-12 border-4 border-rose-200 border-t-rose-500 rounded-full mx-auto mb-4"
               />
               <p className="text-gray-600 text-lg font-medium">
-                {t('letter.opening-the-invitation')}
+                Abriendo la invitación...
               </p>
             </div>
           </motion.div>

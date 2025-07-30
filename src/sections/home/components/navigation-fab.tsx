@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
+import { Heart } from 'lucide-react';
 
 interface NavigationFABProps {
   activeSection: string;
@@ -107,16 +108,14 @@ export default function NavigationFAB({
           <div className="relative z-10 flex items-center justify-center w-full h-full">
             <motion.div
               animate={{
-                rotate: 360,
                 scale: [1, 1.1, 1],
               }}
               transition={{
-                rotate: { duration: 8, repeat: Infinity, ease: 'linear' },
                 scale: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
               }}
-              className="text-2xl filter drop-shadow-sm"
+              className="filter drop-shadow-sm"
             >
-              💕
+              <Heart className="w-6 h-6 text-rose-500 fill-current" />
             </motion.div>
           </div>
 

@@ -7,27 +7,20 @@ import {
   generateMapLink,
 } from '@/lib/wedding-utils';
 import type { WeddingConfigType } from '@/types';
-import { useTranslation } from 'react-i18next';
-import { useTranslate } from '@/locales';
+import { Calendar, MapPin, PartyPopper, ShirtIcon } from 'lucide-react';
 
 interface WeddingDetailsCardProps {
   date: Date;
-  venue: WeddingConfigType['venue'];
 }
 
 export const WeddingDetailsCard = ({
   date,
-  venue,
 }: WeddingDetailsCardProps) => {
-  const { currentLang } = useTranslate();
-  const { t } = useTranslation('home');
-
   const calendarEvent = {
-    title: t('details.our-wedding-day'),
+    title: 'Nuestro Día de Boda',
     start: date,
     end: new Date(date.getTime() + 5 * 60 * 60 * 1000), // 5 hours later
-    description: t('details.join-us'),
-    location: venue.ceremony.address,
+    description: 'Únete a nosotros en nuestra celebración especial',
   };
 
   return (
@@ -42,11 +35,11 @@ export const WeddingDetailsCard = ({
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-4">
-            {t('details.title')}
+            Detalles de la Boda
           </h2>
           <div className="w-24 h-px bg-rose-400 mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto">
-            {t('details.join-us-text')}
+            Únete a nosotros para celebrar nuestro amor
           </p>
         </motion.div>
 
@@ -74,7 +67,7 @@ export const WeddingDetailsCard = ({
               >
                 <span className="text-2xl">💕</span>
                 <span className="text-sm sm:text-base font-semibold text-rose-600 tracking-wide uppercase">
-                  {t('details.date')}
+                  Guarda la Fecha
                 </span>
               </motion.div>
             </div>
@@ -95,7 +88,7 @@ export const WeddingDetailsCard = ({
                   </div>
                 </div>
                 <p className="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mt-3">
-                  {t('details.day')}
+                  Día
                 </p>
               </motion.div>
 
@@ -110,7 +103,7 @@ export const WeddingDetailsCard = ({
                 <div className="bg-gradient-to-br from-purple-500 to-indigo-600 text-white rounded-2xl p-4 sm:p-6 shadow-lg mb-2 h-24 sm:h-28 md:h-32 lg:h-36 flex flex-col items-center justify-center min-w-[100px] sm:min-w-[120px] md:min-w-[140px]">
                   <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-none mb-1">
                     {date
-                      .toLocaleDateString(currentLang.numberFormat.code, {
+                      .toLocaleDateString('es-ES', {
                         month: 'short',
                       })
                       .toUpperCase()}
@@ -120,7 +113,7 @@ export const WeddingDetailsCard = ({
                   </div>
                 </div>
                 <p className="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mt-3">
-                  {t('details.month')} & {t('details.year')}
+                  Mes y Año
                 </p>
               </motion.div>
 
@@ -134,11 +127,11 @@ export const WeddingDetailsCard = ({
               >
                 <div className="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-2xl p-4 sm:p-6 shadow-lg mb-2 h-24 sm:h-28 md:h-32 lg:h-36 flex flex-col items-center justify-center min-w-[100px] sm:min-w-[120px] md:min-w-[140px]">
                   <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold leading-none">
-                    {formatWeddingTime(date, currentLang.numberFormat.code)}
+                    {formatWeddingTime(date, 'es-ES')}
                   </div>
                 </div>
                 <p className="text-xs sm:text-sm font-medium text-gray-500 uppercase tracking-wider mt-3">
-                  {t('details.time')}
+                  Hora
                 </p>
               </motion.div>
             </div>
@@ -160,7 +153,7 @@ export const WeddingDetailsCard = ({
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-3">
                     <span className="text-xl sm:text-2xl md:text-3xl">🗓️</span>
                     <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-serif text-gray-800 font-bold text-center leading-tight">
-                      {date.toLocaleDateString(currentLang.numberFormat.code, {
+                      {date.toLocaleDateString('es-ES', {
                         weekday: 'long',
                       })}
                     </p>
@@ -168,14 +161,14 @@ export const WeddingDetailsCard = ({
                   </div>
                   <div className="w-16 sm:w-20 md:w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto mb-3"></div>
                   <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 font-medium">
-                    {date.toLocaleDateString(currentLang.numberFormat.code, {
+                    {date.toLocaleDateString('es-ES', {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric',
                     })}
                   </p>
                   <p className="text-xs sm:text-sm md:text-base text-rose-600 font-semibold mt-2">
-                    {t('details.mark-calendar')}
+                    ¡Marca tu calendario!
                   </p>
                 </div>
               </div>
@@ -197,10 +190,10 @@ export const WeddingDetailsCard = ({
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-3 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 text-white px-8 py-4 rounded-2xl font-semibold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 group/btn"
               >
-                <span className="text-xl group-hover/btn:scale-110 transition-transform duration-200">
-                  📅
+                <span className="group-hover/btn:scale-110 transition-transform duration-200">
+                  <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
                 </span>
-                <span>{t('details.add-to-calendar')}</span>
+                <span>Agregar al Calendario</span>
                 <motion.span
                   className="text-sm opacity-75"
                   animate={{ x: [0, 4, 0] }}
@@ -211,114 +204,12 @@ export const WeddingDetailsCard = ({
               </motion.a>
 
               <p className="text-xs sm:text-sm text-gray-500 mt-4 max-w-md mx-auto">
-                {t('details.message')}
+                Sincroniza con tu calendario para no perderte nuestro gran día
               </p>
             </motion.div>
           </div>
         </motion.div>
 
-        {/* Venue Cards */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Ceremony Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 group hover:shadow-2xl transition-all duration-300"
-          >
-            <div className="text-center mb-6">
-              <div className="inline-block bg-gradient-to-r from-purple-100 to-indigo-100 rounded-full p-4 mb-4 group-hover:scale-110 transition-transform duration-300">
-                <div className="text-4xl">⛪</div>
-              </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2">
-                {t('details.ceremony')}
-              </h3>
-              <div className="w-16 h-px bg-purple-400 mx-auto"></div>
-            </div>
-
-            <div className="space-y-4 text-center">
-              <div>
-                <h4 className="font-semibold text-gray-800 mb-1 text-sm sm:text-base">
-                  {venue.ceremony.name}
-                </h4>
-                <p className="text-gray-600 text-xs sm:text-sm">
-                  {venue.ceremony.address}
-                </p>
-              </div>
-
-              <div className="bg-gray-50 rounded-xl p-4">
-                <p className="font-medium text-gray-800 text-sm sm:text-base">
-                  {t('details.time')}
-                </p>
-                <p className="text-purple-600 font-semibold text-sm sm:text-base">
-                  {venue.ceremony.time}
-                </p>
-              </div>
-
-              <motion.a
-                href={generateMapLink(venue.ceremony.name)}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300"
-              >
-                📍 {t('details.get-directions')}
-              </motion.a>
-            </div>
-          </motion.div>
-
-          {/* Reception Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 group hover:shadow-2xl transition-all duration-300"
-          >
-            <div className="text-center mb-6">
-              <div className="inline-block bg-gradient-to-r from-emerald-100 to-teal-100 rounded-full p-4 mb-4 group-hover:scale-110 transition-transform duration-300">
-                <div className="text-4xl">🎉</div>
-              </div>
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2">
-                {t('details.reception')}
-              </h3>
-              <div className="w-16 h-px bg-emerald-400 mx-auto"></div>
-            </div>
-
-            <div className="space-y-4 text-center">
-              <div>
-                <h4 className="font-semibold text-gray-800 mb-1 text-sm sm:text-base">
-                  {venue.reception.name}
-                </h4>
-                <p className="text-gray-600 text-xs sm:text-sm">
-                  {venue.reception.address}
-                </p>
-              </div>
-
-              <div className="bg-gray-50 rounded-xl p-4">
-                <p className="font-medium text-gray-800 text-sm sm:text-base">
-                  {t('details.time')}
-                </p>
-                <p className="text-emerald-600 font-semibold text-sm sm:text-base">
-                  {venue.reception.time}
-                </p>
-              </div>
-
-              <motion.a
-                href={generateMapLink(venue.reception.name)}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:shadow-lg transition-all duration-300"
-              >
-                📍 {t('details.get-directions')}
-              </motion.a>
-            </div>
-          </motion.div>
-        </div>
 
         {/* Additional Info */}
         <motion.div
@@ -330,23 +221,25 @@ export const WeddingDetailsCard = ({
         >
           <div className="bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-8 border border-rose-100">
             <h4 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-4">
-              {t('details.please-note')}
+              Información Importante
             </h4>
             <div className="grid md:grid-cols-3 gap-6 text-xs sm:text-sm text-gray-600">
               <div className="flex flex-col items-center">
-                <div className="text-xl sm:text-2xl mb-2">👗</div>
-                <p className="font-medium">{t('details.dress-code')}</p>
-                <p>{t('details.formal-attire')}</p>
+                <div className="flex justify-center mb-2">
+                  <ShirtIcon className="w-6 h-6 sm:w-8 sm:h-8 text-pink-500" />
+                </div>
+                <p className="font-medium">Código de Vestimenta</p>
+                <p>Vestimenta Formal</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="text-xl sm:text-2xl mb-2">🚗</div>
-                <p className="font-medium">{t('details.parking')}</p>
-                <p>{t('details.valet-available')}</p>
+                <p className="font-medium">Estacionamiento</p>
+                <p>Valet disponible</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="text-xl sm:text-2xl mb-2">📱</div>
-                <p className="font-medium">{t('details.contact')}</p>
-                <p>+62 812 3456 7890</p>
+                <p className="font-medium">Contacto</p>
+                <p>+52 123 456 7890</p>
               </div>
             </div>
           </div>

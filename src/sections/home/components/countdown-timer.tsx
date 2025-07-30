@@ -3,14 +3,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
-import { useTranslation } from 'react-i18next';
 
 interface CountdownTimerProps {
   targetDate: Date;
 }
 
 export const CountdownTimer = ({ targetDate }: CountdownTimerProps) => {
-  const { t } = useTranslation('home');
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -50,22 +48,22 @@ export const CountdownTimer = ({ targetDate }: CountdownTimerProps) => {
 
   const timeUnits = [
     {
-      label: t('details.day'),
+      label: 'Días',
       value: timeLeft.days,
       color: 'from-rose-400 to-pink-500',
     },
     {
-      label: t('details.hours'),
+      label: 'Horas',
       value: timeLeft.hours,
       color: 'from-purple-400 to-indigo-500',
     },
     {
-      label: t('details.minutes'),
+      label: 'Minutos',
       value: timeLeft.minutes,
       color: 'from-blue-400 to-cyan-500',
     },
     {
-      label: t('details.seconds'),
+      label: 'Segundos',
       value: timeLeft.seconds,
       color: 'from-emerald-400 to-teal-500',
     },
@@ -85,11 +83,11 @@ export const CountdownTimer = ({ targetDate }: CountdownTimerProps) => {
           className="mb-12"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-4">
-            {t('details.countdown-title')}
+            Cuenta Regresiva
           </h2>
           <div className="w-24 h-px bg-rose-400 mx-auto mb-4"></div>
           <p className="text-gray-600 text-base sm:text-lg md:text-xl">
-            {t('details.countdown-subtitle')}
+            El gran día se acerca
           </p>
         </motion.div>
 
@@ -149,12 +147,12 @@ export const CountdownTimer = ({ targetDate }: CountdownTimerProps) => {
           <div className="inline-block bg-white/60 backdrop-blur-sm rounded-full px-6 py-3 shadow-md border border-white/40">
             <p className="text-gray-700 font-medium text-sm sm:text-base md:text-lg">
               {timeLeft.days > 0
-                ? `${timeLeft.days} ${t('details.days-until')}`
+                ? `${timeLeft.days} días para el gran día`
                 : timeLeft.hours > 0
-                ? `${timeLeft.hours} ${t('details.hours-until')}`
+                ? `${timeLeft.hours} horas para el gran día`
                 : timeLeft.minutes > 0
-                ? `${timeLeft.minutes} ${t('details.minutes-until')}`
-                : t('details.moment-arrived')}
+                ? `${timeLeft.minutes} minutos para el gran día`
+                : '¡El momento ha llegado!'}
             </p>
           </div>
         </motion.div>

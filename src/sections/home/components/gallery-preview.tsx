@@ -2,10 +2,9 @@
 
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
-import { useTranslation } from 'react-i18next';
+import { Heart, Plane, Flower2, Gem, Users, PartyPopper, Camera } from 'lucide-react';
 
 export const GalleryPreview = () => {
-  const { t } = useTranslation('home');
 
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -17,38 +16,38 @@ export const GalleryPreview = () => {
     {
       id: 1,
       category: 'engagement',
-      emoji: '💕',
-      description: t('gallery.engagement'),
+      emoji: 'Heart',
+      description: 'Nuestro Compromiso',
     },
     {
       id: 2,
       category: 'travel',
-      emoji: '✈️',
-      description: t('gallery.travel'),
+      emoji: 'Plane',
+      description: 'Aventuras Juntos',
     },
     {
       id: 3,
       category: 'date',
-      emoji: '🌹',
-      description: t('gallery.date'),
+      emoji: 'Flower2',
+      description: 'Primeras Citas',
     },
     {
       id: 4,
       category: 'proposal',
-      emoji: '💍',
-      description: t('gallery.proposal'),
+      emoji: 'Gem',
+      description: 'La Propuesta',
     },
     {
       id: 5,
       category: 'family',
-      emoji: '👨‍👩‍👧‍👦',
-      description: t('gallery.family'),
+      emoji: 'Users',
+      description: 'Con la Familia',
     },
     {
       id: 6,
       category: 'friends',
-      emoji: '🎉',
-      description: t('gallery.friends'),
+      emoji: 'PartyPopper',
+      description: 'Con Amigos',
     },
   ];
 
@@ -65,11 +64,11 @@ export const GalleryPreview = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-4">
-            {t('gallery.journey-title')}
+            Nuestra Historia de Amor
           </h2>
           <div className="w-24 h-px bg-rose-400 mx-auto mb-6"></div>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            {t('gallery.journey-subtitle')}
+            Un vistazo a los momentos que nos han traído hasta aquí
           </p>
         </motion.div>
 
@@ -84,8 +83,19 @@ export const GalleryPreview = () => {
             >
               {/* Image placeholder with emoji */}
               <div className="absolute inset-0 bg-gradient-to-br from-rose-100 to-pink-200 flex items-center justify-center">
-                <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl opacity-50 group-hover:scale-110 transition-transform duration-300">
-                  {image.emoji}
+                <span className="opacity-50 group-hover:scale-110 transition-transform duration-300">
+                  {(() => {
+                    const iconMap = {
+                      Heart: Heart,
+                      Plane: Plane,
+                      Flower2: Flower2,
+                      Gem: Gem,
+                      Users: Users,
+                      PartyPopper: PartyPopper
+                    };
+                    const IconComponent = iconMap[image.emoji as keyof typeof iconMap];
+                    return IconComponent ? <IconComponent className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32" /> : null;
+                  })()}
                 </span>
               </div>
 
@@ -112,9 +122,21 @@ export const GalleryPreview = () => {
         >
           <button className="bg-white text-gray-700 px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-rose-300 group text-sm sm:text-base">
             <span className="flex items-center space-x-2">
-              <span>{t('gallery.view-full')}</span>
+              <span>Ver Galería Completa</span>
               <span className="group-hover:translate-x-1 transition-transform duration-300">
-                📸
+                <motion.span
+                  animate={{
+                    rotate: [0, -5, 5, -5, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  className="inline-block"
+                >
+                  <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
+                </motion.span>
               </span>
             </span>
           </button>

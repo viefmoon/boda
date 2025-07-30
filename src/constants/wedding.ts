@@ -1,25 +1,27 @@
 export const WEDDING_CONFIG = {
-  date: new Date('2025-10-15T16:00:00'),
+  date: new Date('2025-11-01T17:00:00-06:00'), // 1 de noviembre 2025, 5:00 PM hora de México
   bride: {
-    name: 'Mio',
-    fullName: 'Akiyama Mio',
+    name: 'Sofia',
+    fullName: 'Sofia Mora Delgado',
     photo: '/assets/images/bride-circle.png',
   },
   groom: {
-    name: 'Fiqri',
-    fullName: 'M Fiqri Haikhar Anwar',
+    name: 'Oswaldo',
+    fullName: 'Oswaldo Lozano Jiménez',
     photo: '/assets/images/groom-circle.png',
   },
   venue: {
     ceremony: {
-      name: 'Masjid Songkok Recca Bone',
-      address: 'Jl. Jend. Ahmad Yani',
-      time: '4:00 PM',
+      name: 'Capilla de Nuestra Señora de Ocotlán, La Purísima',
+      address: 'C. Fco I. Madero, Centro, 47800 Ocotlán, Jal.',
+      time: '5:00 PM',
+      mapUrl: 'https://maps.app.goo.gl/1kiNcAxmvYPACwet5',
     },
     reception: {
-      name: 'Hotel Novena Bone',
-      address: 'Jl. Jend. Ahmad Yani No.25',
+      name: 'La Magnolia',
+      address: 'C. México 28, Ferrocarril, 47830 Ocotlán, Jal.',
       time: '6:30 PM',
+      mapUrl: 'https://maps.app.goo.gl/qBpGVzWnBh4UdYfw9',
     },
   },
 };

@@ -3,10 +3,9 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
-import { useTranslation } from 'react-i18next';
+import { Gift } from 'lucide-react';
 
 export const RSVP = () => {
-  const { t } = useTranslation('home');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -68,10 +67,10 @@ export const RSVP = () => {
               <span className="text-4xl">✅</span>
             </div>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif text-gray-800 mb-4">
-              {t('rsvp.thank-you')}
+              ¡Gracias!
             </h3>
             <p className="text-gray-600 text-base sm:text-lg md:text-xl">
-              {t('rsvp.thank-you-received')}
+              Hemos recibido tu confirmación. ¡Nos vemos pronto!
             </p>
             <div className="mt-6 text-2xl">💕</div>
           </motion.div>
@@ -94,11 +93,11 @@ export const RSVP = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-4">
-            {t('rsvp.title')}
+            Confirmación de Asistencia
           </h2>
           <div className="w-24 h-px bg-rose-400 mx-auto mb-6"></div>
           <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            {t('rsvp.subtitle')}
+            Por favor, confírmanos tu asistencia para nuestro gran día
           </p>
         </motion.div>
 
@@ -111,7 +110,7 @@ export const RSVP = () => {
           >
             <div className="bg-white rounded-3xl p-8 shadow-xl border border-rose-100">
               <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-gray-800 mb-6 text-center">
-                {t('rsvp.confirm-attendance')}
+                Confirma tu Asistencia
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -121,7 +120,7 @@ export const RSVP = () => {
                     htmlFor="name"
                     className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
                   >
-                    {t('rsvp.full-name')} *
+                    Nombre completo *
                   </label>
                   <input
                     type="text"
@@ -131,7 +130,7 @@ export const RSVP = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
-                    placeholder={t('rsvp.full-name')}
+                    placeholder="Nombre completo"
                   />
                 </div>
                 {/* Email */}
@@ -140,7 +139,7 @@ export const RSVP = () => {
                     htmlFor="email"
                     className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
                   >
-                    {t('rsvp.email-address')} *
+                    Correo electrónico *
                   </label>
                   <input
                     type="email"
@@ -150,7 +149,7 @@ export const RSVP = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
-                    placeholder={t('rsvp.email-address')}
+                    placeholder="Correo electrónico"
                   />
                 </div>
                 {/* Attendance */}
@@ -159,7 +158,7 @@ export const RSVP = () => {
                     htmlFor="attendance"
                     className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
                   >
-                    {t('rsvp.will-attend')} *
+                    ¿Asistirás? *
                   </label>
                   <select
                     id="attendance"
@@ -169,9 +168,9 @@ export const RSVP = () => {
                     required
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
                   >
-                    <option value="">{t('rsvp.please-select')}</option>
-                    <option value="yes">{t('rsvp.yes-there')}</option>
-                    <option value="no">{t('rsvp.no-cant')}</option>
+                    <option value="">Selecciona una opción</option>
+                    <option value="yes">Sí, ahí estaré</option>
+                    <option value="no">No podré asistir</option>
                   </select>
                 </div>
                 {/* Number of Guests */}
@@ -181,7 +180,7 @@ export const RSVP = () => {
                       htmlFor="guests"
                       className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
                     >
-                      {t('rsvp.number-guests')}
+                      Número de invitados
                     </label>
                     <select
                       id="guests"
@@ -190,10 +189,10 @@ export const RSVP = () => {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
                     >
-                      <option value="1">1 {t('rsvp.guest-count')}</option>
-                      <option value="2">2 {t('rsvp.guests-count')}</option>
-                      <option value="3">3 {t('rsvp.guests-count')}</option>
-                      <option value="4">4 {t('rsvp.guests-count')}</option>
+                      <option value="1">1 persona</option>
+                      <option value="2">2 personas</option>
+                      <option value="3">3 personas</option>
+                      <option value="4">4 personas</option>
                     </select>
                   </div>
                 )}
@@ -204,7 +203,7 @@ export const RSVP = () => {
                       htmlFor="dietaryRestrictions"
                       className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
                     >
-                      {t('rsvp.dietary-restrictions')}
+                      Restricciones alimentarias
                     </label>
                     <input
                       type="text"
@@ -213,7 +212,7 @@ export const RSVP = () => {
                       value={formData.dietaryRestrictions}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
-                      placeholder={t('rsvp.dietary-placeholder')}
+                      placeholder="Vegetariano, alergias, etc."
                     />
                   </div>
                 )}
@@ -223,7 +222,7 @@ export const RSVP = () => {
                     htmlFor="message"
                     className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
                   >
-                    {t('rsvp.message-couple')}
+                    Mensaje para los novios
                   </label>
                   <textarea
                     id="message"
@@ -232,7 +231,7 @@ export const RSVP = () => {
                     onChange={handleChange}
                     rows={4}
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300 resize-none"
-                    placeholder={t('rsvp.message-placeholder')}
+                    placeholder="Comparte tus buenos deseos..."
                   />
                 </div>
 
@@ -241,7 +240,7 @@ export const RSVP = () => {
                   type="submit"
                   className="w-full bg-gradient-to-r from-rose-400 to-pink-500 text-white py-4 px-6 rounded-xl font-medium text-base sm:text-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
-                  {t('rsvp.send-rsvp')}
+                  Enviar Confirmación
                 </button>
               </form>
             </div>
@@ -262,15 +261,15 @@ export const RSVP = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
-                    {t('rsvp.deadline')}
+                    Fecha límite RSVP
                   </h4>
                   <p className="text-gray-600 text-xs sm:text-sm">
-                    {t('rsvp.deadline-date')}
+                    15 de mayo de 2025
                   </p>
                 </div>
               </div>
               <p className="text-gray-600 text-xs sm:text-sm">
-                {t('rsvp.deadline-help')}
+                Por favor confirma antes de esta fecha para ayudarnos con la organización
               </p>
             </div>
 
@@ -282,16 +281,16 @@ export const RSVP = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
-                    {t('rsvp.questions')}
+                    ¿Preguntas?
                   </h4>
                   <p className="text-gray-600 text-xs sm:text-sm">
-                    {t('rsvp.questions-help')}
+                    Estamos aquí para ayudarte
                   </p>
                 </div>
               </div>
               <div className="space-y-2 text-xs sm:text-sm text-gray-600">
-                <p>📧 wedding@fihaa.my.id</p>
-                <p>📱 (555) 123-4567</p>
+                <p>📧 bodaoswaldsofiaM@gmail.com</p>
+                <p>📱 +52 123 456 7890</p>
               </div>
             </div>
 
@@ -299,19 +298,19 @@ export const RSVP = () => {
             <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 shadow-lg border border-amber-100">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-amber-600 text-xl">🎁</span>
+                  <Gift className="w-6 h-6 text-amber-600" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
-                    {t('rsvp.gift-registry')}
+                    Mesa de Regalos
                   </h4>
                   <p className="text-gray-600 text-xs sm:text-sm">
-                    {t('rsvp.presence-present')}
+                    Tu presencia es nuestro mejor regalo
                   </p>
                 </div>
               </div>
               <p className="text-gray-600 text-xs sm:text-sm mb-4">
-                {t('rsvp.registry-text')}
+                Si deseas obsequiarnos algo, hemos preparado una lista de regalos
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="bg-white/60 px-3 py-1 rounded-full text-xs font-medium text-gray-700">

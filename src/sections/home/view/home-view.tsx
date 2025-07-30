@@ -10,6 +10,7 @@ import {
   CountdownTimer,
   VenueInformation,
   EventSchedule,
+  WeddingParty,
   RSVP,
   GalleryPreview,
   ClosingMessage,
@@ -92,7 +93,6 @@ export default function HomeView() {
       <section id="details" className="relative">
         <WeddingDetailsCard
           date={WEDDING_CONFIG.date}
-          venue={WEDDING_CONFIG.venue}
         />
         <CountdownTimer targetDate={WEDDING_CONFIG.date} />
       </section>
@@ -101,6 +101,11 @@ export default function HomeView() {
       <section id="venue" className="relative">
         <VenueInformation venue={WEDDING_CONFIG.venue} />
         <EventSchedule />
+      </section>
+
+      {/* Wedding Party */}
+      <section id="wedding-party" className="relative">
+        <WeddingParty />
       </section>
 
       {/* Gallery Preview */}

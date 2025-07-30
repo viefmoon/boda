@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { useTranslation } from 'react-i18next';
 import { useInView } from 'react-intersection-observer';
+import { Heart } from 'lucide-react';
 
 interface ClosingMessageProps {
   bride: string;
@@ -10,7 +10,6 @@ interface ClosingMessageProps {
 }
 
 export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
-  const { t } = useTranslation('home');
 
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -30,7 +29,7 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
           className="mb-12"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-6">
-            {t('closing-message.title')}
+            Con Amor y Gratitud
           </h2>
           <div className="w-24 h-px bg-rose-500 mx-auto mb-8"></div>
         </motion.div>
@@ -42,10 +41,10 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
           className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-white/40 mb-12"
         >
           <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-700 leading-relaxed mb-6 font-light">
-            &quot;{t('closing-message.quote')}&quot;
+            &quot;El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección&quot;
           </p>
           <div className="text-base sm:text-lg text-gray-600">
-            {t('closing-message.with-love')}
+            Con todo nuestro amor,
           </div>
           <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-rose-600 mt-2">
             {groom} & {bride}
@@ -58,18 +57,20 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="space-y-6"
         >
-          <div className="flex justify-center space-x-4 text-2xl sm:text-3xl md:text-4xl">
-            <span className="animate-bounce">💕</span>
+          <div className="flex justify-center space-x-4">
+            <span className="animate-bounce">
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-500 fill-current" />
+            </span>
             <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>
-              💖
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-rose-500 fill-current" />
             </span>
             <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>
-              💕
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-500 fill-current" />
             </span>
           </div>
 
           <p className="text-sm sm:text-base text-gray-600">
-            #FiqriAndMio2025 #LoveWins #ForeverStartsNow
+            #SofiaYOswaldo2025 #AmorVerdadero #JuntosParaSiempre
           </p>
         </motion.div>
 
@@ -81,7 +82,7 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
           className="mt-16 pt-8 border-t border-white/40"
         >
           <p className="text-xs sm:text-sm text-gray-500">
-            Questions? Contact us at wedding@fihaa.my.id
+            ¿Preguntas? Contáctanos en bodaoswaldsofiaM@gmail.com
           </p>
         </motion.div>
       </div>

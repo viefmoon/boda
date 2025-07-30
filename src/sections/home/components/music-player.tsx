@@ -2,14 +2,13 @@
 
 import { motion } from 'motion/react';
 import { useState, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Music, Pause, Play, Settings } from 'lucide-react';
 
 interface MusicPlayerProps {
   className?: string;
 }
 
 export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
-  const { t } = useTranslation('home');
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -135,33 +134,33 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                 <motion.div
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="text-4xl mb-4"
+                  className="mb-4"
                 >
-                  🎵
+                  <Music className="w-12 h-12 text-blue-500 mx-auto" />
                 </motion.div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  {t('music.enable-music')}
+                  Habilitar Música
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  {t('music.browser-blocked')}
+                  Tu navegador ha bloqueado la reproducción automática
                 </p>
               </div>
 
               {/* Browser Settings Guide */}
               <div className="bg-blue-50 rounded-lg p-4 mb-6">
                 <h4 className="font-semibold text-blue-800 mb-2 flex items-center">
-                  <span className="mr-2">⚙️</span>
-                  {t('music.how-to-enable')}
+                  <Settings className="w-4 h-4 mr-2" />
+                  Cómo habilitar la reproducción automática:
                 </h4>
                 <div className="text-blue-700 text-sm space-y-1">
                   <p>
-                    • <strong>Chrome/Edge:</strong> {t('music.chrome-edge')}
+                    • <strong>Chrome/Edge:</strong> Configuración → Sitio → Permitir sonido
                   </p>
                   <p>
-                    • <strong>Firefox:</strong> {t('music.firefox')}
+                    • <strong>Firefox:</strong> Haz clic en el ícono del candado → Permitir audio
                   </p>
                   <p>
-                    • <strong>Safari:</strong> {t('music.safari')}
+                    • <strong>Safari:</strong> Safari → Configuración para este sitio → Permitir todo
                   </p>
                 </div>
               </div>
@@ -174,7 +173,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                   onClick={handleAllowAutoplay}
                   className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
                 >
-                  {t('music.play-music')}
+                  Reproducir Música
                 </motion.button>
                 <motion.button
                   whileHover={{ scale: 1.02 }}
@@ -182,13 +181,13 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                   onClick={handleDismissModal}
                   className="px-4 py-3 bg-gray-100 text-gray-600 font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
                 >
-                  {t('music.later')}
+                  Más tarde
                 </motion.button>
               </div>
 
               {/* Footer note */}
               <p className="text-xs text-gray-500 text-center mt-4">
-                {t('music.auto-note')}
+                La música se reproducirá automáticamente en tu próxima visita
               </p>
             </div>
           </motion.div>
@@ -207,16 +206,15 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
             <motion.div
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-xl"
             >
-              🎵
+              <Music className="w-5 h-5 text-white" />
             </motion.div>
             <div>
               <div className="font-medium text-sm">
-                {t('music.wedding-music')}
+                Música de Boda
               </div>
               <div className="text-xs opacity-90">
-                {t('music.click-to-start')}
+                Haz clic para comenzar
               </div>
             </div>
           </div>
@@ -245,15 +243,15 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
           ref={audioRef}
           loop
           preload="auto"
-          src="/assets/audio/shirushi-lisa.mp3"
-          aria-label="Wedding background music"
+          src="/assets/audio/Valentín Elizalde - La Más Deseada.mp3"
+          aria-label="Música de fondo de la boda"
         >
           <track
             kind="captions"
-            src="/assets/audio/shirushi-lisa.mp3"
-            label="No captions available"
+            src="/assets/audio/Valentín Elizalde - La Más Deseada.mp3"
+            label="Sin subtítulos disponibles"
           />
-          Your browser does not support the audio element.
+          Tu navegador no soporta el elemento de audio.
         </audio>
 
         {/* Progress Ring */}
@@ -395,9 +393,9 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                     repeat: Infinity,
                     ease: 'easeInOut',
                   }}
-                  className="text-2xl filter drop-shadow-sm"
+                  className="filter drop-shadow-sm"
                 >
-                  🎵
+                  <Play className="w-6 h-6 text-blue-500 fill-current" />
                 </motion.div>
               )}
             </div>
@@ -417,17 +415,18 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
             whileHover={{ opacity: 1, x: 0 }}
             className="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-gray-800/90 text-white text-xs px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm whitespace-nowrap pointer-events-none"
           >
-            <div className="font-medium">
+            <div className="font-medium flex items-center gap-1">
+              <Music className="w-3 h-3" />
               {isPlaying
-                ? `🎵 ${t('music.playing')}`
+                ? 'Reproduciendo'
                 : autoplayBlocked && !hasInteracted
-                ? `🎵 ${t('music.click-to-start')}`
-                : `🎵 ${t('music.paused')}`}
+                ? 'Haz clic para comenzar'
+                : 'Pausado'}
             </div>
             <div className="text-gray-300 text-xs">
               {autoplayBlocked && !hasInteracted
-                ? `${t('music.wedding-music')} (Autoplay Blocked)`
-                : t('music.wedding-music')}
+                ? 'Música de Boda (Autoplay Bloqueado)'
+                : 'Música de Boda'}
             </div>
 
             {/* Tooltip arrow */}

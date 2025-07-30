@@ -1,7 +1,7 @@
 import { NAVIGATION_ANIMATIONS } from '@/constants/navigation';
 import type { NavigationSection } from '@/types/navigation';
 import { motion, AnimatePresence } from 'motion/react';
-import * as Icons from 'lucide-react';
+import { Home, Heart, Calendar, MapPin, Camera, Mail } from 'lucide-react';
 
 // NavigationButton Component for better code organization
 interface NavigationButtonProps {
@@ -70,7 +70,16 @@ export function NavigationButton({
         whileHover={NAVIGATION_ANIMATIONS.icon.hover}
       >
         {(() => {
-          const IconComponent = Icons[section.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
+          const iconMap = {
+            Home,
+            Heart,
+            Calendar,
+            MapPin,
+            Camera,
+            Mail
+          };
+
+          const IconComponent = iconMap[section.icon as keyof typeof iconMap];
 
           return IconComponent ? <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" /> : null;
         })()}

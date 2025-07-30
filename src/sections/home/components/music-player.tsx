@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 import { useState, useRef, useEffect } from 'react';
-import { Music, Pause, Play, Settings } from 'lucide-react';
+import { Music, Play, Settings } from 'lucide-react';
 
 interface MusicPlayerProps {
   className?: string;

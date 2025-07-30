@@ -102,7 +102,7 @@ export const WeddingParty = () => {
         >
           <div className="bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-6 max-w-3xl mx-auto border border-rose-100">
             <p className="text-gray-700 text-sm sm:text-base italic">
-              "Gracias por ser parte de nuestra historia y acompañarnos en este momento tan especial"
+              &ldquo;Gracias por ser parte de nuestra historia y acompañarnos en este momento tan especial&rdquo;
             </p>
           </div>
         </motion.div>

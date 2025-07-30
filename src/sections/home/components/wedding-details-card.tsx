@@ -4,10 +4,8 @@ import { motion } from 'motion/react';
 import {
   formatWeddingTime,
   generateGoogleCalendarLink,
-  generateMapLink,
 } from '@/lib/wedding-utils';
-import type { WeddingConfigType } from '@/types';
-import { Calendar, MapPin, PartyPopper, ShirtIcon } from 'lucide-react';
+import { Calendar, ShirtIcon } from 'lucide-react';
 
 interface WeddingDetailsCardProps {
   date: Date;

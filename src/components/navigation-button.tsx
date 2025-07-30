@@ -71,6 +71,7 @@ export function NavigationButton({
       >
         {(() => {
           const IconComponent = Icons[section.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
+
           return IconComponent ? <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" /> : null;
         })()}
       </motion.span>

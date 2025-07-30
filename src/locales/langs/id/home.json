@@ -1,0 +1,33 @@
+{
+  "title": "Wedding",
+  "subtitle": "We Are Getting Married",
+  "countdown": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "description": "Please let us know if you can attend",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "attending": "Will you attend?",
+      "guests": "Number of guests",
+      "message": "Message",
+      "submit": "Submit"
+    }
+  },
+  "venue": {
+    "title": "Venue",
+    "ceremony": "Ceremony",
+    "reception": "Reception"
+  },
+  "gallery": {
+    "title": "Gallery"
+  },
+  "weddingParty": {
+    "title": "Wedding Party"
+  }
+}

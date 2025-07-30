@@ -165,7 +165,7 @@ export const CoupleIntroduction = ({
         >
           <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto shadow-lg border border-white/40">
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-gray-700 italic mb-4">
-              "Eres con quien quiero compartir cada amanecer y atardecer."
+              &ldquo;Eres con quien quiero compartir cada amanecer y atardecer.&rdquo;
             </p>
             <p className="text-gray-500 text-xs sm:text-sm">— Clannad</p>
           </div>

@@ -25,7 +25,7 @@ export const CoupleIntroduction = ({
   return (
     <div
       ref={ref}
-      className="py-20 px-4 bg-gradient-to-b from-white to-rose-50/30"
+      className="py-20 px-4 bg-background dark:bg-background"
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
@@ -35,11 +35,11 @@ export const CoupleIntroduction = ({
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-foreground mb-4 font-normal tracking-wide">
             Nuestra Historia de Amor
           </h2>
-          <div className="w-24 h-px bg-rose-400 mx-auto"></div>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 mt-6 max-w-2xl mx-auto">
+          <div className="w-24 h-px bg-gray-300 dark:bg-gray-700 mx-auto"></div>
+          <p className="text-base sm:text-lg text-foreground/80 mt-6 max-w-2xl mx-auto font-normal leading-relaxed">
             Nuestro viaje comenzó con un simple hola y ha florecido en la más hermosa historia de amor. Estamos emocionados de compartir este día especial con todos ustedes.
           </p>
         </motion.div>
@@ -54,7 +54,7 @@ export const CoupleIntroduction = ({
             className="text-center lg:text-right"
           >
             <div className="relative inline-block mb-6">
-              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gradient-to-br from-rose-100 to-pink-200 rounded-full flex items-center justify-center text-6xl sm:text-7xl md:text-8xl lg:text-9xl shadow-2xl border-8 border-white">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-full flex items-center justify-center text-6xl sm:text-7xl md:text-8xl lg:text-9xl shadow-xl border-4 border-white dark:border-gray-800">
                 <Image
                   src={bride.photo}
                   alt={`${bride.fullName}'s photo`}
@@ -64,26 +64,26 @@ export const CoupleIntroduction = ({
                   loading="lazy"
                 />
               </div>
-              <div className="absolute -bottom-4 -right-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-rose-400 rounded-full flex items-center justify-center shadow-lg">
-                <Crown className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+              <div className="absolute -bottom-4 -right-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gray-800 dark:bg-gray-200 rounded-full flex items-center justify-center shadow-lg">
+                <Crown className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white dark:text-gray-800" />
               </div>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-2">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-foreground mb-2">
               {bride.fullName}
             </h3>
-            <p className="text-base sm:text-lg md:text-xl text-rose-600 mb-4 font-medium">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-4 font-light">
               La Novia
             </p>
-            <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-md mx-auto lg:mx-0 lg:ml-auto">
+            <p className="text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed max-w-md mx-auto lg:mx-0 lg:ml-auto">
               Un alma hermosa con un corazón lleno de amor y sueños de un futuro maravilloso juntos.
             </p>
 
             {/* Decorative Elements */}
             <div className="mt-6 flex justify-center lg:justify-end space-x-2">
-              <div className="w-2 h-2 bg-rose-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-rose-400 rounded-full"></div>
-              <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-500 dark:bg-gray-500 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-700 dark:bg-gray-300 rounded-full"></div>
             </div>
           </motion.div>
 
@@ -123,7 +123,7 @@ export const CoupleIntroduction = ({
             className="text-center lg:text-left"
           >
             <div className="relative inline-block mb-6">
-              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gradient-to-br from-blue-100 to-indigo-200 rounded-full flex items-center justify-center text-6xl sm:text-7xl md:text-8xl lg:text-9xl shadow-2xl border-8 border-white">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-full flex items-center justify-center text-6xl sm:text-7xl md:text-8xl lg:text-9xl shadow-xl border-4 border-white dark:border-gray-800">
                 <Image
                   src={groom.photo}
                   alt={`${groom.fullName}'s photo`}
@@ -132,26 +132,26 @@ export const CoupleIntroduction = ({
                   className="rounded-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-4 -left-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-blue-400 rounded-full flex items-center justify-center shadow-lg">
-                <Crown className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+              <div className="absolute -bottom-4 -left-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gray-800 dark:bg-gray-200 rounded-full flex items-center justify-center shadow-lg">
+                <Crown className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white dark:text-gray-800" />
               </div>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-2">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-foreground mb-2">
               {groom.fullName}
             </h3>
-            <p className="text-base sm:text-lg md:text-xl text-blue-600 mb-4 font-medium">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-4 font-light">
               El Novio
             </p>
-            <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-md mx-auto lg:mx-0">
+            <p className="text-sm sm:text-base md:text-lg text-foreground/70 leading-relaxed max-w-md mx-auto lg:mx-0">
               Un compañero amable y cariñoso que trae alegría y risas a cada día.
             </p>
 
             {/* Decorative Elements */}
             <div className="mt-6 flex justify-center lg:justify-start space-x-2">
-              <div className="w-2 h-2 bg-blue-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-500 dark:bg-gray-500 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-700 dark:bg-gray-300 rounded-full"></div>
             </div>
           </motion.div>
         </div>
@@ -163,11 +163,11 @@ export const CoupleIntroduction = ({
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center mt-16"
         >
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto shadow-lg border border-white/40">
-            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-gray-700 italic mb-4">
+          <div className="bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto shadow-lg border border-white/40 dark:border-gray-800/40">
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-foreground/90 italic mb-4">
               &ldquo;Eres con quien quiero compartir cada amanecer y atardecer.&rdquo;
             </p>
-            <p className="text-gray-500 text-xs sm:text-sm">— Clannad</p>
+            <p className="text-foreground/60 text-xs sm:text-sm">— Clannad</p>
           </div>
         </motion.div>
       </div>

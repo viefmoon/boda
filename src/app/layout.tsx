@@ -1,12 +1,19 @@
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
+import { Lato, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'sonner';
 
-const poppins = Poppins({
-  variable: '--font-poppins',
+const lato = Lato({
+  variable: '--font-lato',
   subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  weight: ['300', '400', '700'],
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-cormorant',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
@@ -22,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${poppins.variable} antialiased`}>
+      <body className={`${lato.variable} ${cormorant.variable} antialiased bg-background text-foreground`}>
         {children}
         <Toaster />
       </body>

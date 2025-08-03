@@ -48,7 +48,7 @@ export default function NavigationFAB({
             cy="32"
             r="28"
             fill="none"
-            stroke="rgba(255, 255, 255, 0.1)"
+            stroke="rgba(156, 163, 175, 0.2)"
             strokeWidth="2"
           />
           {/* Progress circle */}
@@ -73,9 +73,9 @@ export default function NavigationFAB({
           />
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#f43f5e" />
-              <stop offset="50%" stopColor="#ec4899" />
-              <stop offset="100%" stopColor="#8b5cf6" />
+              <stop offset="0%" stopColor="var(--beige-light)" />
+              <stop offset="50%" stopColor="var(--beige)" />
+              <stop offset="100%" stopColor="var(--beige-dark)" />
             </linearGradient>
           </defs>
         </svg>
@@ -84,11 +84,11 @@ export default function NavigationFAB({
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="relative w-14 h-14 bg-white/95 backdrop-blur-md border border-white/20 rounded-full shadow-2xl hover:shadow-rose-200/50 transition-all duration-300 group overflow-hidden"
+          className="relative w-14 h-14 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border border-gray-200/20 dark:border-gray-700/20 rounded-full shadow-xl hover:shadow-gray-500/20 transition-all duration-300 group overflow-hidden"
           onClick={handleNextSection}
         >
           {/* Button background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-200/20 to-gray-300/20 dark:from-gray-700/20 dark:to-gray-800/20 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
 
           {/* Animated background effect */}
           <motion.div
@@ -115,13 +115,13 @@ export default function NavigationFAB({
               }}
               className="filter drop-shadow-sm"
             >
-              <Heart className="w-6 h-6 text-rose-500 fill-current" />
+              <Heart className="w-6 h-6 text-gray-700 dark:text-gray-300 fill-current" />
             </motion.div>
           </div>
 
           {/* Ripple effect on click */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-rose-400/30 to-pink-400/30 rounded-full"
+            className="absolute inset-0 bg-gradient-to-r from-gray-300/30 to-gray-400/30 dark:from-gray-600/30 dark:to-gray-700/30 rounded-full"
             initial={{ scale: 0, opacity: 0 }}
             whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
             transition={{ duration: 0.4 }}
@@ -132,17 +132,17 @@ export default function NavigationFAB({
         <motion.div
           initial={{ opacity: 0, x: 10 }}
           whileHover={{ opacity: 1, x: 0 }}
-          className="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-gray-800/90 text-white text-xs px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm whitespace-nowrap pointer-events-none"
+          className="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-gray-800/90 dark:bg-gray-200/90 text-white dark:text-gray-900 text-xs px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm whitespace-nowrap pointer-events-none"
         >
           <div className="font-medium capitalize">
             {activeSection === 'hero' ? 'Home' : activeSection}
           </div>
-          <div className="text-gray-300 text-xs">
+          <div className="text-gray-300 dark:text-gray-700 text-xs">
             {sections.indexOf(activeSection) + 1} of {sections.length}
           </div>
 
           {/* Tooltip arrow */}
-          <div className="absolute left-full top-1/2 -translate-y-1/2 border-l-4 border-l-gray-800/90 border-y-4 border-y-transparent"></div>
+          <div className="absolute left-full top-1/2 -translate-y-1/2 border-l-4 border-l-gray-800/90 dark:border-l-gray-200/90 border-y-4 border-y-transparent"></div>
         </motion.div>
       </div>
     </motion.div>

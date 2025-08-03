@@ -34,36 +34,30 @@ export const NAVIGATION_SECTIONS = [
     id: 'hero',
     label: 'Inicio',
     icon: 'Home',
-    gradient: 'from-rose-500 to-pink-500',
   },
   {
     id: 'couple',
     label: 'Los Novios',
     icon: 'Heart',
-    gradient: 'from-pink-500 to-rose-500',
   },
   {
     id: 'details',
     label: 'Detalles',
     icon: 'Calendar',
-    gradient: 'from-purple-500 to-indigo-500',
   },
   {
     id: 'venue',
     label: 'Lugar',
     icon: 'MapPin',
-    gradient: 'from-indigo-500 to-blue-500',
   },
   {
     id: 'gallery',
     label: 'Galería',
     icon: 'Camera',
-    gradient: 'from-blue-500 to-cyan-500',
   },
   {
     id: 'rsvp',
     label: 'Confirmar',
     icon: 'Mail',
-    gradient: 'from-cyan-500 to-teal-500',
   },
 ];

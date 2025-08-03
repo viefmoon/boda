@@ -125,7 +125,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
             className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative overflow-hidden"
           >
             {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-50"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-beige-light/20 to-beige/20 opacity-50"></div>
 
             {/* Content */}
             <div className="relative z-10">
@@ -136,7 +136,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                   transition={{ duration: 2, repeat: Infinity }}
                   className="mb-4"
                 >
-                  <Music className="w-12 h-12 text-blue-500 mx-auto" />
+                  <Music className="w-12 h-12 text-beige mx-auto" />
                 </motion.div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
                   Habilitar Música
@@ -147,12 +147,12 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
               </div>
 
               {/* Browser Settings Guide */}
-              <div className="bg-blue-50 rounded-lg p-4 mb-6">
-                <h4 className="font-semibold text-blue-800 mb-2 flex items-center">
+              <div className="bg-beige-light/20 rounded-lg p-4 mb-6">
+                <h4 className="font-light text-foreground mb-2 flex items-center">
                   <Settings className="w-4 h-4 mr-2" />
                   Cómo habilitar la reproducción automática:
                 </h4>
-                <div className="text-blue-700 text-sm space-y-1">
+                <div className="text-soft-gray text-sm space-y-1">
                   <p>
                     • <strong>Chrome/Edge:</strong> Configuración → Sitio → Permitir sonido
                   </p>
@@ -171,7 +171,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={handleAllowAutoplay}
-                  className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+                  className="flex-1 bg-beige hover:bg-beige-dark text-white font-light py-3 px-4 rounded-full shadow-md hover:shadow-lg transition-all duration-200"
                 >
                   Reproducir Música
                 </motion.button>
@@ -200,7 +200,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
           initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -20, scale: 0.9 }}
-          className="fixed bottom-44 right-6 z-50 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-3 rounded-lg shadow-xl backdrop-blur-sm max-w-xs"
+          className="fixed bottom-44 right-6 z-50 bg-beige text-white px-4 py-3 rounded-lg shadow-xl backdrop-blur-sm max-w-xs"
         >
           <div className="flex items-center space-x-2">
             <motion.div
@@ -219,7 +219,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
             </div>
           </div>
           <motion.div
-            className="absolute -bottom-1 right-8 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-blue-500"
+            className="absolute -bottom-1 right-8 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-beige"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3 }}
@@ -296,9 +296,9 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                 x2="100%"
                 y2="100%"
               >
-                <stop offset="0%" stopColor="#06b6d4" />
-                <stop offset="50%" stopColor="#3b82f6" />
-                <stop offset="100%" stopColor="#8b5cf6" />
+                <stop offset="0%" stopColor="var(--beige-light)" />
+                <stop offset="50%" stopColor="var(--beige)" />
+                <stop offset="100%" stopColor="var(--beige-dark)" />
               </linearGradient>
             </defs>
           </svg>
@@ -307,13 +307,13 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`relative w-14 h-14 bg-white/95 backdrop-blur-md border border-white/20 rounded-full shadow-2xl hover:shadow-cyan-200/50 transition-all duration-300 group overflow-hidden ${
+            className={`relative w-14 h-14 bg-white/95 backdrop-blur-md border border-beige-light/20 rounded-full shadow-xl hover:shadow-beige/20 transition-all duration-300 group overflow-hidden ${
               autoplayBlocked && !hasInteracted ? 'animate-pulse' : ''
             }`}
             onClick={togglePlayPause}
           >
             {/* Button background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-50 via-blue-50 to-purple-50 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-beige-light/20 to-beige/20 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
 
             {/* Animated background effect */}
             <motion.div
@@ -355,7 +355,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                       repeat: Infinity,
                       ease: 'easeInOut',
                     }}
-                    className="w-1 h-3 bg-gradient-to-t from-cyan-500 to-blue-500 rounded-full"
+                    className="w-1 h-3 bg-gradient-to-t from-beige-light to-beige rounded-full"
                   />
                   <motion.div
                     animate={{
@@ -367,7 +367,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                       ease: 'easeInOut',
                       delay: 0.2,
                     }}
-                    className="w-1 h-4 bg-gradient-to-t from-blue-500 to-purple-500 rounded-full"
+                    className="w-1 h-4 bg-gradient-to-t from-beige to-beige-dark rounded-full"
                   />
                   <motion.div
                     animate={{
@@ -379,7 +379,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                       ease: 'easeInOut',
                       delay: 0.4,
                     }}
-                    className="w-1 h-3 bg-gradient-to-t from-purple-500 to-cyan-500 rounded-full"
+                    className="w-1 h-3 bg-gradient-to-t from-beige-dark to-beige-light rounded-full"
                   />
                 </div>
               ) : (
@@ -395,14 +395,14 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
                   }}
                   className="filter drop-shadow-sm"
                 >
-                  <Play className="w-6 h-6 text-blue-500 fill-current" />
+                  <Play className="w-6 h-6 text-beige fill-current" />
                 </motion.div>
               )}
             </div>
 
             {/* Ripple effect on click */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-cyan-400/30 to-blue-400/30 rounded-full"
+              className="absolute inset-0 bg-gradient-to-r from-beige-light/30 to-beige/30 rounded-full"
               initial={{ scale: 0, opacity: 0 }}
               whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
               transition={{ duration: 0.4 }}
@@ -439,7 +439,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
-              className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg"
+              className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-beige-light to-beige rounded-full flex items-center justify-center shadow-lg"
             >
               <motion.div
                 animate={{

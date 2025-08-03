@@ -54,7 +54,7 @@ export const GalleryPreview = () => {
   return (
     <div
       ref={ref}
-      className="py-20 px-4 bg-gradient-to-br from-gray-50 to-rose-50"
+      className="py-20 px-4 bg-background dark:bg-background"
     >
       <div className="max-w-6xl mx-auto">
         <motion.div
@@ -63,11 +63,11 @@ export const GalleryPreview = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-4 font-light">
             Nuestra Historia de Amor
           </h2>
-          <div className="w-24 h-px bg-rose-400 mx-auto mb-6"></div>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="w-24 h-px bg-gray-300 dark:bg-gray-700 mx-auto mb-6"></div>
+          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto font-light">
             Un vistazo a los momentos que nos han traído hasta aquí
           </p>
         </motion.div>
@@ -79,10 +79,10 @@ export const GalleryPreview = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: inView ? 1 : 0, scale: inView ? 1 : 0.8 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group relative aspect-square bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300 cursor-pointer"
+              className="group relative aspect-square bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
               {/* Image placeholder with emoji */}
-              <div className="absolute inset-0 bg-gradient-to-br from-rose-100 to-pink-200 flex items-center justify-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-100/50 to-gray-200/50 dark:from-gray-700/50 dark:to-gray-800/50 flex items-center justify-center">
                 <span className="opacity-50 group-hover:scale-110 transition-transform duration-300">
                   {(() => {
                     const iconMap = {
@@ -96,7 +96,7 @@ export const GalleryPreview = () => {
 
                     const IconComponent = iconMap[image.emoji as keyof typeof iconMap];
 
-                    return IconComponent ? <IconComponent className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32" /> : null;
+                    return IconComponent ? <IconComponent className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 text-gray-600 dark:text-gray-400" /> : null;
                   })()}
                 </span>
               </div>
@@ -122,7 +122,7 @@ export const GalleryPreview = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-12"
         >
-          <button className="bg-white text-gray-700 px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-rose-300 group text-sm sm:text-base">
+          <button className="bg-transparent text-foreground/70 px-8 py-3 rounded-full font-light shadow-md hover:shadow-lg transition-all duration-300 border border-gray-300 dark:border-gray-700 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white group text-sm sm:text-base tracking-wider">
             <span className="flex items-center space-x-2">
               <span>Ver Galería Completa</span>
               <span className="group-hover:translate-x-1 transition-transform duration-300">

@@ -51,7 +51,7 @@ export const EventSchedule = () => {
   return (
     <div
       ref={ref}
-      className="py-16 px-4 bg-cream/30"
+      className="py-16 px-4 bg-gray-50 dark:bg-gray-900"
     >
       <div className="max-w-4xl mx-auto">
         <motion.div
@@ -60,15 +60,15 @@ export const EventSchedule = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-charcoal mb-4 font-light">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-foreground mb-4 font-light">
             Línea de Tiempo del Evento
           </h3>
-          <div className="w-24 h-0.5 bg-gold mx-auto"></div>
+          <div className="w-24 h-0.5 bg-gray-300 dark:bg-gray-700 mx-auto"></div>
         </motion.div>
 
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-px bg-gold-light"></div>
+          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-px bg-gray-300 dark:bg-gray-700"></div>
 
           <div className="space-y-8">
             {scheduleItems.map((item, index) => (
@@ -82,7 +82,7 @@ export const EventSchedule = () => {
                 } flex-row`}
               >
                 {/* Timeline dot */}
-                <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-gold rounded-full border-4 border-ivory shadow-lg z-10"></div>
+                <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-gray-600 dark:bg-gray-400 rounded-full border-4 border-white dark:border-gray-900 shadow-lg z-10"></div>
 
                 {/* Content */}
                 <div
@@ -92,16 +92,16 @@ export const EventSchedule = () => {
                       : 'md:text-left md:pl-8'
                   } pl-12 md:pl-0`}
                 >
-                  <div className="bg-ivory rounded-none p-6 shadow-lg border border-gold/30">
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg border border-gray-200 dark:border-gray-700">
                     <div className="flex items-center mb-2">
-                      <span className="bg-gold/10 text-gold-dark px-3 py-1 rounded-none text-xs sm:text-sm font-light uppercase tracking-wider">
+                      <span className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded text-xs sm:text-sm font-medium uppercase tracking-wider">
                         {item.time}
                       </span>
                     </div>
-                    <h4 className="text-base sm:text-lg md:text-xl font-serif text-charcoal mb-1 font-light italic">
+                    <h4 className="text-base sm:text-lg md:text-xl font-serif text-foreground mb-1 font-light italic">
                       {item.event}
                     </h4>
-                    <p className="text-charcoal/70 text-xs sm:text-sm md:text-base font-light">
+                    <p className="text-foreground/70 text-xs sm:text-sm md:text-base font-light">
                       {item.description}
                     </p>
                   </div>

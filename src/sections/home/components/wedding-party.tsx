@@ -22,30 +22,30 @@ export const WeddingParty = () => {
       tipo: 'Padrinos de Velación',
       personas: ['Pedro Salcedo Terrones', 'Jacqueline Lozano Jiménez'],
       icon: <Heart className="w-5 h-5" />,
-      color: 'from-rose-400 to-pink-500',
+      color: '',
     },
     {
       tipo: 'Padrinos de Anillos',
       personas: ['Diego Mora Delgado', 'Lizeth Vera Alvarado'],
       icon: <CircleDot className="w-5 h-5" />,
-      color: 'from-amber-400 to-orange-500',
+      color: '',
     },
     {
       tipo: 'Padrinos de Arras',
       personas: ['Luis Armando Lozano Jiménez', 'Berenice Aguiñaga Olivares'],
       icon: <Sparkles className="w-5 h-5" />,
-      color: 'from-purple-400 to-indigo-500',
+      color: '',
     },
     {
       tipo: 'Padrinos de Mancuerna',
       personas: ['Daniela Mora Delgado', 'Jason Iván Ceja Valencia'],
       icon: <Users className="w-5 h-5" />,
-      color: 'from-emerald-400 to-teal-500',
+      color: '',
     },
   ];
 
   return (
-    <div ref={ref} className="py-16 px-4 bg-gradient-to-br from-white via-rose-50/30 to-white">
+    <div ref={ref} className="py-16 px-4 bg-background dark:bg-background">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -54,11 +54,11 @@ export const WeddingParty = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-gray-800 mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mb-3 font-light">
             Nuestros Padrinos
           </h2>
-          <div className="w-20 h-px bg-rose-400 mx-auto"></div>
-          <p className="text-sm sm:text-base md:text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+          <div className="w-20 h-px bg-gray-300 dark:bg-gray-700 mx-auto"></div>
+          <p className="text-sm sm:text-base md:text-lg text-foreground/70 mt-4 max-w-2xl mx-auto font-light">
             Agradecemos a quienes nos acompañan en este día especial
           </p>
         </motion.div>
@@ -71,20 +71,20 @@ export const WeddingParty = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-shadow duration-300"
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`bg-gradient-to-r ${padrino.color} text-white rounded-full p-2.5`}>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full p-2.5">
                   {padrino.icon}
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+                <h3 className="text-lg sm:text-xl font-serif text-foreground font-light">
                   {padrino.tipo}
                 </h3>
               </div>
               
-              <div className="space-y-2">
+              <div className="space-y-2 pl-14">
                 {padrino.personas.map((persona, personaIndex) => (
-                  <p key={personaIndex} className="text-sm sm:text-base text-gray-600">
+                  <p key={personaIndex} className="text-base text-foreground/70">
                     {persona}
                   </p>
                 ))}
@@ -100,8 +100,8 @@ export const WeddingParty = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-12 text-center"
         >
-          <div className="bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-6 max-w-3xl mx-auto border border-rose-100">
-            <p className="text-gray-700 text-sm sm:text-base italic">
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 max-w-3xl mx-auto border border-gray-200 dark:border-gray-700">
+            <p className="text-foreground text-sm sm:text-base italic font-light">
               &ldquo;Gracias por ser parte de nuestra historia y acompañarnos en este momento tan especial&rdquo;
             </p>
           </div>

@@ -1,0 +1,3537 @@
+This file is a merged representation of a subset of the codebase, containing specifically included files, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Only files matching these patterns are included: src
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+src/app/globals.css
+src/app/layout.tsx
+src/app/page.tsx
+src/components/floating-particles.tsx
+src/components/index.ts
+src/components/letter-animation.tsx
+src/components/navigation-button.tsx
+src/constants/index.ts
+src/constants/navigation.ts
+src/constants/wedding.ts
+src/hooks/use-count-down.ts
+src/hooks/use-scroll-spy.ts
+src/lib/wedding-utils.ts
+src/locales/langs/id/home.json
+src/sections/home/components/closing-message.tsx
+src/sections/home/components/countdown-timer.tsx
+src/sections/home/components/couple-introduction.tsx
+src/sections/home/components/event-schedule.tsx
+src/sections/home/components/floating-navigation.tsx
+src/sections/home/components/gallery-preview.tsx
+src/sections/home/components/hero-section.tsx
+src/sections/home/components/index.ts
+src/sections/home/components/music-player.tsx
+src/sections/home/components/navigation-fab.tsx
+src/sections/home/components/rsvp.tsx
+src/sections/home/components/scroll-progress-indicator.tsx
+src/sections/home/components/venue-information.tsx
+src/sections/home/components/wedding-details-card.tsx
+src/sections/home/components/wedding-party.tsx
+src/sections/home/index.ts
+src/sections/home/view/home-view.tsx
+src/sections/home/view/index.ts
+src/sections/index.ts
+src/types/index.ts
+src/types/navigation.ts
+src/types/resources.ts
+src/types/wedding.ts
+src/utils/storage-available.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/components/floating-particles.tsx">
+import React from 'react';
+import { motion } from 'motion/react';
+
+// Floating Particles Component
+export function FloatingParticles() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl sm:rounded-2xl">
+      {[...Array(3)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-0.5 sm:w-1 h-0.5 sm:h-1 bg-rose-400/30 rounded-full"
+          animate={{
+            x: [0, 100, 0],
+            y: [0, -20, 0],
+            opacity: [0, 0.6, 0],
+          }}
+          transition={{
+            duration: 3 + i,
+            repeat: Infinity,
+            delay: i * 0.8,
+            ease: 'easeInOut',
+          }}
+          style={{
+            left: `${20 + i * 30}%`,
+            top: '50%',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+</file>
+
+<file path="src/constants/index.ts">
+export * from './navigation';
+export * from './wedding';
+</file>
+
+<file path="src/hooks/use-count-down.ts">
+import { calculateTimeRemaining } from '@/lib/wedding-utils';
+import { useEffect, useState } from 'react';
+
+interface TimeRemaining {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+export const useCountdown = (targetDate: Date): TimeRemaining => {
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>(() =>
+    calculateTimeRemaining(targetDate)
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeRemaining(calculateTimeRemaining(targetDate));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  return timeRemaining;
+};
+</file>
+
+<file path="src/hooks/use-scroll-spy.ts">
+import { useState, useEffect } from 'react';
+
+export const useScrollSpy = (sectionIds: string[]) => {
+  const [activeSection, setActiveSection] = useState(sectionIds[0]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .map((entry) => ({
+            id: entry.target.id,
+            ratio: entry.intersectionRatio,
+            top: entry.boundingClientRect.top,
+          }))
+          .sort((a, b) => {
+            // Sort by intersection ratio first, then by distance from top
+            if (Math.abs(a.ratio - b.ratio) > 0.1) {
+              return b.ratio - a.ratio;
+            }
+
+            return Math.abs(a.top) - Math.abs(b.top);
+          });
+
+        if (visibleSections.length > 0) {
+          setActiveSection(visibleSections[0].id);
+        }
+      },
+      {
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        rootMargin: '-10% 0px -10% 0px',
+      }
+    );
+
+    // Observe all sections
+    const elements: HTMLElement[] = [];
+
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id);
+
+      if (element) {
+        elements.push(element);
+        observer.observe(element);
+      }
+    });
+
+    // Fallback: detect active section on scroll for edge cases
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sectionIds[i]);
+
+        if (element && element.offsetTop <= scrollPosition) {
+          setActiveSection(sectionIds[i]);
+
+          break;
+        }
+      }
+    };
+
+    // Add scroll listener as fallback
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [sectionIds]);
+
+  return activeSection;
+};
+
+export const useInView = (threshold: number = 0.1) => {
+  const [inView, setInView] = useState(false);
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!ref) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold }
+    );
+
+    observer.observe(ref);
+
+    return () => observer.disconnect();
+  }, [ref, threshold]);
+
+  return [setRef, inView] as const;
+};
+</file>
+
+<file path="src/lib/wedding-utils.ts">
+// Wedding-related utility functions
+export const formatWeddingTime = (date: Date, code: string): string => {
+  return date.toLocaleTimeString(code, {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+};
+
+export const calculateTimeRemaining = (targetDate: Date) => {
+  const now = new Date().getTime();
+  const target = targetDate.getTime();
+  const difference = target - now;
+
+  if (difference <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  return {
+    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((difference % (1000 * 60)) / 1000),
+  };
+};
+
+export const generateGoogleCalendarLink = (event: {
+  title: string;
+  start: Date;
+  end: Date;
+  description?: string;
+  location?: string;
+}): string => {
+  const baseUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
+
+  const params = new URLSearchParams({
+    text: event.title,
+    dates: `${formatDateForGoogle(event.start)}/${formatDateForGoogle(
+      event.end
+    )}`,
+    details: event.description || '',
+    location: event.location || '',
+  });
+
+  return `${baseUrl}&${params.toString()}`;
+};
+
+const formatDateForGoogle = (date: Date): string => {
+  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+};
+
+export const generateMapLink = (address: string): string => {
+  return `https://maps.google.com/maps?q=${encodeURIComponent(address)}`;
+};
+</file>
+
+<file path="src/sections/home/components/scroll-progress-indicator.tsx">
+'use client';
+
+import { NAVIGATION_SECTIONS } from '@/constants';
+import { motion } from 'motion/react';
+
+interface ScrollProgressIndicatorProps {
+  activeSection: string;
+}
+
+const sections = NAVIGATION_SECTIONS.map((section) => section.id);
+
+export default function ScrollProgressIndicator({
+  activeSection,
+}: ScrollProgressIndicatorProps) {
+  const progress = (sections.indexOf(activeSection) + 1) / sections.length;
+
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 via-purple-500 to-blue-500 origin-left z-40"
+      initial={{ scaleX: 0 }}
+      animate={{ scaleX: progress }}
+      transition={{ duration: 0.3 }}
+    />
+  );
+}
+</file>
+
+<file path="src/sections/home/index.ts">
+export * from './view';
+export * from './components';
+</file>
+
+<file path="src/sections/home/view/index.ts">
+export { default as HomeView } from './home-view';
+</file>
+
+<file path="src/sections/index.ts">
+export * from './home';
+</file>
+
+<file path="src/types/index.ts">
+export * from './wedding';
+</file>
+
+<file path="src/types/navigation.ts">
+import type { NAVIGATION_SECTIONS } from '@/constants';
+import type { NAVIGATION_ANIMATIONS } from '@/constants/navigation';
+
+export type NavigationSection = (typeof NAVIGATION_SECTIONS)[number];
+export type NavigationAnimation = typeof NAVIGATION_ANIMATIONS;
+</file>
+
+<file path="src/types/resources.ts">
+import home from '@/locales/langs/id/home.json';
+
+const resources = {
+  home,
+} as const;
+
+export default resources;
+</file>
+
+<file path="src/types/wedding.ts">
+import type { WEDDING_CONFIG } from '@/constants';
+
+export type WeddingConfigType = typeof WEDDING_CONFIG;
+</file>
+
+<file path="src/utils/storage-available.ts">
+// ----------------------------------------------------------------------
+
+export function localStorageAvailable() {
+  try {
+    const key = Array.from('ayola')
+      .map((char) => char.charCodeAt(0).toString(16))
+      .join('');
+
+    window.localStorage.setItem(key, key);
+    window.localStorage.removeItem(key);
+
+    return true;
+  } catch (error) {
+    console.error('localStorage is not available:', error);
+
+    return false;
+  }
+}
+
+// ----------------------------------------------------------------------
+
+export function localStorageGetItem(key: string, defaultValue: string = '') {
+  const storageAvailable = localStorageAvailable();
+
+  let value: string | null = null;
+
+  if (storageAvailable) {
+    value = localStorage.getItem(key) || defaultValue;
+  }
+
+  return value;
+}
+</file>
+
+<file path="src/app/globals.css">
+@import 'tailwindcss';
+
+:root {
+  --background: #ffffff;
+  --foreground: #3a3a3a;
+  --beige: #e5d1bf;
+  --beige-light: #f5ebe3;
+  --beige-dark: #d4b8a3;
+  --cream: #fdfcfa;
+  --soft-gray: #8a8a8a;
+  --warm-white: #faf8f6;
+  --accent: #c9a87d;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-beige: var(--beige);
+  --color-beige-light: var(--beige-light);
+  --color-beige-dark: var(--beige-dark);
+  --color-cream: var(--cream);
+  --color-soft-gray: var(--soft-gray);
+  --color-warm-white: var(--warm-white);
+  --color-accent: var(--accent);
+  --font-poppins: var(--font-poppins);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1a1a1a;
+    --foreground: #f0f0f0;
+    --beige: #a68b73;
+    --beige-light: #b39a87;
+    --beige-dark: #8a7360;
+    --soft-gray: #b8b8b8;
+    --warm-white: #2a2826;
+    --accent: #d4b896;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), 'Playfair Display', Georgia, serif;
+}
+
+* {
+  font-family: var(--font-poppins);
+}
+</file>
+
+<file path="src/app/layout.tsx">
+import type { Metadata } from 'next';
+import { Poppins, Playfair_Display } from 'next/font/google';
+import './globals.css';
+import { Toaster } from 'sonner';
+
+const poppins = Poppins({
+  variable: '--font-poppins',
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+
+export const metadata: Metadata = {
+  title: 'La Boda de Sofia y Oswaldo',
+  description:
+    'Únete a nosotros para celebrar la unión de Sofia y Oswaldo. Descubre nuestra historia de amor, detalles de la boda y más.',
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="es">
+      <body className={`${poppins.variable} ${playfair.variable} antialiased bg-background text-foreground`}>
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  );
+}
+</file>
+
+<file path="src/app/page.tsx">
+import { Suspense } from 'react';
+import { HomeView } from '@/sections';
+
+export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeView />
+    </Suspense>
+  );
+}
+</file>
+
+<file path="src/components/index.ts">
+export * from './navigation-button';
+export * from './floating-particles';
+export * from './letter-animation';
+</file>
+
+<file path="src/constants/navigation.ts">
+export const NAVIGATION_ANIMATIONS = {
+  navigation: {
+    initial: { opacity: 0, y: -20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay: 0.2 },
+  },
+  button: {
+    hover: { scale: 1.05 },
+    tap: { scale: 0.95 },
+    transition: { duration: 0.3 },
+  },
+  background: {
+    initial: { scale: 0, opacity: 0 },
+    animate: { scale: 1, opacity: 1 },
+    exit: { scale: 0, opacity: 0 },
+    transition: { duration: 0.3, type: 'spring', stiffness: 300 },
+  },
+  icon: {
+    active: {
+      rotate: [0, -10, 10, -10, 0],
+      scale: [1, 1.1, 1],
+    },
+    hover: { scale: 1.2, rotate: 5 },
+    transition: { duration: 0.5 },
+  },
+  pulse: {
+    animate: { scale: [1, 1.5, 1] },
+    transition: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
+  },
+};
+
+export const NAVIGATION_SECTIONS = [
+  {
+    id: 'hero',
+    label: 'Inicio',
+    icon: 'Home',
+  },
+  {
+    id: 'couple',
+    label: 'Los Novios',
+    icon: 'Heart',
+  },
+  {
+    id: 'details',
+    label: 'Detalles',
+    icon: 'Calendar',
+  },
+  {
+    id: 'venue',
+    label: 'Lugar',
+    icon: 'MapPin',
+  },
+  {
+    id: 'gallery',
+    label: 'Galería',
+    icon: 'Camera',
+  },
+  {
+    id: 'rsvp',
+    label: 'Confirmar',
+    icon: 'Mail',
+  },
+];
+</file>
+
+<file path="src/sections/home/components/closing-message.tsx">
+'use client';
+
+import { motion } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
+import { Heart } from 'lucide-react';
+
+interface ClosingMessageProps {
+  bride: string;
+  groom: string;
+}
+
+export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  return (
+    <div
+      ref={ref}
+      className="py-20 px-4 bg-gradient-to-br from-rose-100 to-pink-200"
+    >
+      <div className="max-w-4xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8 }}
+          className="mb-12"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-6">
+            Con Amor y Gratitud
+          </h2>
+          <div className="w-24 h-px bg-rose-500 mx-auto mb-8"></div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: inView ? 1 : 0, scale: inView ? 1 : 0.9 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-white/40 mb-12"
+        >
+          <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-700 leading-relaxed mb-6 font-light">
+            &quot;El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección&quot;
+          </p>
+          <div className="text-base sm:text-lg text-gray-600">
+            Con todo nuestro amor,
+          </div>
+          <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-rose-600 mt-2">
+            {groom} & {bride}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="space-y-6"
+        >
+          <div className="flex justify-center space-x-4">
+            <span className="animate-bounce">
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-500 fill-current" />
+            </span>
+            <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-rose-500 fill-current" />
+            </span>
+            <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-pink-500 fill-current" />
+            </span>
+          </div>
+
+          <p className="text-sm sm:text-base text-gray-600">
+            #SofiaYOswaldo2025 #AmorVerdadero #JuntosParaSiempre
+          </p>
+        </motion.div>
+
+        {/* Footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: inView ? 1 : 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-16 pt-8 border-t border-white/40"
+        >
+          <p className="text-xs sm:text-sm text-gray-500">
+            ¿Preguntas? Contáctanos en bodaoswaldsofiaM@gmail.com
+          </p>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/components/countdown-timer.tsx">
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
+
+interface CountdownTimerProps {
+  targetDate: Date;
+}
+
+export const CountdownTimer = ({ targetDate }: CountdownTimerProps) => {
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.3,
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate.getTime() - now;
+
+      if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        setTimeLeft({ days, hours, minutes, seconds });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  const timeUnits = [
+    {
+      label: 'Días',
+      value: timeLeft.days,
+    },
+    {
+      label: 'Horas',
+      value: timeLeft.hours,
+    },
+    {
+      label: 'Minutos',
+      value: timeLeft.minutes,
+    },
+    {
+      label: 'Segundos',
+      value: timeLeft.seconds,
+    },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      className="py-16 px-4 bg-background"
+    >
+      <div className="max-w-4xl mx-auto text-center">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8 }}
+          className="mb-12"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-foreground mb-4 font-light">
+            Cuenta Regresiva
+          </h2>
+          <div className="w-24 h-px bg-beige/30 mx-auto mb-4"></div>
+          <p className="text-soft-gray text-base sm:text-lg md:text-xl font-light">
+            El gran día se acerca
+          </p>
+        </motion.div>
+
+        {/* Countdown Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {timeUnits.map((unit, index) => (
+            <motion.div
+              key={unit.label}
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              animate={{
+                opacity: inView ? 1 : 0,
+                scale: inView ? 1 : 0.8,
+                y: inView ? 0 : 50,
+              }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.1 + 0.2,
+                type: 'spring',
+                stiffness: 100,
+              }}
+              className="relative group"
+            >
+              <div className="bg-warm-white dark:bg-warm-white rounded-2xl p-6 shadow-md border border-beige/10 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                {/* Content */}
+                <div className="text-5xl lg:text-6xl font-serif font-light text-beige mb-2">
+                  {unit.value.toString().padStart(2, '0')}
+                </div>
+                <div className="text-soft-gray font-sans text-sm uppercase tracking-[0.2em]">
+                  {unit.label}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-12"
+        >
+          <div className="inline-block bg-warm-white/60 dark:bg-warm-white/60 backdrop-blur-sm rounded-full px-6 py-3 shadow-sm border border-beige/20">
+            <p className="text-foreground font-light text-sm sm:text-base md:text-lg">
+              {timeLeft.days > 0
+                ? `${timeLeft.days} días para el gran día`
+                : timeLeft.hours > 0
+                ? `${timeLeft.hours} horas para el gran día`
+                : timeLeft.minutes > 0
+                ? `${timeLeft.minutes} minutos para el gran día`
+                : '¡El momento ha llegado!'}
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/components/event-schedule.tsx">
+'use client';
+
+import { motion } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
+
+export const EventSchedule = () => {
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  const scheduleItems = [
+    {
+      time: '3:30 PM',
+      event: 'Llegada de Invitados',
+      description: 'Bebidas de bienvenida disponibles',
+    },
+    {
+      time: '4:00 PM',
+      event: 'Ceremonia de Boda',
+      description: 'Intercambio de votos',
+    },
+    {
+      time: '4:30 PM',
+      event: 'Sesión de Fotografía',
+      description: 'Bebida de bienvenida para invitados',
+    },
+    {
+      time: '6:30 PM',
+      event: 'Comienza la Recepción',
+      description: 'Cena y celebración',
+    },
+    {
+      time: '7:30 PM',
+      event: 'Primer Baile',
+      description: 'Momento especial de los novios',
+    },
+    {
+      time: '8:00 PM',
+      event: 'Baile y Fiesta',
+      description: '¡Que continúe la celebración!',
+    },
+    {
+      time: '12:00 AM',
+      event: 'Despedida',
+      description: 'Despedida con bengalas',
+    },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      className="py-16 px-4 bg-cream/30"
+    >
+      <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12"
+        >
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-charcoal mb-4 font-light">
+            Línea de Tiempo del Evento
+          </h3>
+          <div className="w-24 h-0.5 bg-gold mx-auto"></div>
+        </motion.div>
+
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-px bg-gold-light"></div>
+
+          <div className="space-y-8">
+            {scheduleItems.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className={`relative flex items-center ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                } flex-row`}
+              >
+                {/* Timeline dot */}
+                <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-gold rounded-full border-4 border-ivory shadow-lg z-10"></div>
+
+                {/* Content */}
+                <div
+                  className={`flex-1 ${
+                    index % 2 === 0
+                      ? 'md:text-right md:pr-8'
+                      : 'md:text-left md:pl-8'
+                  } pl-12 md:pl-0`}
+                >
+                  <div className="bg-ivory rounded-none p-6 shadow-lg border border-gold/30">
+                    <div className="flex items-center mb-2">
+                      <span className="bg-gold/10 text-gold-dark px-3 py-1 rounded-none text-xs sm:text-sm font-light uppercase tracking-wider">
+                        {item.time}
+                      </span>
+                    </div>
+                    <h4 className="text-base sm:text-lg md:text-xl font-serif text-charcoal mb-1 font-light italic">
+                      {item.event}
+                    </h4>
+                    <p className="text-charcoal/70 text-xs sm:text-sm md:text-base font-light">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/components/floating-navigation.tsx">
+'use client';
+
+import { motion } from 'motion/react';
+import {
+  FloatingParticles,
+  NavigationButton,
+} from '@/components';
+import { NAVIGATION_SECTIONS } from '@/constants';
+import { NAVIGATION_ANIMATIONS } from '@/constants/navigation';
+
+interface FloatingNavigationProps {
+  activeSection: string;
+  onScrollToSection: (sectionId: string) => void;
+}
+
+export default function FloatingNavigation({
+  activeSection,
+  onScrollToSection,
+}: FloatingNavigationProps) {
+  return (
+    <motion.nav
+      initial={NAVIGATION_ANIMATIONS.navigation.initial}
+      animate={NAVIGATION_ANIMATIONS.navigation.animate}
+      transition={NAVIGATION_ANIMATIONS.navigation.transition}
+      className="fixed top-3 sm:top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300"
+    >
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        className="bg-white/90 backdrop-blur-xl rounded-xl sm:rounded-2xl px-1.5 sm:px-2 py-1.5 sm:py-2 shadow-xl border border-white/40 hover:shadow-2xl transition-all duration-300"
+      >
+        <div className="flex items-center space-x-0.5 sm:space-x-1">
+          {NAVIGATION_SECTIONS.map((section, index) => (
+            <NavigationButton
+              key={section.id}
+              section={section}
+              index={index}
+              isActive={activeSection === section.id}
+              onClick={() => onScrollToSection(section.id)}
+            />
+          ))}
+
+        </div>
+
+        <FloatingParticles />
+      </motion.div>
+    </motion.nav>
+  );
+}
+</file>
+
+<file path="src/sections/home/components/hero-section.tsx">
+'use client';
+
+import type { WeddingConfigType } from '@/types';
+import { motion } from 'motion/react';
+
+interface HeroSectionProps {
+  isLoaded: boolean;
+  couple: WeddingConfigType;
+  onScrollToSection: (sectionId: string) => void;
+}
+
+export const HeroSection = ({
+  isLoaded,
+  couple,
+  onScrollToSection,
+}: HeroSectionProps) => {
+
+  return (
+    <div className="h-screen bg-gradient-to-b from-warm-white to-background relative overflow-hidden">
+      {/* Background Decorations */}
+      <div className="absolute inset-0">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-beige-light/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-beige-light/10 rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col h-full px-6 pt-10 sm:pt-18 md:pt-20">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Main Heading */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 50 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="mb-6 sm:mb-8"
+            >
+              <div className="text-sm sm:text-base md:text-lg lg:text-xl text-soft-gray mb-4 font-light tracking-[0.3em] uppercase">
+                Nos casamos
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif text-foreground mb-6 leading-tight font-light">
+                <span className="font-light">Nuestra</span>
+                <span className="block text-beige font-light">
+                  Boda
+                </span>
+              </h1>
+              <div className="w-32 h-px bg-beige/30 mx-auto"></div>
+            </motion.div>
+
+            {/* Couple Photos */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: isLoaded ? 1 : 0, scale: isLoaded ? 1 : 0.8 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="mb-6 sm:mb-8"
+            >
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-4 sm:mb-6">
+                {/* Bride */}
+                <div className="text-center flex-shrink-0 justify-items-center">
+                  <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full overflow-hidden border-2 border-beige/30 shadow-xl mb-4">
+                    <img src={couple.bride.photo} alt={couple.bride.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-28 sm:w-32 md:w-40 lg:w-48 xl:w-56 mx-auto px-2">
+                    <h3
+                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif text-charcoal font-light italic"
+                      title={couple.bride.fullName}
+                    >
+                      {couple.bride.name}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Heart - Hidden on mobile, shown on larger screens */}
+                <div className="hidden sm:block text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-beige font-serif font-light flex-shrink-0">
+                  &
+                </div>
+
+                {/* Heart for mobile - shown between bride and groom on mobile */}
+                <div className="sm:hidden text-2xl text-beige my-4 font-serif font-light">
+                  &
+                </div>
+
+                {/* Groom */}
+                <div className="text-center flex-shrink-0 justify-items-center">
+                  <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full overflow-hidden border-2 border-beige/30 shadow-xl mb-4">
+                    <img src={couple.groom.photo} alt={couple.groom.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-28 sm:w-32 md:w-40 lg:w-48 xl:w-56 mx-auto px-2">
+                    <h3
+                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-serif text-charcoal font-light italic"
+                      title={couple.groom.fullName}
+                    >
+                      {couple.groom.name}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 30 }}
+              transition={{ duration: 1, delay: 1.2 }}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center"
+            >
+              <motion.button
+                onClick={() => onScrollToSection('rsvp')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-beige hover:bg-beige-dark text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full font-light tracking-[0.2em] text-sm sm:text-base uppercase shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+              >
+                Confirmar Asistencia
+              </motion.button>
+              <motion.button
+                onClick={() => onScrollToSection('details')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-transparent text-soft-gray px-8 sm:px-10 py-3 sm:py-4 rounded-full font-light tracking-[0.2em] text-sm sm:text-base uppercase transition-all duration-300 border border-soft-gray/30 hover:border-beige hover:text-beige cursor-pointer"
+              >
+                Ver Detalles
+              </motion.button>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="flex justify-center pb-6 sm:pb-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isLoaded ? 1 : 0 }}
+            transition={{ duration: 1, delay: 1.5 }}
+            className="z-20"
+          >
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="text-gray-600 text-center cursor-pointer"
+              onClick={() => onScrollToSection('couple')}
+            >
+              <div className="text-xs mb-1 sm:mb-2">
+                Desliza hacia abajo
+              </div>
+              <svg className="w-6 h-6 text-beige/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Remove the old absolute positioned scroll indicator */}
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/components/index.ts">
+export { HeroSection } from './hero-section';
+export { CoupleIntroduction } from './couple-introduction';
+export { WeddingDetailsCard } from './wedding-details-card';
+export { CountdownTimer } from './countdown-timer';
+export { VenueInformation } from './venue-information';
+export { EventSchedule } from './event-schedule';
+export { WeddingParty } from './wedding-party';
+export { GalleryPreview } from './gallery-preview';
+export { RSVP } from './rsvp';
+export { ClosingMessage } from './closing-message';
+export { default as FloatingNavigation } from './floating-navigation';
+export { default as NavigationFAB } from './navigation-fab';
+export { default as MusicPlayer } from './music-player';
+export { default as ScrollProgressIndicator } from './scroll-progress-indicator';
+</file>
+
+<file path="src/sections/home/components/navigation-fab.tsx">
+'use client';
+
+import { motion } from 'motion/react';
+import { Heart } from 'lucide-react';
+
+interface NavigationFABProps {
+  activeSection: string;
+  onScrollToSection: (sectionId: string) => void;
+}
+
+const sections = [
+  'hero',
+  'couple',
+  'details',
+  'venue',
+  'gallery',
+  'rsvp',
+  'closing',
+];
+
+export default function NavigationFAB({
+  activeSection,
+  onScrollToSection,
+}: NavigationFABProps) {
+  const handleNextSection = () => {
+    const currentIndex = sections.indexOf(activeSection);
+    const nextSection = sections[(currentIndex + 1) % sections.length];
+
+    onScrollToSection(nextSection);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0, y: 100 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.8, type: 'spring', stiffness: 200 }}
+      className="fixed bottom-6 right-6 z-50"
+    >
+      {/* Progress Ring */}
+      <div className="relative">
+        <svg
+          className="w-14 h-14 transform -rotate-90 absolute inset-0"
+          viewBox="0 0 64 64"
+        >
+          {/* Background circle */}
+          <circle
+            cx="32"
+            cy="32"
+            r="28"
+            fill="none"
+            stroke="rgba(255, 255, 255, 0.1)"
+            strokeWidth="2"
+          />
+          {/* Progress circle */}
+          <motion.circle
+            cx="32"
+            cy="32"
+            r="28"
+            fill="none"
+            stroke="url(#gradient)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            initial={{ pathLength: 0 }}
+            animate={{
+              pathLength:
+                (sections.indexOf(activeSection) + 1) / sections.length,
+            }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
+            style={{
+              strokeDasharray: '175.93',
+              strokeDashoffset: 0,
+            }}
+          />
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="var(--beige-light)" />
+              <stop offset="50%" stopColor="var(--beige)" />
+              <stop offset="100%" stopColor="var(--beige-dark)" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Main Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="relative w-14 h-14 bg-white/95 backdrop-blur-md border border-beige-light/20 rounded-full shadow-xl hover:shadow-beige/20 transition-all duration-300 group overflow-hidden"
+          onClick={handleNextSection}
+        >
+          {/* Button background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-beige-light/20 to-beige/20 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+          {/* Animated background effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-rose-400/20 via-pink-400/20 to-purple-400/20 rounded-full"
+            animate={{
+              background: [
+                'linear-gradient(45deg, rgba(244, 63, 94, 0.1), rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1))',
+                'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(244, 63, 94, 0.1), rgba(236, 72, 153, 0.1))',
+                'linear-gradient(225deg, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1), rgba(244, 63, 94, 0.1))',
+                'linear-gradient(315deg, rgba(244, 63, 94, 0.1), rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1))',
+              ],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+          />
+
+          {/* Icon container */}
+          <div className="relative z-10 flex items-center justify-center w-full h-full">
+            <motion.div
+              animate={{
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                scale: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
+              }}
+              className="filter drop-shadow-sm"
+            >
+              <Heart className="w-6 h-6 text-beige fill-current" />
+            </motion.div>
+          </div>
+
+          {/* Ripple effect on click */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-beige-light/30 to-beige/30 rounded-full"
+            initial={{ scale: 0, opacity: 0 }}
+            whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
+            transition={{ duration: 0.4 }}
+          />
+        </motion.button>
+
+        {/* Section indicator tooltip */}
+        <motion.div
+          initial={{ opacity: 0, x: 10 }}
+          whileHover={{ opacity: 1, x: 0 }}
+          className="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-gray-800/90 text-white text-xs px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm whitespace-nowrap pointer-events-none"
+        >
+          <div className="font-medium capitalize">
+            {activeSection === 'hero' ? 'Home' : activeSection}
+          </div>
+          <div className="text-gray-300 text-xs">
+            {sections.indexOf(activeSection) + 1} of {sections.length}
+          </div>
+
+          {/* Tooltip arrow */}
+          <div className="absolute left-full top-1/2 -translate-y-1/2 border-l-4 border-l-gray-800/90 border-y-4 border-y-transparent"></div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+</file>
+
+<file path="src/sections/home/components/rsvp.tsx">
+'use client';
+
+import { useState } from 'react';
+import { motion } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
+import { Gift } from 'lucide-react';
+
+export const RSVP = () => {
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    attendance: '',
+    guests: '1',
+    dietaryRestrictions: '',
+    message: '',
+  });
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the data to your backend
+    setIsSubmitted(true);
+
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setFormData({
+        name: '',
+        email: '',
+        attendance: '',
+        guests: '1',
+        dietaryRestrictions: '',
+        message: '',
+      });
+    }, 3000);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="py-20 px-4 bg-background">
+        <div className="max-w-2xl mx-auto text-center">
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="bg-warm-white rounded-3xl p-12 shadow-lg border border-beige/10"
+          >
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span className="text-4xl">✅</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif text-gray-800 mb-4">
+              ¡Gracias!
+            </h3>
+            <p className="text-gray-600 text-base sm:text-lg md:text-xl">
+              Hemos recibido tu confirmación. ¡Nos vemos pronto!
+            </p>
+            <div className="mt-6 text-2xl">💕</div>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={ref}
+      className="py-20 px-4 bg-background"
+    >
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-4 font-light">
+            Confirmación de Asistencia
+          </h2>
+          <div className="w-24 h-px bg-beige/30 mx-auto mb-6"></div>
+          <p className="text-base sm:text-lg md:text-xl text-soft-gray max-w-2xl mx-auto font-light">
+            Por favor, confírmanos tu asistencia para nuestro gran día
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* RSVP Form */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : -50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="bg-warm-white rounded-3xl p-8 shadow-lg border border-beige/10">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-gray-800 mb-6 text-center">
+                Confirma tu Asistencia
+              </h3>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name */}
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Nombre completo *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-beige/30 rounded-xl focus:ring-2 focus:ring-beige focus:border-transparent outline-none transition-all duration-300"
+                    placeholder="Nombre completo"
+                  />
+                </div>
+                {/* Email */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Correo electrónico *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-beige/30 rounded-xl focus:ring-2 focus:ring-beige focus:border-transparent outline-none transition-all duration-300"
+                    placeholder="Correo electrónico"
+                  />
+                </div>
+                {/* Attendance */}
+                <div>
+                  <label
+                    htmlFor="attendance"
+                    className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                  >
+                    ¿Asistirás? *
+                  </label>
+                  <select
+                    id="attendance"
+                    name="attendance"
+                    value={formData.attendance}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-beige/30 rounded-xl focus:ring-2 focus:ring-beige focus:border-transparent outline-none transition-all duration-300"
+                  >
+                    <option value="">Selecciona una opción</option>
+                    <option value="yes">Sí, ahí estaré</option>
+                    <option value="no">No podré asistir</option>
+                  </select>
+                </div>
+                {/* Number of Guests */}
+                {formData.attendance === 'yes' && (
+                  <div>
+                    <label
+                      htmlFor="guests"
+                      className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Número de invitados
+                    </label>
+                    <select
+                      id="guests"
+                      name="guests"
+                      value={formData.guests}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-beige/30 rounded-xl focus:ring-2 focus:ring-beige focus:border-transparent outline-none transition-all duration-300"
+                    >
+                      <option value="1">1 persona</option>
+                      <option value="2">2 personas</option>
+                      <option value="3">3 personas</option>
+                      <option value="4">4 personas</option>
+                    </select>
+                  </div>
+                )}
+                {/* Dietary Restrictions */}
+                {formData.attendance === 'yes' && (
+                  <div>
+                    <label
+                      htmlFor="dietaryRestrictions"
+                      className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Restricciones alimentarias
+                    </label>
+                    <input
+                      type="text"
+                      id="dietaryRestrictions"
+                      name="dietaryRestrictions"
+                      value={formData.dietaryRestrictions}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-beige/30 rounded-xl focus:ring-2 focus:ring-beige focus:border-transparent outline-none transition-all duration-300"
+                      placeholder="Vegetariano, alergias, etc."
+                    />
+                  </div>
+                )}
+                {/* Message */}
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Mensaje para los novios
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300 resize-none"
+                    placeholder="Comparte tus buenos deseos..."
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="w-full bg-beige hover:bg-beige-dark text-white py-4 px-6 rounded-full font-light text-base sm:text-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 tracking-wider"
+                >
+                  Enviar Confirmación
+                </button>
+              </form>
+            </div>
+          </motion.div>
+
+          {/* Info Side */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : 50 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="space-y-8"
+          >
+            {/* RSVP Deadline */}
+            <div className="bg-warm-white rounded-2xl p-6 shadow-md border border-beige/10">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-beige/10 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-beige text-xl">⏰</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
+                    Fecha límite RSVP
+                  </h4>
+                  <p className="text-gray-600 text-xs sm:text-sm">
+                    15 de mayo de 2025
+                  </p>
+                </div>
+              </div>
+              <p className="text-gray-600 text-xs sm:text-sm">
+                Por favor confirma antes de esta fecha para ayudarnos con la organización
+              </p>
+            </div>
+
+            {/* Contact Info */}
+            <div className="bg-warm-white rounded-2xl p-6 shadow-md border border-beige/10">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-blue-600 text-xl">📞</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
+                    ¿Preguntas?
+                  </h4>
+                  <p className="text-gray-600 text-xs sm:text-sm">
+                    Estamos aquí para ayudarte
+                  </p>
+                </div>
+              </div>
+              <div className="space-y-2 text-xs sm:text-sm text-gray-600">
+                <p>📧 bodaoswaldsofiaM@gmail.com</p>
+                <p>📱 +52 123 456 7890</p>
+              </div>
+            </div>
+
+            {/* Gift Registry */}
+            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 shadow-lg border border-amber-100">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                  <Gift className="w-6 h-6 text-amber-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
+                    Mesa de Regalos
+                  </h4>
+                  <p className="text-gray-600 text-xs sm:text-sm">
+                    Tu presencia es nuestro mejor regalo
+                  </p>
+                </div>
+              </div>
+              <p className="text-gray-600 text-xs sm:text-sm mb-4">
+                Si deseas obsequiarnos algo, hemos preparado una lista de regalos en Amazon
+              </p>
+              <a
+                href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              >
+                <Gift className="w-5 h-5" />
+                Ver Mesa de Regalos en Amazon
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/components/venue-information.tsx">
+'use client';
+
+import type { WeddingConfigType } from '@/types';
+import { motion } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
+import { generateMapLink } from '@/lib/wedding-utils';
+import { Calendar, GlassWater } from 'lucide-react';
+
+interface VenueInformationProps {
+  venue: WeddingConfigType['venue'];
+}
+
+export const VenueInformation = ({ venue }: VenueInformationProps) => {
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  return (
+    <div ref={ref} className="py-20 px-4 bg-white">
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-4">
+            Ubicación y Lugar
+          </h2>
+          <div className="w-24 h-px bg-beige mx-auto"></div>
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 mt-6 max-w-2xl mx-auto">
+            Celebremos juntos en estos hermosos lugares
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Ceremony Venue */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : -50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="bg-gradient-to-br from-warm-white to-beige-light rounded-3xl p-8 shadow-lg border border-beige-light"
+          >
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-beige to-beige-dark rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <span className="text-white text-3xl">⛪</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-gray-800 mb-2">
+                Ceremonia
+              </h3>
+              <div className="w-16 h-px bg-beige mx-auto"></div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="text-center">
+                <h4 className="text-lg sm:text-xl md:text-2xl font-light text-gray-800 mb-2">
+                  {venue.ceremony.name}
+                </h4>
+                <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-4">
+                  {venue.ceremony.address}
+                </p>
+                <div className="inline-block bg-white/60 rounded-lg px-4 py-2 shadow-sm">
+                  <p className="text-beige-dark font-light text-sm sm:text-base">
+                    <Calendar className="w-4 h-4 inline mr-1" />
+                    {venue.ceremony.time}
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white/50 rounded-2xl p-6 space-y-4">
+                <h5 className="font-light text-gray-800 mb-3 text-sm sm:text-base">
+                  Detalles de la Ceremonia
+                </h5>
+                <div className="space-y-2 text-xs sm:text-sm text-gray-600">
+                  <p>• Por favor llegar 15 minutos antes</p>
+                  <p>• Ceremonia sin dispositivos electrónicos</p>
+                  <p>• Estacionamiento disponible</p>
+                  <p>• Acceso para sillas de ruedas</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() =>
+                  window.open(venue.ceremony.mapUrl || generateMapLink(venue.ceremony.name), '_blank')
+                }
+                className="w-full bg-gradient-to-r from-beige to-beige-dark text-white py-3 px-6 rounded-xl font-light hover:from-beige-dark hover:to-beige transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base cursor-pointer"
+              >
+                Ver en el Mapa
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Reception Venue */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : 50 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl p-8 shadow-lg border border-amber-100"
+          >
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <GlassWater className="w-10 h-10 text-white" />
+              </div>
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-gray-800 mb-2">
+                Recepción
+              </h3>
+              <div className="w-16 h-px bg-amber-400 mx-auto"></div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="text-center">
+                <h4 className="text-lg sm:text-xl md:text-2xl font-light text-gray-800 mb-2">
+                  {venue.reception.name}
+                </h4>
+                <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-4">
+                  {venue.reception.address}
+                </p>
+                <div className="inline-block bg-white/60 rounded-lg px-4 py-2 shadow-sm">
+                  <p className="text-beige-dark font-light text-sm sm:text-base">
+                    🍽️ {venue.reception.time}
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white/50 rounded-2xl p-6 space-y-4">
+                <h5 className="font-light text-gray-800 mb-3 text-sm sm:text-base">
+                  Detalles de la Recepción
+                </h5>
+                <div className="space-y-2 text-xs sm:text-sm text-gray-600">
+                  <p>• Cóctel de bienvenida</p>
+                  <p>• Barra libre disponible</p>
+                  <p>• Música y baile hasta las 2 AM</p>
+                  <p>• Servicio de valet parking</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() =>
+                  window.open(venue.reception.mapUrl || generateMapLink(venue.reception.name), '_blank')
+                }
+                className="w-full bg-gradient-to-r from-beige to-beige-dark text-white py-3 px-6 rounded-xl font-light hover:from-beige-dark hover:to-beige transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base cursor-pointer"
+              >
+                Ver en el Mapa
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/components/wedding-party.tsx">
+'use client';
+
+import { motion } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
+import { Heart, CircleDot, Sparkles, Users } from 'lucide-react';
+
+interface Padrino {
+  tipo: string;
+  personas: string[];
+  icon: React.ReactNode;
+  color: string;
+}
+
+export const WeddingParty = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  const padrinos: Padrino[] = [
+    {
+      tipo: 'Padrinos de Velación',
+      personas: ['Pedro Salcedo Terrones', 'Jacqueline Lozano Jiménez'],
+      icon: <Heart className="w-5 h-5" />,
+      color: '',
+    },
+    {
+      tipo: 'Padrinos de Anillos',
+      personas: ['Diego Mora Delgado', 'Lizeth Vera Alvarado'],
+      icon: <CircleDot className="w-5 h-5" />,
+      color: '',
+    },
+    {
+      tipo: 'Padrinos de Arras',
+      personas: ['Luis Armando Lozano Jiménez', 'Berenice Aguiñaga Olivares'],
+      icon: <Sparkles className="w-5 h-5" />,
+      color: '',
+    },
+    {
+      tipo: 'Padrinos de Mancuerna',
+      personas: ['Daniela Mora Delgado', 'Jason Iván Ceja Valencia'],
+      icon: <Users className="w-5 h-5" />,
+      color: '',
+    },
+  ];
+
+  return (
+    <div ref={ref} className="py-16 px-4 bg-background">
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mb-3 font-light">
+            Nuestros Padrinos
+          </h2>
+          <div className="w-20 h-px bg-beige/30 mx-auto"></div>
+          <p className="text-sm sm:text-base md:text-lg text-soft-gray mt-4 max-w-2xl mx-auto font-light">
+            Agradecemos a quienes nos acompañan en este día especial
+          </p>
+        </motion.div>
+
+        {/* Padrinos Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {padrinos.map((padrino, index) => (
+            <motion.div
+              key={padrino.tipo}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="bg-warm-white dark:bg-warm-white rounded-2xl shadow-md p-6 border border-beige/10 hover:shadow-lg transition-shadow duration-300"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="bg-beige/10 text-beige rounded-full p-2.5">
+                  {padrino.icon}
+                </div>
+                <h3 className="text-lg sm:text-xl font-serif text-foreground font-light">
+                  {padrino.tipo}
+                </h3>
+              </div>
+              
+              <div className="space-y-2 pl-14">
+                {padrino.personas.map((persona, personaIndex) => (
+                  <p key={personaIndex} className="text-base text-soft-gray">
+                    {persona}
+                  </p>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Thank You Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-12 text-center"
+        >
+          <div className="bg-warm-white dark:bg-warm-white rounded-2xl p-6 max-w-3xl mx-auto border border-beige/10">
+            <p className="text-foreground text-sm sm:text-base italic font-light">
+              &ldquo;Gracias por ser parte de nuestra historia y acompañarnos en este momento tan especial&rdquo;
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/view/home-view.tsx">
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useScrollSpy } from '@/hooks/use-scroll-spy';
+import { LetterAnimation } from '@/components';
+import {
+  HeroSection,
+  CoupleIntroduction,
+  WeddingDetailsCard,
+  CountdownTimer,
+  VenueInformation,
+  EventSchedule,
+  WeddingParty,
+  RSVP,
+  GalleryPreview,
+  ClosingMessage,
+  FloatingNavigation,
+  NavigationFAB,
+  MusicPlayer,
+  ScrollProgressIndicator,
+} from '../components';
+import { NAVIGATION_SECTIONS, WEDDING_CONFIG } from '@/constants';
+
+export default function HomeView() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showLetter, setShowLetter] = useState(true);
+
+  // Auto-detect active section using scroll spy
+  const activeSection = useScrollSpy(
+    NAVIGATION_SECTIONS.map((section) => section.id)
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 300);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  const handleLetterOpen = () => {
+    setShowLetter(false);
+    setTimeout(() => setIsLoaded(true), 300);
+  };
+
+  // Show letter animation first
+  if (showLetter) {
+    return (
+      <LetterAnimation
+        onOpen={handleLetterOpen}
+        coupleName={`${WEDDING_CONFIG.bride.name} & ${WEDDING_CONFIG.groom.name}`}
+      />
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <FloatingNavigation
+        activeSection={activeSection}
+        onScrollToSection={scrollToSection}
+      />
+
+      {/* Hero Section */}
+      <section id="hero" className="relative">
+        <HeroSection
+          isLoaded={isLoaded}
+          couple={WEDDING_CONFIG}
+          onScrollToSection={scrollToSection}
+        />
+      </section>
+
+      {/* Couple Introduction */}
+      <section id="couple" className="relative">
+        <CoupleIntroduction
+          bride={WEDDING_CONFIG.bride}
+          groom={WEDDING_CONFIG.groom}
+          isVisible={isLoaded}
+        />
+      </section>
+
+      {/* Wedding Details */}
+      <section id="details" className="relative">
+        <WeddingDetailsCard
+          date={WEDDING_CONFIG.date}
+        />
+        <CountdownTimer targetDate={WEDDING_CONFIG.date} />
+      </section>
+
+      {/* Venue Information */}
+      <section id="venue" className="relative">
+        <VenueInformation venue={WEDDING_CONFIG.venue} />
+        <EventSchedule />
+      </section>
+
+      {/* Wedding Party */}
+      <section id="wedding-party" className="relative">
+        <WeddingParty />
+      </section>
+
+      {/* Gallery Preview */}
+      <section id="gallery" className="relative">
+        <GalleryPreview />
+      </section>
+
+      {/* RSVP Section */}
+      <section id="rsvp" className="relative">
+        <RSVP />
+      </section>
+
+      {/* Closing Message */}
+      <section id="closing" className="relative">
+        <ClosingMessage
+          bride={WEDDING_CONFIG.bride.fullName}
+          groom={WEDDING_CONFIG.groom.fullName}
+        />
+      </section>
+
+      {/* Music Player */}
+      <MusicPlayer />
+
+      {/* Mobile Navigation FAB */}
+      <NavigationFAB
+        activeSection={activeSection}
+        onScrollToSection={scrollToSection}
+      />
+
+      {/* Scroll Progress Indicator */}
+      <ScrollProgressIndicator activeSection={activeSection} />
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/letter-animation.tsx">
+'use client';
+
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useSearchParams } from 'next/navigation';
+import { Heart, Mail, Sparkles, Hand } from 'lucide-react';
+
+interface LetterAnimationProps {
+  onOpen: () => void;
+  coupleName: string;
+}
+
+export const LetterAnimation = ({
+  onOpen,
+  coupleName,
+}: LetterAnimationProps) => {
+  const searchParams = useSearchParams();
+
+  const toName =
+    searchParams.get('to') || searchParams.get('toName') || 'Invitado Especial';
+
+  const [isOpening, setIsOpening] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = () => {
+    setIsOpening(true);
+    setTimeout(() => {
+      onOpen();
+    }, 2500);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 bg-gradient-to-br from-rose-100 via-pink-50 to-purple-100 overflow-hidden">
+      {/* Background Decorations */}
+      <div className="absolute inset-0">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-rose-200/30 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-200/20 rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Floating Hearts */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ y: '100%', opacity: 0.3, rotate: 0 }}
+            animate={{
+              y: '-100%',
+              opacity: [0.3, 0.7, 0.3],
+              rotate: [0, 360, 720],
+              x: [0, 50, -50, 0],
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              ease: 'linear',
+              delay: i * 1.5,
+            }}
+            className="absolute text-rose-300"
+            style={{
+              left: `${10 + i * 15}%`,
+            }}
+          >
+            <Heart className="w-6 h-6 text-rose-400 fill-current" />
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-6">
+        <div className="text-center">
+          {/* Greeting Text */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="mb-8 sm:mb-12"
+          >
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-4">
+              ¡Bienvenido!
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-md mx-auto">
+              {toName ? (
+                <>
+                  Querido/a{' '}
+                  <span className="font-medium text-rose-600">{toName}</span>
+                  <br />
+                  Estás invitado/a a nuestra boda
+                </>
+              ) : (
+                'Estás invitado/a a nuestra boda'
+              )}
+            </p>
+          </motion.div>
+
+          {/* Letter Animation */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+            className="relative mx-auto"
+            style={{ perspective: '1000px' }}
+          >
+            <motion.div
+              className="relative cursor-pointer"
+              onClick={handleClick}
+              onHoverStart={() => setIsHovered(true)}
+              onHoverEnd={() => setIsHovered(false)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {/* Envelope Back */}
+              <motion.div
+                className="w-80 h-56 sm:w-96 sm:h-64 bg-gradient-to-br from-rose-200 to-pink-300 rounded-lg shadow-2xl relative mx-auto"
+                animate={{
+                  rotateY: isOpening ? 15 : 0,
+                  z: isOpening ? -50 : 0,
+                }}
+                transition={{ duration: 0.8 }}
+              >
+                {/* Envelope Pattern */}
+                <div className="absolute inset-4 border-2 border-rose-300/30 rounded border-dashed"></div>
+
+                {/* Wax Seal */}
+                <motion.div
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gradient-to-br from-red-600 to-red-700 rounded-full shadow-lg flex items-center justify-center"
+                  animate={{
+                    scale: isHovered ? 1.1 : 1,
+                    rotate: isHovered ? 5 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Mail className="w-6 h-6 text-white" />
+                </motion.div>
+
+                {/* Envelope Flap */}
+                <motion.div
+                  className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-rose-300 to-pink-400 origin-top"
+                  style={{
+                    clipPath: 'polygon(0 0, 100% 0, 50% 100%)',
+                  }}
+                  animate={{
+                    rotateX: isOpening ? -180 : 0,
+                    z: isOpening ? 50 : 0,
+                  }}
+                  transition={{ duration: 1, delay: isOpening ? 0.2 : 0 }}
+                />
+              </motion.div>
+
+              {/* Letter Inside */}
+              <AnimatePresence>
+                {isOpening && (
+                  <motion.div
+                    initial={{ y: 0, opacity: 0, scale: 0.8 }}
+                    animate={{ y: -40, opacity: 1, scale: 1 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    className="absolute top-8 left-1/2 -translate-x-1/2 w-72 h-54 sm:w-80 sm:h-58 bg-gradient-to-br from-yellow-50 to-white rounded-lg shadow-xl border border-rose-200"
+                  >
+                    <div className="p-6 sm:p-8 h-full flex flex-col justify-center text-center">
+                      <div className="text-rose-500 mb-4">
+                        <Heart className="w-8 h-8 sm:w-10 sm:h-10 mx-auto fill-current" />
+                      </div>
+                      {toName && (
+                        <p className="text-sm sm:text-base text-gray-600 mb-2">
+                          Para:{' '}
+                          <span className="font-medium text-rose-600">
+                            {toName}
+                          </span>
+                        </p>
+                      )}
+                      <h3 className="text-lg sm:text-xl font-serif text-gray-800 mb-2">
+                        {coupleName}
+                      </h3>
+                      <p className="text-sm sm:text-base text-gray-600 mb-4">
+                        Te invitamos a celebrar nuestra unión
+                      </p>
+                      <div className="text-xs sm:text-sm text-gray-500 font-serif italic">
+                        &ldquo;Donde hay amor, hay vida&rdquo;
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Sparkle Effects */}
+              <AnimatePresence>
+                {isHovered && !isOpening && (
+                  <>
+                    {[...Array(8)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{
+                          opacity: [0, 1, 0],
+                          scale: [0, 1, 0],
+                          x: [0, (Math.random() - 0.5) * 100],
+                          y: [0, (Math.random() - 0.5) * 100],
+                        }}
+                        exit={{ opacity: 0 }}
+                        transition={{
+                          duration: 1.5,
+                          delay: i * 0.1,
+                          repeat: Infinity,
+                          repeatDelay: 2,
+                        }}
+                        className="absolute top-1/2 left-1/2 text-yellow-400 pointer-events-none"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                      </motion.div>
+                    ))}
+                  </>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </motion.div>
+
+          {/* Click Instruction */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isOpening ? 0 : 1 }}
+            transition={{ duration: 0.5, delay: 2 }}
+            className="mt-8 sm:mt-12"
+          >
+            <motion.p
+              animate={{
+                y: [0, -8, 0],
+                opacity: [0.7, 1, 0.7],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+              className="text-sm sm:text-base text-gray-600 font-medium"
+            >
+              {isHovered
+                ? '¡Haz clic para abrir!'
+                : 'Haz clic en el sobre para abrir'}
+            </motion.p>
+            <div className="flex justify-center mt-4">
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 10, -10, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="text-2xl"
+              >
+                <Hand className="w-8 h-8 text-gray-600" />
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Loading overlay when opening */}
+      <AnimatePresence>
+        {isOpening && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1 }}
+            className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center"
+          >
+            <div className="text-center">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                className="w-12 h-12 border-4 border-rose-200 border-t-rose-500 rounded-full mx-auto mb-4"
+              />
+              <p className="text-gray-600 text-lg font-medium">
+                Abriendo la invitación...
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+</file>
+
+<file path="src/constants/wedding.ts">
+export const WEDDING_CONFIG = {
+  date: new Date('2025-11-01T17:00:00-06:00'), // 1 de noviembre 2025, 5:00 PM hora de México
+  bride: {
+    name: 'Sofia',
+    fullName: 'Sofia Mora Delgado',
+    photo: '/assets/images/bride-circle.png',
+  },
+  groom: {
+    name: 'Oswaldo',
+    fullName: 'Oswaldo Lozano Jiménez',
+    photo: '/assets/images/groom-circle.png',
+  },
+  venue: {
+    ceremony: {
+      name: 'Capilla de Nuestra Señora de Ocotlán, La Purísima',
+      address: 'C. Fco I. Madero, Centro, 47800 Ocotlán, Jal.',
+      time: '5:00 PM',
+      mapUrl: 'https://maps.app.goo.gl/1kiNcAxmvYPACwet5',
+    },
+    reception: {
+      name: 'La Magnolia',
+      address: 'C. México 28, Ferrocarril, 47830 Ocotlán, Jal.',
+      time: '6:30 PM',
+      mapUrl: 'https://maps.app.goo.gl/qBpGVzWnBh4UdYfw9',
+    },
+  },
+};
+</file>
+
+<file path="src/sections/home/components/couple-introduction.tsx">
+'use client';
+
+import type { WeddingConfigType } from '@/types';
+import { motion } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
+import { Crown } from 'lucide-react';
+
+interface CoupleIntroductionProps {
+  bride: WeddingConfigType['bride'];
+  groom: WeddingConfigType['groom'];
+  isVisible: boolean;
+}
+
+export const CoupleIntroduction = ({
+  bride,
+  groom,
+}: CoupleIntroductionProps) => {
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  return (
+    <div
+      ref={ref}
+      className="py-20 px-4 bg-background"
+    >
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-4 font-light">
+            Nuestra Historia de Amor
+          </h2>
+          <div className="w-24 h-px bg-beige/30 mx-auto"></div>
+          <p className="text-base sm:text-lg md:text-xl text-soft-gray mt-6 max-w-2xl mx-auto font-light">
+            Nuestro viaje comenzó con un simple hola y ha florecido en la más hermosa historia de amor. Estamos emocionados de compartir este día especial con todos ustedes.
+          </p>
+        </motion.div>
+
+        {/* Couple Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Bride Card */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : -50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-center lg:text-right"
+          >
+            <div className="relative inline-block mb-6">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gradient-to-br from-beige-light/30 to-beige/30 rounded-full flex items-center justify-center text-6xl sm:text-7xl md:text-8xl lg:text-9xl shadow-xl border-4 border-white">
+                <Image
+                  src={bride.photo}
+                  alt={`${bride.fullName}'s photo`}
+                  width={256}
+                  height={256}
+                  className="rounded-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="absolute -bottom-4 -right-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-beige rounded-full flex items-center justify-center shadow-lg">
+                <Crown className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+              </div>
+            </div>
+
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-2">
+              {bride.fullName}
+            </h3>
+            <p className="text-base sm:text-lg md:text-xl text-beige mb-4 font-light">
+              La Novia
+            </p>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-md mx-auto lg:mx-0 lg:ml-auto">
+              Un alma hermosa con un corazón lleno de amor y sueños de un futuro maravilloso juntos.
+            </p>
+
+            {/* Decorative Elements */}
+            <div className="mt-6 flex justify-center lg:justify-end space-x-2">
+              <div className="w-2 h-2 bg-beige-light rounded-full"></div>
+              <div className="w-2 h-2 bg-beige rounded-full"></div>
+              <div className="w-2 h-2 bg-beige-dark rounded-full"></div>
+            </div>
+          </motion.div>
+
+          {/* Heart Divider (Desktop) */}
+          <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <motion.div
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: inView ? 1 : 0, rotate: inView ? 0 : -180 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="w-16 h-16 bg-ivory rounded-full flex items-center justify-center shadow-xl border-2 border-gold"
+            >
+              <span className="text-2xl sm:text-3xl md:text-4xl text-gold font-serif">
+                &
+              </span>
+            </motion.div>
+          </div>
+
+          {/* Heart Divider (Mobile) */}
+          <div className="lg:hidden flex justify-center -my-6 z-10">
+            <motion.div
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: inView ? 1 : 0, rotate: inView ? 0 : -180 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="w-12 h-12 bg-ivory rounded-full flex items-center justify-center shadow-xl border-2 border-gold"
+            >
+              <span className="text-xl sm:text-2xl md:text-3xl text-gold font-serif">
+                &
+              </span>
+            </motion.div>
+          </div>
+
+          {/* Groom Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : 50 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-center lg:text-left"
+          >
+            <div className="relative inline-block mb-6">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-gradient-to-br from-beige-light/30 to-beige/30 rounded-full flex items-center justify-center text-6xl sm:text-7xl md:text-8xl lg:text-9xl shadow-xl border-4 border-white">
+                <Image
+                  src={groom.photo}
+                  alt={`${groom.fullName}'s photo`}
+                  width={256}
+                  height={256}
+                  className="rounded-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-4 -left-4 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-beige rounded-full flex items-center justify-center shadow-lg">
+                <Crown className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
+              </div>
+            </div>
+
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-gray-800 mb-2">
+              {groom.fullName}
+            </h3>
+            <p className="text-base sm:text-lg md:text-xl text-beige mb-4 font-light">
+              El Novio
+            </p>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed max-w-md mx-auto lg:mx-0">
+              Un compañero amable y cariñoso que trae alegría y risas a cada día.
+            </p>
+
+            {/* Decorative Elements */}
+            <div className="mt-6 flex justify-center lg:justify-start space-x-2">
+              <div className="w-2 h-2 bg-beige-light rounded-full"></div>
+              <div className="w-2 h-2 bg-beige rounded-full"></div>
+              <div className="w-2 h-2 bg-beige-dark rounded-full"></div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Love Quote */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-center mt-16"
+        >
+          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto shadow-lg border border-white/40">
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif text-gray-700 italic mb-4">
+              &ldquo;Eres con quien quiero compartir cada amanecer y atardecer.&rdquo;
+            </p>
+            <p className="text-gray-500 text-xs sm:text-sm">— Clannad</p>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/components/gallery-preview.tsx">
+'use client';
+
+import { motion } from 'motion/react';
+import { useInView } from 'react-intersection-observer';
+import { Heart, Plane, Flower2, Gem, Users, PartyPopper, Camera } from 'lucide-react';
+
+export const GalleryPreview = () => {
+
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  // Mock gallery images
+  const galleryImages = [
+    {
+      id: 1,
+      category: 'engagement',
+      emoji: 'Heart',
+      description: 'Nuestro Compromiso',
+    },
+    {
+      id: 2,
+      category: 'travel',
+      emoji: 'Plane',
+      description: 'Aventuras Juntos',
+    },
+    {
+      id: 3,
+      category: 'date',
+      emoji: 'Flower2',
+      description: 'Primeras Citas',
+    },
+    {
+      id: 4,
+      category: 'proposal',
+      emoji: 'Gem',
+      description: 'La Propuesta',
+    },
+    {
+      id: 5,
+      category: 'family',
+      emoji: 'Users',
+      description: 'Con la Familia',
+    },
+    {
+      id: 6,
+      category: 'friends',
+      emoji: 'PartyPopper',
+      description: 'Con Amigos',
+    },
+  ];
+
+  return (
+    <div
+      ref={ref}
+      className="py-20 px-4 bg-background"
+    >
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-4 font-light">
+            Nuestra Historia de Amor
+          </h2>
+          <div className="w-24 h-px bg-beige/30 mx-auto mb-6"></div>
+          <p className="text-base sm:text-lg md:text-xl text-soft-gray max-w-2xl mx-auto font-light">
+            Un vistazo a los momentos que nos han traído hasta aquí
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          {galleryImages.map((image, index) => (
+            <motion.div
+              key={image.id}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: inView ? 1 : 0, scale: inView ? 1 : 0.8 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="group relative aspect-square bg-warm-white rounded-2xl shadow-md overflow-hidden border border-beige/10 hover:shadow-lg transition-all duration-300 cursor-pointer"
+            >
+              {/* Image placeholder with emoji */}
+              <div className="absolute inset-0 bg-gradient-to-br from-beige-light/30 to-beige/30 flex items-center justify-center">
+                <span className="opacity-50 group-hover:scale-110 transition-transform duration-300">
+                  {(() => {
+                    const iconMap = {
+                      Heart: Heart,
+                      Plane: Plane,
+                      Flower2: Flower2,
+                      Gem: Gem,
+                      Users: Users,
+                      PartyPopper: PartyPopper
+                    };
+
+                    const IconComponent = iconMap[image.emoji as keyof typeof iconMap];
+
+                    return IconComponent ? <IconComponent className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32" /> : null;
+                  })()}
+                </span>
+              </div>
+
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-end">
+                <div className="p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <p className="text-xs sm:text-sm md:text-base font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                    {image.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Decorative corner */}
+              <div className="absolute top-2 right-2 w-6 h-6 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="text-center mt-12"
+        >
+          <button className="bg-transparent text-soft-gray px-8 py-3 rounded-full font-light shadow-md hover:shadow-lg transition-all duration-300 border border-beige/30 hover:border-beige hover:text-beige group text-sm sm:text-base tracking-wider">
+            <span className="flex items-center space-x-2">
+              <span>Ver Galería Completa</span>
+              <span className="group-hover:translate-x-1 transition-transform duration-300">
+                <motion.span
+                  animate={{
+                    rotate: [0, -5, 5, -5, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  className="inline-block"
+                >
+                  <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
+                </motion.span>
+              </span>
+            </span>
+          </button>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/sections/home/components/music-player.tsx">
+'use client';
+
+import { motion } from 'motion/react';
+import { useState, useRef, useEffect } from 'react';
+import { Music, Play, Settings } from 'lucide-react';
+
+interface MusicPlayerProps {
+  className?: string;
+}
+
+export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
+  const [showAutoplayModal, setShowAutoplayModal] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    if (!audio) return;
+
+    const updateTime = () => setCurrentTime(audio.currentTime);
+    const updateDuration = () => setDuration(audio.duration);
+    const handleEnded = () => setIsPlaying(false);
+
+    audio.addEventListener('timeupdate', updateTime);
+    audio.addEventListener('loadedmetadata', updateDuration);
+    audio.addEventListener('ended', handleEnded);
+
+    // Auto-play attempt
+    const attemptAutoPlay = async () => {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+        setAutoplayBlocked(false);
+        setHasInteracted(true);
+      } catch {
+        setIsPlaying(false);
+        setAutoplayBlocked(true);
+        setHasInteracted(false);
+        // Show autoplay modal when blocked
+        setShowAutoplayModal(true);
+      }
+    };
+
+    // Try autoplay after a short delay
+    const timer = setTimeout(() => {
+      attemptAutoPlay();
+
+      // Show welcome message if autoplay fails after a delay
+      const welcomeTimer = setTimeout(() => {
+        setShowWelcomeMessage(true);
+        // Hide welcome message after 5 seconds
+        setTimeout(() => setShowWelcomeMessage(false), 5000);
+      }, 2000);
+
+      return () => clearTimeout(welcomeTimer);
+    }, 1500);
+
+    return () => {
+      audio.removeEventListener('timeupdate', updateTime);
+      audio.removeEventListener('loadedmetadata', updateDuration);
+      audio.removeEventListener('ended', handleEnded);
+      clearTimeout(timer);
+    };
+  }, []); // Empty dependency array is correct here
+
+  const togglePlayPause = async () => {
+    const audio = audioRef.current;
+
+    if (!audio) return;
+
+    // Hide welcome message and modal when user interacts
+    setShowWelcomeMessage(false);
+    setShowAutoplayModal(false);
+
+    try {
+      if (isPlaying) {
+        audio.pause();
+        setIsPlaying(false);
+      } else {
+        await audio.play();
+        setIsPlaying(true);
+        setAutoplayBlocked(false);
+        setHasInteracted(true);
+      }
+    } catch {
+      // Audio play failed - could be network issue or browser policy
+      setAutoplayBlocked(true);
+      setIsPlaying(false);
+    }
+  };
+
+  const handleAllowAutoplay = () => {
+    setShowAutoplayModal(false);
+    // Attempt to play after user acknowledges
+    togglePlayPause();
+  };
+
+  const handleDismissModal = () => {
+    setShowAutoplayModal(false);
+    setShowWelcomeMessage(true);
+  };
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+  return (
+    <>
+      {/* Autoplay Modal */}
+      {showAutoplayModal && !hasInteracted && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative overflow-hidden"
+          >
+            {/* Background gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-beige-light/20 to-beige/20 opacity-50"></div>
+
+            {/* Content */}
+            <div className="relative z-10">
+              {/* Header */}
+              <div className="text-center mb-6">
+                <motion.div
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="mb-4"
+                >
+                  <Music className="w-12 h-12 text-beige mx-auto" />
+                </motion.div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                  Habilitar Música
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Tu navegador ha bloqueado la reproducción automática
+                </p>
+              </div>
+
+              {/* Browser Settings Guide */}
+              <div className="bg-beige-light/20 rounded-lg p-4 mb-6">
+                <h4 className="font-light text-foreground mb-2 flex items-center">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Cómo habilitar la reproducción automática:
+                </h4>
+                <div className="text-soft-gray text-sm space-y-1">
+                  <p>
+                    • <strong>Chrome/Edge:</strong> Configuración → Sitio → Permitir sonido
+                  </p>
+                  <p>
+                    • <strong>Firefox:</strong> Haz clic en el ícono del candado → Permitir audio
+                  </p>
+                  <p>
+                    • <strong>Safari:</strong> Safari → Configuración para este sitio → Permitir todo
+                  </p>
+                </div>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex gap-3">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleAllowAutoplay}
+                  className="flex-1 bg-beige hover:bg-beige-dark text-white font-light py-3 px-4 rounded-full shadow-md hover:shadow-lg transition-all duration-200"
+                >
+                  Reproducir Música
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleDismissModal}
+                  className="px-4 py-3 bg-gray-100 text-gray-600 font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
+                >
+                  Más tarde
+                </motion.button>
+              </div>
+
+              {/* Footer note */}
+              <p className="text-xs text-gray-500 text-center mt-4">
+                La música se reproducirá automáticamente en tu próxima visita
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+
+      {/* Welcome message for autoplay blocked */}
+      {showWelcomeMessage && !hasInteracted && (
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -20, scale: 0.9 }}
+          className="fixed bottom-44 right-6 z-50 bg-beige text-white px-4 py-3 rounded-lg shadow-xl backdrop-blur-sm max-w-xs"
+        >
+          <div className="flex items-center space-x-2">
+            <motion.div
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <Music className="w-5 h-5 text-white" />
+            </motion.div>
+            <div>
+              <div className="font-medium text-sm">
+                Música de Boda
+              </div>
+              <div className="text-xs opacity-90">
+                Haz clic para comenzar
+              </div>
+            </div>
+          </div>
+          <motion.div
+            className="absolute -bottom-1 right-8 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-beige"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.3 }}
+          />
+        </motion.div>
+      )}
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0, y: 100 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{
+          duration: 0.6,
+          delay: 1.0,
+          type: 'spring',
+          stiffness: 200,
+        }}
+        className={`fixed bottom-24 right-6 z-50 ${className}`}
+      >
+        {/* Hidden audio element */}
+        <audio
+          ref={audioRef}
+          loop
+          preload="auto"
+          src="/assets/audio/Valentín Elizalde - La Más Deseada.mp3"
+          aria-label="Música de fondo de la boda"
+        >
+          <track
+            kind="captions"
+            src="/assets/audio/Valentín Elizalde - La Más Deseada.mp3"
+            label="Sin subtítulos disponibles"
+          />
+          Tu navegador no soporta el elemento de audio.
+        </audio>
+
+        {/* Progress Ring */}
+        <div className="relative">
+          <svg
+            className="w-14 h-14 transform -rotate-90 absolute inset-0"
+            viewBox="0 0 64 64"
+          >
+            {/* Background circle */}
+            <circle
+              cx="32"
+              cy="32"
+              r="28"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.1)"
+              strokeWidth="2"
+            />
+            {/* Progress circle */}
+            <motion.circle
+              cx="32"
+              cy="32"
+              r="28"
+              fill="none"
+              stroke="url(#musicGradient)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              initial={{ pathLength: 0 }}
+              animate={{
+                pathLength: progress / 100,
+              }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              style={{
+                strokeDasharray: '175.93',
+                strokeDashoffset: 0,
+              }}
+            />
+            <defs>
+              <linearGradient
+                id="musicGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" stopColor="var(--beige-light)" />
+                <stop offset="50%" stopColor="var(--beige)" />
+                <stop offset="100%" stopColor="var(--beige-dark)" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* Main Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`relative w-14 h-14 bg-white/95 backdrop-blur-md border border-beige-light/20 rounded-full shadow-xl hover:shadow-beige/20 transition-all duration-300 group overflow-hidden ${
+              autoplayBlocked && !hasInteracted ? 'animate-pulse' : ''
+            }`}
+            onClick={togglePlayPause}
+          >
+            {/* Button background gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-beige-light/20 to-beige/20 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+            {/* Animated background effect */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-400/20 to-purple-400/20 rounded-full"
+              animate={{
+                background:
+                  autoplayBlocked && !hasInteracted
+                    ? [
+                        'linear-gradient(45deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3))',
+                        'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3))',
+                        'linear-gradient(225deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3))',
+                        'linear-gradient(315deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3))',
+                      ]
+                    : [
+                        'linear-gradient(45deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
+                        'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1))',
+                        'linear-gradient(225deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1))',
+                        'linear-gradient(315deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
+                      ],
+              }}
+              transition={{
+                duration: autoplayBlocked && !hasInteracted ? 2 : 4,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+            />
+
+            {/* Icon container */}
+            <div className="relative z-10 flex items-center justify-center w-full h-full">
+              {isPlaying ? (
+                // Pause icon with animated sound waves
+                <div className="flex items-center space-x-0.5">
+                  <motion.div
+                    animate={{
+                      scaleY: [1, 1.5, 1, 2, 1],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                    className="w-1 h-3 bg-gradient-to-t from-beige-light to-beige rounded-full"
+                  />
+                  <motion.div
+                    animate={{
+                      scaleY: [1, 2, 1, 1.5, 1],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: 0.2,
+                    }}
+                    className="w-1 h-4 bg-gradient-to-t from-beige to-beige-dark rounded-full"
+                  />
+                  <motion.div
+                    animate={{
+                      scaleY: [1, 1.5, 2, 1, 1],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: 0.4,
+                    }}
+                    className="w-1 h-3 bg-gradient-to-t from-beige-dark to-beige-light rounded-full"
+                  />
+                </div>
+              ) : (
+                // Play icon
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  className="filter drop-shadow-sm"
+                >
+                  <Play className="w-6 h-6 text-beige fill-current" />
+                </motion.div>
+              )}
+            </div>
+
+            {/* Ripple effect on click */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-beige-light/30 to-beige/30 rounded-full"
+              initial={{ scale: 0, opacity: 0 }}
+              whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
+              transition={{ duration: 0.4 }}
+            />
+          </motion.button>
+
+          {/* Music info tooltip */}
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            whileHover={{ opacity: 1, x: 0 }}
+            className="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-gray-800/90 text-white text-xs px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm whitespace-nowrap pointer-events-none"
+          >
+            <div className="font-medium flex items-center gap-1">
+              <Music className="w-3 h-3" />
+              {isPlaying
+                ? 'Reproduciendo'
+                : autoplayBlocked && !hasInteracted
+                ? 'Haz clic para comenzar'
+                : 'Pausado'}
+            </div>
+            <div className="text-gray-300 text-xs">
+              {autoplayBlocked && !hasInteracted
+                ? 'Música de Boda (Autoplay Bloqueado)'
+                : 'Música de Boda'}
+            </div>
+
+            {/* Tooltip arrow */}
+            <div className="absolute left-full top-1/2 -translate-y-1/2 border-l-4 border-l-gray-800/90 border-y-4 border-y-transparent"></div>
+          </motion.div>
+
+          {/* Volume indicator for when playing */}
+          {isPlaying && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-beige-light to-beige rounded-full flex items-center justify-center shadow-lg"
+            >
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="w-2 h-2 bg-white rounded-full"
+              />
+            </motion.div>
+          )}
+
+          {/* Click indicator when autoplay is blocked */}
+          {autoplayBlocked && !hasInteracted && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center shadow-lg"
+            >
+              <motion.div
+                animate={{
+                  scale: [1, 1.3, 1],
+                  rotate: [0, 15, -15, 0],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="text-white text-xs font-bold"
+              >
+                !
+              </motion.div>
+            </motion.div>
+          )}
+        </div>
+      </motion.div>
+    </>
+  );
+}
+</file>
+
+<file path="src/sections/home/components/wedding-details-card.tsx">
+'use client';
+
+import { motion } from 'motion/react';
+import {
+  formatWeddingTime,
+  generateGoogleCalendarLink,
+} from '@/lib/wedding-utils';
+import { Calendar, ShirtIcon } from 'lucide-react';
+
+interface WeddingDetailsCardProps {
+  date: Date;
+}
+
+export const WeddingDetailsCard = ({
+  date,
+}: WeddingDetailsCardProps) => {
+  const calendarEvent = {
+    title: 'Nuestro Día de Boda',
+    start: date,
+    end: new Date(date.getTime() + 5 * 60 * 60 * 1000), // 5 hours later
+    description: 'Únete a nosotros en nuestra celebración especial',
+  };
+
+  return (
+    <div className="py-20 bg-background">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-4 font-light">
+            Detalles de la Boda
+          </h2>
+          <div className="w-24 h-px bg-beige/30 mx-auto mb-6"></div>
+          <p className="text-lg sm:text-xl md:text-2xl text-soft-gray max-w-2xl mx-auto font-light">
+            Únete a nosotros para celebrar nuestro amor
+          </p>
+        </motion.div>
+
+        {/* Date Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative bg-warm-white dark:bg-warm-white rounded-2xl shadow-lg p-8 sm:p-10 md:p-12 mb-12 border border-beige/10 overflow-hidden group"
+        >
+          {/* Background Decorations */}
+
+          <div className="relative z-10">
+            {/* Save the Date Header */}
+            <div className="text-center mb-8">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="inline-flex items-center gap-3 bg-transparent rounded-full px-6 py-3 mb-6"
+              >
+                <span className="text-sm sm:text-base font-light text-beige tracking-[0.3em] uppercase">
+                  Guarda la Fecha
+                </span>
+              </motion.div>
+            </div>
+
+            {/* Date Display */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-center mb-10">
+              {/* Day */}
+              <div className="flex-1">
+                <p className="text-6xl md:text-7xl font-serif text-beige font-light">{date.getDate()}</p>
+                <p className="text-sm font-sans uppercase tracking-[0.2em] text-soft-gray mt-1">
+                  {date.toLocaleDateString('es-ES', { weekday: 'long' })}
+                </p>
+              </div>
+
+              {/* Divider */}
+              <div className="h-16 w-px bg-beige/20 hidden sm:block"></div>
+              <div className="w-16 h-px bg-beige/20 sm:hidden my-4"></div>
+
+              {/* Month and Year */}
+              <div className="flex-1">
+                <p className="text-3xl md:text-4xl font-serif text-foreground font-light">
+                  {date.toLocaleDateString('es-ES', { month: 'long' })}
+                </p>
+                <p className="text-lg text-soft-gray">{date.getFullYear()}</p>
+              </div>
+
+              {/* Time */}
+              <div className="flex-1">
+                <p className="text-3xl md:text-4xl font-serif text-foreground font-light">
+                  {formatWeddingTime(date, 'es-ES')}
+                </p>
+                <p className="text-sm text-soft-gray">Hora</p>
+              </div>
+            </div>
+
+
+            {/* Call to Action */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="text-center"
+            >
+              <motion.a
+                href={generateGoogleCalendarLink(calendarEvent)}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-3 bg-beige hover:bg-beige-dark text-white px-8 py-4 rounded-full font-light text-base sm:text-lg shadow-md hover:shadow-lg transition-all duration-300 group/btn tracking-wider"
+              >
+                <span className="group-hover/btn:scale-110 transition-transform duration-200">
+                  <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
+                </span>
+                <span>Agregar al Calendario</span>
+                <motion.span
+                  className="text-sm opacity-75"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  →
+                </motion.span>
+              </motion.a>
+
+              <p className="text-xs sm:text-sm text-soft-gray mt-4 max-w-md mx-auto">
+                Sincroniza con tu calendario para no perderte nuestro gran día
+              </p>
+            </motion.div>
+          </div>
+        </motion.div>
+
+
+        {/* Additional Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="mt-12 text-center"
+        >
+          <div className="bg-warm-white dark:bg-warm-white rounded-2xl p-8 border border-beige/10">
+            <h4 className="text-lg sm:text-xl md:text-2xl font-light text-foreground mb-4">
+              Información Importante
+            </h4>
+            <div className="grid md:grid-cols-3 gap-6 text-xs sm:text-sm text-soft-gray">
+              <div className="flex flex-col items-center">
+                <div className="flex justify-center mb-2">
+                  <ShirtIcon className="w-6 h-6 sm:w-8 sm:h-8 text-beige" />
+                </div>
+                <p className="font-medium">Código de Vestimenta</p>
+                <p>Vestimenta Formal</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="text-xl sm:text-2xl mb-2">🚗</div>
+                <p className="font-medium">Estacionamiento</p>
+                <p>Valet disponible</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="text-xl sm:text-2xl mb-2">📱</div>
+                <p className="font-medium">Contacto</p>
+                <p>+52 123 456 7890</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+</file>
+
+<file path="src/components/navigation-button.tsx">
+import { NAVIGATION_ANIMATIONS } from '@/constants/navigation';
+import type { NavigationSection } from '@/types/navigation';
+import { motion, AnimatePresence } from 'motion/react';
+import { Home, Heart, Calendar, MapPin, Camera, Mail } from 'lucide-react';
+
+// NavigationButton Component for better code organization
+interface NavigationButtonProps {
+  section: NavigationSection;
+  index: number;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+export function NavigationButton({
+  section,
+  index,
+  isActive,
+  onClick,
+}: NavigationButtonProps) {
+
+  const baseClasses =
+    'relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 group overflow-hidden cursor-pointer';
+
+  const activeClasses = 'text-white';
+
+  const inactiveClasses =
+    'text-soft-gray hover:text-beige hover:bg-beige/10';
+
+  return (
+    <motion.button
+      onClick={onClick}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3, delay: 0.1 * index }}
+      whileHover={NAVIGATION_ANIMATIONS.button.hover}
+      whileTap={NAVIGATION_ANIMATIONS.button.tap}
+      className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}
+    >
+      {/* Animated Background for Active State */}
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            initial={NAVIGATION_ANIMATIONS.background.initial}
+            animate={NAVIGATION_ANIMATIONS.background.animate}
+            exit={NAVIGATION_ANIMATIONS.background.exit}
+            transition={NAVIGATION_ANIMATIONS.background.transition}
+            className="absolute inset-0 bg-beige rounded-lg sm:rounded-xl"
+          />
+        )}
+      </AnimatePresence>
+
+
+      {/* Icon with Bounce Animation */}
+      <motion.span
+        className="text-sm sm:text-base relative z-10"
+        animate={isActive ? NAVIGATION_ANIMATIONS.icon.active : {}}
+        transition={NAVIGATION_ANIMATIONS.icon.transition}
+        whileHover={NAVIGATION_ANIMATIONS.icon.hover}
+      >
+        {(() => {
+          const iconMap = {
+            Home,
+            Heart,
+            Calendar,
+            MapPin,
+            Camera,
+            Mail
+          };
+
+          const IconComponent = iconMap[section.icon as keyof typeof iconMap];
+
+          return IconComponent ? <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" /> : null;
+        })()}
+      </motion.span>
+
+      {/* Label with Slide Animation */}
+      <motion.span
+        className="hidden sm:inline-block whitespace-nowrap relative z-10 text-xs sm:text-sm"
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3, delay: 0.1 * index }}
+      >
+        {section.label}
+      </motion.span>
+
+      {/* Active Indicator Dot with Pulse */}
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            initial={NAVIGATION_ANIMATIONS.background.initial}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={NAVIGATION_ANIMATIONS.background.exit}
+            transition={NAVIGATION_ANIMATIONS.background.transition}
+            className="absolute -bottom-0.5 sm:-bottom-1 left-1/2 -translate-x-1/2 w-0.5 sm:w-1 h-0.5 sm:h-1 bg-white rounded-full shadow-lg z-10"
+          >
+            <motion.div
+              animate={NAVIGATION_ANIMATIONS.pulse.animate}
+              transition={NAVIGATION_ANIMATIONS.pulse.transition}
+              className="w-full h-full bg-white rounded-full"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+    </motion.button>
+  );
+}
+</file>
+
+<file path="src/locales/langs/id/home.json">
+{
+  "title": "Wedding",
+  "subtitle": "We Are Getting Married",
+  "countdown": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "description": "Please let us know if you can attend",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "attending": "Will you attend?",
+      "guests": "Number of guests",
+      "message": "Message",
+      "submit": "Submit"
+    }
+  },
+  "venue": {
+    "title": "Venue",
+    "ceremony": "Ceremony",
+    "reception": "Reception"
+  },
+  "gallery": {
+    "title": "Gallery"
+  },
+  "weddingParty": {
+    "title": "Wedding Party"
+  }
+}
+</file>
+
+</files>

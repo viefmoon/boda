@@ -55,21 +55,21 @@ export const RSVP = () => {
 
   if (isSubmitted) {
     return (
-      <div className="py-20 px-4 bg-gradient-to-br from-rose-50 to-pink-100">
+      <div className="py-20 px-4 bg-background dark:bg-background">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-white rounded-3xl p-12 shadow-xl border border-rose-100"
+            className="bg-gray-50 dark:bg-gray-900 rounded-3xl p-12 shadow-lg border border-gray-200 dark:border-gray-800"
           >
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-4xl">✅</span>
             </div>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif text-gray-800 mb-4">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mb-4">
               ¡Gracias!
             </h3>
-            <p className="text-gray-600 text-base sm:text-lg md:text-xl">
+            <p className="text-foreground/70 text-base sm:text-lg md:text-xl">
               Hemos recibido tu confirmación. ¡Nos vemos pronto!
             </p>
             <div className="mt-6 text-2xl">💕</div>
@@ -82,7 +82,7 @@ export const RSVP = () => {
   return (
     <div
       ref={ref}
-      className="py-20 px-4 bg-gradient-to-br from-rose-50 to-pink-100"
+      className="py-20 px-4 bg-background"
     >
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -92,11 +92,11 @@ export const RSVP = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-800 mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-4 font-light">
             Confirmación de Asistencia
           </h2>
-          <div className="w-24 h-px bg-rose-400 mx-auto mb-6"></div>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="w-24 h-px bg-gray-300 dark:bg-gray-700 mx-auto mb-6"></div>
+          <p className="text-base sm:text-lg md:text-xl text-soft-gray max-w-2xl mx-auto font-light">
             Por favor, confírmanos tu asistencia para nuestro gran día
           </p>
         </motion.div>
@@ -108,8 +108,8 @@ export const RSVP = () => {
             animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="bg-white rounded-3xl p-8 shadow-xl border border-rose-100">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-gray-800 mb-6 text-center">
+            <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-lg border border-gray-200 dark:border-gray-800">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-6 text-center">
                 Confirma tu Asistencia
               </h3>
 
@@ -118,7 +118,7 @@ export const RSVP = () => {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                    className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
                   >
                     Nombre completo *
                   </label>
@@ -129,7 +129,7 @@ export const RSVP = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
                     placeholder="Nombre completo"
                   />
                 </div>
@@ -137,7 +137,7 @@ export const RSVP = () => {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                    className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
                   >
                     Correo electrónico *
                   </label>
@@ -148,7 +148,7 @@ export const RSVP = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
                     placeholder="Correo electrónico"
                   />
                 </div>
@@ -156,7 +156,7 @@ export const RSVP = () => {
                 <div>
                   <label
                     htmlFor="attendance"
-                    className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                    className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
                   >
                     ¿Asistirás? *
                   </label>
@@ -166,7 +166,7 @@ export const RSVP = () => {
                     value={formData.attendance}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
                   >
                     <option value="">Selecciona una opción</option>
                     <option value="yes">Sí, ahí estaré</option>
@@ -178,7 +178,7 @@ export const RSVP = () => {
                   <div>
                     <label
                       htmlFor="guests"
-                      className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                      className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
                     >
                       Número de invitados
                     </label>
@@ -187,7 +187,7 @@ export const RSVP = () => {
                       name="guests"
                       value={formData.guests}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
                     >
                       <option value="1">1 persona</option>
                       <option value="2">2 personas</option>
@@ -201,7 +201,7 @@ export const RSVP = () => {
                   <div>
                     <label
                       htmlFor="dietaryRestrictions"
-                      className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                      className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
                     >
                       Restricciones alimentarias
                     </label>
@@ -211,7 +211,7 @@ export const RSVP = () => {
                       name="dietaryRestrictions"
                       value={formData.dietaryRestrictions}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
                       placeholder="Vegetariano, alergias, etc."
                     />
                   </div>
@@ -220,7 +220,7 @@ export const RSVP = () => {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-xs sm:text-sm font-medium text-gray-700 mb-2"
+                    className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
                   >
                     Mensaje para los novios
                   </label>
@@ -230,7 +230,7 @@ export const RSVP = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-400 focus:border-transparent outline-none transition-all duration-300 resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 resize-none bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
                     placeholder="Comparte tus buenos deseos..."
                   />
                 </div>
@@ -238,7 +238,7 @@ export const RSVP = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-rose-400 to-pink-500 text-white py-4 px-6 rounded-xl font-medium text-base sm:text-lg hover:from-rose-500 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="w-full bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black py-4 px-6 rounded-full font-light text-base sm:text-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 tracking-wider"
                 >
                   Enviar Confirmación
                 </button>
@@ -254,75 +254,73 @@ export const RSVP = () => {
             className="space-y-8"
           >
             {/* RSVP Deadline */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-rose-100">
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 shadow-md border border-gray-200 dark:border-gray-800">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-rose-600 text-xl">⏰</span>
+                <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mr-4">
+                  <span className="text-gray-600 dark:text-gray-400 text-xl">⏰</span>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
+                  <h4 className="font-semibold text-foreground text-sm sm:text-base">
                     Fecha límite RSVP
                   </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm">
+                  <p className="text-foreground/70 text-xs sm:text-sm">
                     15 de mayo de 2025
                   </p>
                 </div>
               </div>
-              <p className="text-gray-600 text-xs sm:text-sm">
+              <p className="text-foreground/70 text-xs sm:text-sm">
                 Por favor confirma antes de esta fecha para ayudarnos con la organización
               </p>
             </div>
 
             {/* Contact Info */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border border-rose-100">
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 shadow-md border border-gray-200 dark:border-gray-800">
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
                   <span className="text-blue-600 text-xl">📞</span>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
+                  <h4 className="font-semibold text-foreground text-sm sm:text-base">
                     ¿Preguntas?
                   </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm">
+                  <p className="text-foreground/70 text-xs sm:text-sm">
                     Estamos aquí para ayudarte
                   </p>
                 </div>
               </div>
-              <div className="space-y-2 text-xs sm:text-sm text-gray-600">
+              <div className="space-y-2 text-xs sm:text-sm text-foreground/70">
                 <p>📧 bodaoswaldsofiaM@gmail.com</p>
                 <p>📱 +52 123 456 7890</p>
               </div>
             </div>
 
             {/* Gift Registry */}
-            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 shadow-lg border border-amber-100">
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-800">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
-                  <Gift className="w-6 h-6 text-amber-600" />
+                <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center mr-4">
+                  <Gift className="w-6 h-6 text-gray-700 dark:text-gray-300" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-800 text-sm sm:text-base">
+                  <h4 className="font-semibold text-foreground text-sm sm:text-base">
                     Mesa de Regalos
                   </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm">
+                  <p className="text-foreground/70 text-xs sm:text-sm">
                     Tu presencia es nuestro mejor regalo
                   </p>
                 </div>
               </div>
-              <p className="text-gray-600 text-xs sm:text-sm mb-4">
-                Si deseas obsequiarnos algo, hemos preparado una lista de regalos
+              <p className="text-foreground/70 text-xs sm:text-sm mb-4">
+                Si deseas obsequiarnos algo, hemos preparado una lista de regalos en Amazon
               </p>
-              <div className="flex flex-wrap gap-2">
-                <span className="bg-white/60 px-3 py-1 rounded-full text-xs font-medium text-gray-700">
-                  Gank Now
-                </span>
-                <span className="bg-white/60 px-3 py-1 rounded-full text-xs font-medium text-gray-700">
-                  Fantia
-                </span>
-                <span className="bg-white/60 px-3 py-1 rounded-full text-xs font-medium text-gray-700">
-                  Trakteer
-                </span>
-              </div>
+              <a
+                href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full gap-2 bg-gray-800 dark:bg-gray-200 hover:bg-black dark:hover:bg-white text-white dark:text-gray-900 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              >
+                <Gift className="w-5 h-5" />
+                Ver Mesa de Regalos en Amazon
+              </a>
             </div>
           </motion.div>
         </div>

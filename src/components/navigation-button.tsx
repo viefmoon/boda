@@ -21,10 +21,10 @@ export function NavigationButton({
   const baseClasses =
     'relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 group overflow-hidden cursor-pointer';
 
-  const activeClasses = 'text-white shadow-lg';
+  const activeClasses = 'text-white';
 
   const inactiveClasses =
-    'text-gray-600 hover:text-rose-500 hover:bg-rose-50/80';
+    'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800';
 
   return (
     <motion.button
@@ -44,23 +44,11 @@ export function NavigationButton({
             animate={NAVIGATION_ANIMATIONS.background.animate}
             exit={NAVIGATION_ANIMATIONS.background.exit}
             transition={NAVIGATION_ANIMATIONS.background.transition}
-            className={`absolute inset-0 bg-gradient-to-r ${section.gradient} rounded-lg sm:rounded-xl`}
+            className="absolute inset-0 bg-gray-800 dark:bg-gray-200 rounded-lg sm:rounded-xl"
           />
         )}
       </AnimatePresence>
 
-      {/* Glow Effect for Active State */}
-      <AnimatePresence>
-        {isActive && (
-          <motion.div
-            initial={NAVIGATION_ANIMATIONS.background.initial}
-            animate={{ scale: 1.2, opacity: 0.3 }}
-            exit={NAVIGATION_ANIMATIONS.background.exit}
-            transition={{ duration: 0.3 }}
-            className={`absolute inset-0 bg-gradient-to-r ${section.gradient} rounded-lg sm:rounded-xl blur-sm -z-10`}
-          />
-        )}
-      </AnimatePresence>
 
       {/* Icon with Bounce Animation */}
       <motion.span
@@ -114,20 +102,7 @@ export function NavigationButton({
         )}
       </AnimatePresence>
 
-      {/* Hover Ripple Effect */}
-      <motion.div
-        className="absolute inset-0 rounded-lg sm:rounded-xl opacity-0 group-hover:opacity-10 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(circle at center, ${getRippleColor(
-            section.gradient
-          )} 0%, transparent 70%)`,
-        }}
-      />
     </motion.button>
   );
 }
 
-// Helper function to get ripple color
-const getRippleColor = (gradient: string): string => {
-  return gradient.includes('rose') ? '#f43f5e' : '#8b5cf6';
-};

@@ -123,7 +123,8 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
               cy="32"
               r="28"
               fill="none"
-              stroke="rgba(107, 114, 128, 0.2)"
+              stroke="currentColor"
+              className="text-stone-500/20"
               strokeWidth="2"
             />
             {/* Progress circle */}
@@ -153,9 +154,9 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
                 x2="100%"
                 y2="100%"
               >
-                <stop offset="0%" stopColor="#374151" />
-                <stop offset="50%" stopColor="#1f2937" />
-                <stop offset="100%" stopColor="#111827" />
+                <stop offset="0%" stopColor="var(--stone-600)" />
+                <stop offset="50%" stopColor="var(--stone-700)" />
+                <stop offset="100%" stopColor="var(--stone-800)" />
               </linearGradient>
             </defs>
           </svg>
@@ -164,29 +165,13 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="relative w-14 h-14 bg-white/95 backdrop-blur-md border border-gray-300 rounded-full shadow-xl hover:shadow-gray-400/30 transition-all duration-300 group overflow-hidden"
+            className="relative w-14 h-14 bg-white dark:bg-accent/90 border-2 border-accent dark:border-accent-hover backdrop-blur-md rounded-full shadow-xl transition-all duration-300 group overflow-hidden hover:bg-accent/10 dark:hover:bg-accent"
             onClick={togglePlayPause}
           >
             {/* Button background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-200/30 to-gray-300/30 opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-accent-hover/10 dark:from-transparent dark:to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-            {/* Animated background effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-400/20 to-purple-400/20 rounded-full"
-              animate={{
-                background: [
-                  'linear-gradient(45deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
-                  'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1))',
-                  'linear-gradient(225deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1))',
-                  'linear-gradient(315deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
-                ],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-            />
+            {/* Animated background effect - removed to keep background light */}
 
             {/* Icon container */}
             <div className="relative z-10 flex items-center justify-center w-full h-full">
@@ -202,7 +187,7 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
                       repeat: Infinity,
                       ease: 'easeInOut',
                     }}
-                    className="w-1 h-3 bg-gradient-to-t from-gray-700 to-gray-900 rounded-full"
+                    className="w-1 h-3 rounded-full bg-gradient-to-t from-white/70 to-white/90"
                   />
                   <motion.div
                     animate={{
@@ -214,7 +199,7 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
                       ease: 'easeInOut',
                       delay: 0.2,
                     }}
-                    className="w-1 h-4 bg-gradient-to-t from-gray-800 to-gray-900 rounded-full"
+                    className="w-1 h-4 rounded-full bg-gradient-to-t from-white/80 to-white"
                   />
                   <motion.div
                     animate={{
@@ -226,7 +211,7 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
                       ease: 'easeInOut',
                       delay: 0.4,
                     }}
-                    className="w-1 h-3 bg-gradient-to-t from-gray-900 to-gray-700 rounded-full"
+                    className="w-1 h-3 rounded-full bg-gradient-to-t from-white/90 to-white/70"
                   />
                 </div>
               ) : (
@@ -242,14 +227,14 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
                   }}
                   className="filter drop-shadow-sm"
                 >
-                  <Play className="w-6 h-6 text-gray-800 fill-current" strokeWidth={2.5} />
+                  <Play className="w-6 h-6 text-accent dark:text-white fill-current" strokeWidth={2.5} />
                 </motion.div>
               )}
             </div>
 
             {/* Ripple effect on click */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-gray-400/40 to-gray-500/40 rounded-full"
+              className="absolute inset-0 bg-gradient-to-r from-stone-400/40 to-stone-500/40 rounded-full"
               initial={{ scale: 0, opacity: 0 }}
               whileTap={{ scale: 2, opacity: [0, 0.3, 0] }}
               transition={{ duration: 0.4 }}
@@ -260,18 +245,18 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
           <motion.div
             initial={{ opacity: 0, x: 10 }}
             whileHover={{ opacity: 1, x: 0 }}
-            className="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-gray-800/90 text-white text-xs px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm whitespace-nowrap pointer-events-none"
+            className="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-coffee-darkest/90 dark:bg-coffee-dark/90 text-white dark:text-button-text text-xs px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm whitespace-nowrap pointer-events-none"
           >
             <div className="font-medium flex items-center gap-1">
               <Music className="w-3 h-3" strokeWidth={2} />
               {isPlaying ? 'Reproduciendo' : 'Pausado'}
             </div>
-            <div className="text-gray-300 text-xs">
+            <div className="text-stone-300 text-xs">
               Música de Boda
             </div>
 
             {/* Tooltip arrow */}
-            <div className="absolute left-full top-1/2 -translate-y-1/2 border-l-4 border-l-gray-800/90 border-y-4 border-y-transparent"></div>
+            <div className="absolute left-full top-1/2 -translate-y-1/2 border-l-4 border-l-stone-800/90 border-y-4 border-y-transparent"></div>
           </motion.div>
 
           {/* Volume indicator for when playing */}
@@ -280,7 +265,7 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
-              className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-gray-700 to-gray-900 rounded-full flex items-center justify-center shadow-lg"
+              className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-coffee-dark to-coffee-darker dark:from-coffee-light dark:to-coffee-medium rounded-full flex items-center justify-center shadow-lg"
             >
               <motion.div
                 animate={{

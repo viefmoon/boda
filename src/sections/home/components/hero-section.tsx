@@ -65,12 +65,12 @@ export const HeroSection = ({
               </h2>
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* CTA Button */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 30 }}
               transition={{ duration: 1, delay: 1.2 }}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center"
+              className="flex justify-center"
             >
               <motion.button
                 onClick={() => onScrollToSection('rsvp')}
@@ -79,14 +79,6 @@ export const HeroSection = ({
                 className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full font-medium tracking-[0.2em] text-sm sm:text-base uppercase shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border border-white/50"
               >
                 Confirmar Asistencia
-              </motion.button>
-              <motion.button
-                onClick={() => onScrollToSection('details')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-transparent text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full font-medium tracking-[0.2em] text-sm sm:text-base uppercase transition-all duration-300 border border-white/50 hover:bg-white/10 cursor-pointer"
-              >
-                Ver Detalles
               </motion.button>
             </motion.div>
           </div>
@@ -103,7 +95,7 @@ export const HeroSection = ({
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-gray-600 text-center cursor-pointer"
+              className="text-text-muted text-center cursor-pointer"
               onClick={() => onScrollToSection('couple')}
             >
               <div className="text-xs mb-1 sm:mb-2 text-white/80">

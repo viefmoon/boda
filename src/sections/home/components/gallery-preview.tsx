@@ -40,7 +40,7 @@ export const GalleryPreview = () => {
             Nuestra Historia de Amor
           </h2>
           <div className="w-16 h-px bg-accent/30 mx-auto mb-4"></div>
-          <p className="text-sm text-gray-800 dark:text-white max-w-xl mx-auto font-light">
+          <p className="text-sm text-text-primary dark:text-white max-w-xl mx-auto font-light">
             Un vistazo a los momentos que nos han traído hasta aquí
           </p>
         </motion.div>

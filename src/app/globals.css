@@ -33,11 +33,53 @@ body.modal-open {
   --beige-light: #f5ebe3;
   --beige-dark: #d4b8a3;
   --cream: #fdfcfa;
-  --soft-gray: #6b7280;
   --warm-white: #fdfbf7;
   --accent: #b8956d;
   --accent-hover: #a17f5a;
-  --text-muted: #9ca3af;
+  
+  /* Brown/Coffee colors */
+  --coffee-light: #8b6836;
+  --coffee-medium: #6b4e2a;
+  --coffee-dark: #5a3f23;
+  --coffee-darker: #3d2817;
+  --coffee-darkest: #2a1a0f;
+  
+  /* Modal and component backgrounds */
+  --modal-bg: #ffffff;
+  --modal-overlay: rgba(0, 0, 0, 0.6);
+  --button-primary: #6F4E37;
+  --button-text: #f5e6d3;
+  
+  /* Music player */
+  --music-bg: #f5e6d3;
+  --music-border: #d4a574;
+  --music-wave: #8b6836;
+  
+  /* Stone colors (neutral warm grays) */
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-300: #d6d3d1;
+  --stone-400: #a8a29e;
+  --stone-500: #78716c;
+  --stone-600: #57534e;
+  --stone-700: #44403c;
+  --stone-800: #292524;
+  --stone-900: #1c1917;
+  
+  /* Text colors */
+  --text-primary: #292524;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+  --text-light: #a8a29e;
+  
+  /* Border colors */
+  --border-light: #e7e5e4;
+  --border-medium: #d6d3d1;
+  
+  /* Shadow colors */
+  --shadow-color: rgba(41, 37, 36, 0.1);
+  --shadow-color-strong: rgba(41, 37, 36, 0.15);
 }
 
 @theme inline {
@@ -49,11 +91,33 @@ body.modal-open {
   --color-beige-light: var(--beige-light);
   --color-beige-dark: var(--beige-dark);
   --color-cream: var(--cream);
-  --color-soft-gray: var(--soft-gray);
   --color-warm-white: var(--warm-white);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  
+  /* Stone colors */
+  --color-stone-50: var(--stone-50);
+  --color-stone-100: var(--stone-100);
+  --color-stone-200: var(--stone-200);
+  --color-stone-300: var(--stone-300);
+  --color-stone-400: var(--stone-400);
+  --color-stone-500: var(--stone-500);
+  --color-stone-600: var(--stone-600);
+  --color-stone-700: var(--stone-700);
+  --color-stone-800: var(--stone-800);
+  --color-stone-900: var(--stone-900);
+  
+  /* Text colors */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
+  --color-text-light: var(--text-light);
+  
+  /* Border colors */
+  --color-border-light: var(--border-light);
+  --color-border-medium: var(--border-medium);
+  
+  /* Fonts */
   --font-lato: var(--font-lato);
   --font-cormorant: var(--font-cormorant);
 }
@@ -61,18 +125,57 @@ body.modal-open {
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #faf8f6;
+    --foreground: #fdfcfa;
     --card-bg: #1a1a1a;
     --card-border: rgba(139, 115, 85, 0.4);
     --beige: #a68b73;
     --beige-light: #b39a87;
     --beige-dark: #8a7360;
     --cream: #1a1a1a;
-    --soft-gray: #f5f0e8;
-    --warm-white: #1a1a1a;
+    --warm-white: #faf8f6;
     --accent: #b8956d;
     --accent-hover: #a17f5a;
-    --text-muted: #e8e2d9;
+    
+    /* Brown/Coffee colors for dark mode */
+    --coffee-light: #d4a574;
+    --coffee-medium: #b8956a;
+    --coffee-dark: #a08468;
+    --coffee-darker: #8b6836;
+    --coffee-darkest: #6b4e2a;
+    
+    /* Modal and component backgrounds for dark mode */
+    --modal-bg: #2a1a0f;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+    --button-primary: #8b6836;
+    --button-text: #f5e6d3;
+    
+    /* Music player for dark mode */
+    --music-bg: #f5e6d3;
+    --music-border: #b8956a;
+    --music-wave: #6b4e2a;
+    
+    /* Navigation for dark mode */
+    --nav-bg: rgba(42, 26, 15, 0.9);
+    --nav-border: rgba(180, 149, 106, 0.5);
+    --nav-icon: #d4a574;
+    --nav-icon-inactive: #a08468;
+    --nav-tooltip-bg: rgba(107, 78, 42, 0.9);
+    
+    /* Remove stone colors - use coffee colors instead */
+    
+    /* Text colors for dark mode */
+    --text-primary: #faf8f6;
+    --text-secondary: #f5f5f4;
+    --text-muted: #d6d3d1;
+    --text-light: #a8a29e;
+    
+    /* Border colors for dark mode */
+    --border-light: #292524;
+    --border-medium: #44403c;
+    
+    /* Shadow colors for dark mode */
+    --shadow-color: rgba(250, 248, 246, 0.1);
+    --shadow-color-strong: rgba(250, 248, 246, 0.15);
   }
 }
 

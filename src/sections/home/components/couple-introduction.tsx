@@ -28,7 +28,7 @@ export const CoupleIntroduction = () => {
               &ldquo;Eres con quien quiero compartir cada amanecer y atardecer.&rdquo;
             </p>
             <div className="w-16 h-px bg-accent/30 mx-auto mb-4"></div>
-            <p className="text-soft-gray text-sm sm:text-base">— Nuestro amor eterno</p>
+            <p className="text-text-muted text-sm sm:text-base">— Nuestro amor eterno</p>
           </div>
         </motion.div>
       </div>

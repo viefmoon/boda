@@ -36,6 +36,7 @@ export function CalendarButton({ event }: CalendarButtonProps) {
     const link = document.createElement('a');
     link.href = url;
     link.download = 'boda-sofia-oswaldo.ics';
+    
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

@@ -91,7 +91,7 @@ export const getDeviceType = (): 'ios' | 'android' | 'desktop' => {
   const userAgent = navigator.userAgent || navigator.vendor;
   
   // iOS detection
-  if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
+  if (/iPad|iPhone|iPod/.test(userAgent) && !('MSStream' in window)) {
     return 'ios';
   }
   

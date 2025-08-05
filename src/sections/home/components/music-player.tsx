@@ -20,6 +20,7 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
 
   const startMusic = async () => {
     const audio = audioRef.current;
+    
     if (!audio || isPlaying) return;
 
     try {
@@ -37,6 +38,7 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
 
   useEffect(() => {
     const audio = audioRef.current;
+    
     if (!audio) return;
 
     const updateTime = () => setCurrentTime(audio.currentTime);
@@ -58,6 +60,7 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
 
   const togglePlayPause = async () => {
     const audio = audioRef.current;
+    
     if (!audio) return;
 
     if (isPlaying) {

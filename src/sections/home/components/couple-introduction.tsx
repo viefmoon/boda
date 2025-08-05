@@ -1,20 +1,9 @@
 'use client';
 
-import type { WeddingConfigType } from '@/types';
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
 
-interface CoupleIntroductionProps {
-  bride: WeddingConfigType['bride'];
-  groom: WeddingConfigType['groom'];
-  isVisible: boolean;
-}
-
-export const CoupleIntroduction = ({
-  bride,
-  groom,
-}: CoupleIntroductionProps) => {
-
+export const CoupleIntroduction = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,

@@ -50,6 +50,7 @@ export default function HomeView() {
 
   const handleWelcomeModalClose = async () => {
     setShowWelcomeModal(false);
+    
     if (musicPlayerRef.current) {
       await musicPlayerRef.current.startMusic();
     }
@@ -79,11 +80,7 @@ export default function HomeView() {
 
       {/* Couple Introduction */}
       <section id="couple" className="relative">
-        <CoupleIntroduction
-          bride={WEDDING_CONFIG.bride}
-          groom={WEDDING_CONFIG.groom}
-          isVisible={isLoaded}
-        />
+        <CoupleIntroduction />
       </section>
 
       {/* Wedding Details */}

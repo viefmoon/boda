@@ -26,60 +26,65 @@ body.modal-open {
 
 :root {
   --background: #ffffff;
-  --foreground: #1a1a1a;
-  --card-bg: #fdfbf7;
+  --foreground: #000000;
+  --card-bg: #fafafa;
   --card-border: rgba(229, 231, 235, 0.5);
-  --beige: #e5d1bf;
-  --beige-light: #f5ebe3;
-  --beige-dark: #d4b8a3;
-  --cream: #fdfcfa;
-  --warm-white: #fdfbf7;
-  --accent: #b8956d;
-  --accent-hover: #a17f5a;
+  --beige: #e0e0e0;
+  --beige-light: #f5f5f5;
+  --beige-dark: #b8b8b8;
+  --cream: #fafafa;
+  --warm-white: #f9f9f9;
+  --accent: #404040;
+  --accent-hover: #2a2a2a;
   
-  /* Brown/Coffee colors */
-  --coffee-light: #8b6836;
-  --coffee-medium: #6b4e2a;
-  --coffee-dark: #5a3f23;
-  --coffee-darker: #3d2817;
-  --coffee-darkest: #2a1a0f;
+  /* Gray scale colors */
+  --gray-50: #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --gray-800: #262626;
+  --gray-900: #171717;
   
   /* Modal and component backgrounds */
   --modal-bg: #ffffff;
-  --modal-overlay: rgba(0, 0, 0, 0.6);
-  --button-primary: #6F4E37;
-  --button-text: #f5e6d3;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --button-primary: #000000;
+  --button-text: #ffffff;
   
   /* Music player */
-  --music-bg: #f5e6d3;
-  --music-border: #d4a574;
-  --music-wave: #8b6836;
+  --music-bg: #f5f5f5;
+  --music-border: #d4d4d4;
+  --music-wave: #737373;
   
-  /* Stone colors (neutral warm grays) */
-  --stone-50: #fafaf9;
-  --stone-100: #f5f5f4;
-  --stone-200: #e7e5e4;
-  --stone-300: #d6d3d1;
-  --stone-400: #a8a29e;
-  --stone-500: #78716c;
-  --stone-600: #57534e;
-  --stone-700: #44403c;
-  --stone-800: #292524;
-  --stone-900: #1c1917;
+  /* Stone colors (neutral grays) */
+  --stone-50: #fafafa;
+  --stone-100: #f5f5f5;
+  --stone-200: #e5e5e5;
+  --stone-300: #d4d4d4;
+  --stone-400: #a3a3a3;
+  --stone-500: #737373;
+  --stone-600: #525252;
+  --stone-700: #404040;
+  --stone-800: #262626;
+  --stone-900: #171717;
   
   /* Text colors */
-  --text-primary: #292524;
-  --text-secondary: #44403c;
-  --text-muted: #78716c;
-  --text-light: #a8a29e;
+  --text-primary: #000000;
+  --text-secondary: #404040;
+  --text-muted: #737373;
+  --text-light: #a3a3a3;
   
   /* Border colors */
-  --border-light: #e7e5e4;
-  --border-medium: #d6d3d1;
+  --border-light: #e5e5e5;
+  --border-medium: #d4d4d4;
   
   /* Shadow colors */
-  --shadow-color: rgba(41, 37, 36, 0.1);
-  --shadow-color-strong: rgba(41, 37, 36, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-strong: rgba(0, 0, 0, 0.15);
 }
 
 @theme inline {
@@ -124,58 +129,73 @@ body.modal-open {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #fdfcfa;
-    --card-bg: #1a1a1a;
-    --card-border: rgba(139, 115, 85, 0.4);
-    --beige: #a68b73;
-    --beige-light: #b39a87;
-    --beige-dark: #8a7360;
-    --cream: #1a1a1a;
-    --warm-white: #faf8f6;
-    --accent: #b8956d;
-    --accent-hover: #a17f5a;
+    --background: #000000;
+    --foreground: #ffffff;
+    --card-bg: #171717;
+    --card-border: rgba(255, 255, 255, 0.1);
+    --beige: #737373;
+    --beige-light: #a3a3a3;
+    --beige-dark: #525252;
+    --cream: #171717;
+    --warm-white: #fafafa;
+    --accent: #ffffff;
+    --accent-hover: #e5e5e5;
     
-    /* Brown/Coffee colors for dark mode */
-    --coffee-light: #d4a574;
-    --coffee-medium: #b8956a;
-    --coffee-dark: #a08468;
-    --coffee-darker: #8b6836;
-    --coffee-darkest: #6b4e2a;
+    /* Gray scale colors for dark mode */
+    --gray-50: #171717;
+    --gray-100: #262626;
+    --gray-200: #404040;
+    --gray-300: #525252;
+    --gray-400: #737373;
+    --gray-500: #a3a3a3;
+    --gray-600: #d4d4d4;
+    --gray-700: #e5e5e5;
+    --gray-800: #f5f5f5;
+    --gray-900: #fafafa;
     
     /* Modal and component backgrounds for dark mode */
-    --modal-bg: #2a1a0f;
-    --modal-overlay: rgba(0, 0, 0, 0.7);
-    --button-primary: #8b6836;
-    --button-text: #f5e6d3;
+    --modal-bg: #171717;
+    --modal-overlay: rgba(0, 0, 0, 0.8);
+    --button-primary: #ffffff;
+    --button-text: #000000;
     
     /* Music player for dark mode */
-    --music-bg: #f5e6d3;
-    --music-border: #b8956a;
-    --music-wave: #6b4e2a;
+    --music-bg: #262626;
+    --music-border: #525252;
+    --music-wave: #a3a3a3;
     
     /* Navigation for dark mode */
-    --nav-bg: rgba(42, 26, 15, 0.9);
-    --nav-border: rgba(180, 149, 106, 0.5);
-    --nav-icon: #d4a574;
-    --nav-icon-inactive: #a08468;
-    --nav-tooltip-bg: rgba(107, 78, 42, 0.9);
+    --nav-bg: rgba(0, 0, 0, 0.9);
+    --nav-border: rgba(255, 255, 255, 0.1);
+    --nav-icon: #ffffff;
+    --nav-icon-inactive: #737373;
+    --nav-tooltip-bg: rgba(38, 38, 38, 0.9);
     
-    /* Remove stone colors - use coffee colors instead */
+    /* Stone colors for dark mode */
+    --stone-50: #171717;
+    --stone-100: #262626;
+    --stone-200: #404040;
+    --stone-300: #525252;
+    --stone-400: #737373;
+    --stone-500: #a3a3a3;
+    --stone-600: #d4d4d4;
+    --stone-700: #e5e5e5;
+    --stone-800: #f5f5f5;
+    --stone-900: #fafafa;
     
     /* Text colors for dark mode */
-    --text-primary: #faf8f6;
-    --text-secondary: #f5f5f4;
-    --text-muted: #d6d3d1;
-    --text-light: #a8a29e;
+    --text-primary: #ffffff;
+    --text-secondary: #e5e5e5;
+    --text-muted: #a3a3a3;
+    --text-light: #737373;
     
     /* Border colors for dark mode */
-    --border-light: #292524;
-    --border-medium: #44403c;
+    --border-light: #262626;
+    --border-medium: #404040;
     
     /* Shadow colors for dark mode */
-    --shadow-color: rgba(250, 248, 246, 0.1);
-    --shadow-color-strong: rgba(250, 248, 246, 0.15);
+    --shadow-color: rgba(255, 255, 255, 0.1);
+    --shadow-color-strong: rgba(255, 255, 255, 0.15);
   }
 }
 

@@ -20,7 +20,7 @@ export const WEDDING_CONFIG = {
     reception: {
       name: 'La Magnolia',
       address: 'C. México 28, Ferrocarril, 47830 Ocotlán, Jal.',
-      time: '6:30 PM',
+      time: '6:00 PM',
       mapUrl: 'https://maps.app.goo.gl/qBpGVzWnBh4UdYfw9',
     },
   },

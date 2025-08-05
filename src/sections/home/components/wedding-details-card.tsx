@@ -5,7 +5,7 @@ import {
   formatWeddingTime,
   generateGoogleCalendarLink,
 } from '@/lib/wedding-utils';
-import { Calendar, Clock, PartyPopper, Gift } from 'lucide-react';
+import { Calendar, Clock, PartyPopper, Gift, Hotel } from 'lucide-react';
 import { WEDDING_CONFIG } from '@/constants/wedding';
 
 interface WeddingDetailsCardProps {
@@ -189,6 +189,62 @@ export const WeddingDetailsCard = ({
             </a>
           </div>
 
+        </motion.div>
+
+        {/* Accommodation Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 0.2 }}
+          className="max-w-5xl mx-auto mt-8"
+        >
+          <div className="bg-card-bg rounded-xl p-6 border border-card-border">
+            <Hotel className="w-8 h-8 text-text-muted mx-auto mb-3" />
+            <h4 className="font-medium text-lg text-stone-900 dark:text-foreground mb-2 text-center">
+              Hospedaje Disponible
+            </h4>
+            <p className="text-sm text-text-secondary dark:text-warm-white/90 mb-4 text-center">
+              Opciones de hospedaje cercanas al lugar del evento
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Hotel 1 */}
+              <a
+                href="https://maps.app.goo.gl/N7kSYgARU7isLD177?g_st=iw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white dark:bg-stone-800/20 p-4 rounded-lg border border-border-light dark:border-stone-700 hover:bg-accent/5 dark:hover:bg-accent/10 transition-all duration-200 text-center group"
+              >
+                <Hotel className="w-6 h-6 text-accent mx-auto mb-2 group-hover:scale-110 transition-transform" />
+                <p className="text-sm font-medium text-text-primary dark:text-warm-white mb-1">Hotel Acuario</p>
+                <p className="text-xs text-accent group-hover:text-accent-hover">Ver ubicación →</p>
+              </a>
+              
+              {/* Hotel 2 */}
+              <a
+                href="https://maps.app.goo.gl/KfHuqpXMTXeVBJNj9?g_st=iw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white dark:bg-stone-800/20 p-4 rounded-lg border border-border-light dark:border-stone-700 hover:bg-accent/5 dark:hover:bg-accent/10 transition-all duration-200 text-center group"
+              >
+                <Hotel className="w-6 h-6 text-accent mx-auto mb-2 group-hover:scale-110 transition-transform" />
+                <p className="text-sm font-medium text-text-primary dark:text-warm-white mb-1">Hotel Posada Santa Fe</p>
+                <p className="text-xs text-accent group-hover:text-accent-hover">Ver ubicación →</p>
+              </a>
+              
+              {/* Hotel 3 */}
+              <a
+                href="https://maps.app.goo.gl/QmfQZvRx9rc778rQ8?g_st=iw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white dark:bg-stone-800/20 p-4 rounded-lg border border-border-light dark:border-stone-700 hover:bg-accent/5 dark:hover:bg-accent/10 transition-all duration-200 text-center group"
+              >
+                <Hotel className="w-6 h-6 text-accent mx-auto mb-2 group-hover:scale-110 transition-transform" />
+                <p className="text-sm font-medium text-text-primary dark:text-warm-white mb-1">Hotel Pabela</p>
+                <p className="text-xs text-accent group-hover:text-accent-hover">Ver ubicación →</p>
+              </a>
+            </div>
+          </div>
         </motion.div>
 
         {/* Gift Registry */}

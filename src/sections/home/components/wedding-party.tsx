@@ -58,7 +58,7 @@ export const WeddingParty = () => {
             Nuestros Padrinos
           </h2>
           <div className="w-16 h-px bg-accent/30 mx-auto"></div>
-          <p className="text-sm text-text-muted mt-3 max-w-xl mx-auto font-light">
+          <p className="text-sm text-gray-800 dark:text-white mt-3 max-w-xl mx-auto font-light">
             Agradecemos a quienes nos acompañan
           </p>
         </motion.div>
@@ -84,7 +84,7 @@ export const WeddingParty = () => {
               
               <div className="space-y-1 pl-11">
                 {padrino.personas.map((persona, personaIndex) => (
-                  <p key={personaIndex} className="text-sm text-text-muted">
+                  <p key={personaIndex} className="text-sm text-gray-800 dark:text-white">
                     {persona}
                   </p>
                 ))}
@@ -101,7 +101,7 @@ export const WeddingParty = () => {
           className="mt-8 text-center"
         >
           <div className="bg-card-bg/50 backdrop-blur-sm rounded-xl p-4 max-w-2xl mx-auto border border-card-border">
-            <p className="text-foreground text-sm italic font-light">
+            <p className="text-gray-900 dark:text-white text-sm italic font-light">
               &ldquo;Gracias por ser parte de nuestra historia&rdquo;
             </p>
           </div>

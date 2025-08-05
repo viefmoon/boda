@@ -32,15 +32,15 @@ export const GalleryPreview = () => {
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
-          transition={{ duration: 0.8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
           className="text-center mb-8"
         >
           <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-3 font-light">
             Nuestra Historia de Amor
           </h2>
           <div className="w-16 h-px bg-accent/30 mx-auto mb-4"></div>
-          <p className="text-sm text-text-muted max-w-xl mx-auto font-light">
+          <p className="text-sm text-gray-800 dark:text-white max-w-xl mx-auto font-light">
             Un vistazo a los momentos que nos han traído hasta aquí
           </p>
         </motion.div>
@@ -49,9 +49,9 @@ export const GalleryPreview = () => {
           {galleryImages.map((imageName, index) => (
             <motion.div
               key={`gallery-${index}`}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: inView ? 1 : 0, scale: inView ? 1 : 0.8 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2, delay: index * 0.02 }}
               className="group relative aspect-square bg-card-bg rounded-xl shadow-md overflow-hidden border border-card-border hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
               {/* Actual Image */}
@@ -59,7 +59,7 @@ export const GalleryPreview = () => {
                 src={`/assets/images/gallery/${imageName}`}
                 alt={`Memoria ${index + 1}`}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                loading="lazy"
+                loading="eager"
               />
 
               {/* Overlay */}

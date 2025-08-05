@@ -21,10 +21,10 @@ export function NavigationButton({
   const baseClasses =
     'relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all duration-300 group cursor-pointer';
 
-  const activeClasses = 'text-white';
+  const activeClasses = 'text-accent dark:text-white';
 
   const inactiveClasses =
-    'text-white/70 hover:text-white';
+    'text-gray-600 dark:text-white/70 hover:text-accent dark:hover:text-white';
 
   return (
     <motion.button
@@ -44,7 +44,7 @@ export function NavigationButton({
             animate={NAVIGATION_ANIMATIONS.background.animate}
             exit={NAVIGATION_ANIMATIONS.background.exit}
             transition={NAVIGATION_ANIMATIONS.background.transition}
-            className="absolute inset-0 bg-white/20 rounded-full"
+            className="absolute inset-0 bg-accent/20 dark:bg-white/20 rounded-full"
           />
         )}
       </AnimatePresence>
@@ -84,7 +84,7 @@ export function NavigationButton({
             transition={{ duration: 0.3 }}
             className="absolute inset-0 rounded-full"
           >
-            <div className="absolute inset-0 bg-white/10 rounded-full blur-xl" />
+            <div className="absolute inset-0 bg-accent/10 dark:bg-white/10 rounded-full blur-xl" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -94,7 +94,7 @@ export function NavigationButton({
         initial={{ opacity: 0, y: 10 }}
         whileHover={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2 }}
-        className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none"
+        className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-gray-900/90 dark:bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none shadow-lg"
       >
         {section.label}
       </motion.div>

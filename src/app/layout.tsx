@@ -32,8 +32,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${lato.variable} ${cormorant.variable} antialiased bg-background text-foreground overflow-x-hidden`}>
-        <div className="min-h-screen w-full overflow-x-hidden">
+      <body className={`${lato.variable} ${cormorant.variable} antialiased bg-background text-foreground`}>
+        <div className="min-h-screen w-full">
           {children}
         </div>
         <Toaster />

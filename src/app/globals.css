@@ -1,16 +1,27 @@
 @import 'tailwindcss';
+@import './scroll-fixes.css';
 
-/* Prevenir overflow horizontal */
-html, body {
+/* Reset y mejoras de scroll */
+html {
+  scroll-behavior: smooth;
   overflow-x: hidden;
-  width: 100%;
-  position: relative;
 }
 
-/* Asegurar que el contenido no se desborde */
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Mejora de rendimiento de scroll */
 * {
-  max-width: 100%;
   box-sizing: border-box;
+}
+
+/* Asegurar que los modales no interfieran con el scroll del body */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
 
 :root {
@@ -50,18 +61,18 @@ html, body {
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #f8f6f2;
+    --foreground: #faf8f6;
     --card-bg: #1a1a1a;
     --card-border: rgba(139, 115, 85, 0.4);
     --beige: #a68b73;
     --beige-light: #b39a87;
     --beige-dark: #8a7360;
     --cream: #1a1a1a;
-    --soft-gray: #e2ddd5;
+    --soft-gray: #f5f0e8;
     --warm-white: #1a1a1a;
     --accent: #b8956d;
     --accent-hover: #a17f5a;
-    --text-muted: #d4cfc7;
+    --text-muted: #e8e2d9;
   }
 }
 

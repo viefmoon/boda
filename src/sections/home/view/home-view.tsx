@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useScrollSpy } from '@/hooks/use-scroll-spy';
+import { useSmoothScroll } from '@/hooks/use-smooth-scroll';
 import {
   HeroSection,
   CoupleIntroduction,
@@ -16,6 +17,8 @@ import {
   ScrollProgressIndicator,
   WelcomeModal,
 } from '../components';
+import { ScrollOptimizer } from '@/components/scroll-optimizer';
+import { ContentPreloader } from '@/components/content-preloader';
 import { NAVIGATION_SECTIONS, WEDDING_CONFIG } from '@/constants';
 
 import type { MusicPlayerRef } from '../components/music-player';
@@ -24,6 +27,7 @@ export default function HomeView() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const musicPlayerRef = useRef<MusicPlayerRef>(null);
+  const { scrollToElement } = useSmoothScroll();
 
   const activeSection = useScrollSpy(
     NAVIGATION_SECTIONS.map((section) => section.id)
@@ -38,14 +42,7 @@ export default function HomeView() {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
+    scrollToElement(sectionId);
   };
 
   const handleWelcomeModalClose = async () => {
@@ -58,6 +55,12 @@ export default function HomeView() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Scroll Optimizer */}
+      <ScrollOptimizer />
+      
+      {/* Content Preloader */}
+      <ContentPreloader />
+      
       {/* Welcome Modal */}
       <WelcomeModal 
         isOpen={showWelcomeModal} 

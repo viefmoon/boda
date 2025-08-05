@@ -66,32 +66,32 @@ export const CountdownTimer = ({ targetDate }: CountdownTimerProps) => {
           <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-4">
             <div className="flex items-baseline gap-1">
               <span className="text-3xl sm:text-4xl md:text-5xl font-serif text-accent font-light">{timeLeft.days}</span>
-              <span className="text-sm sm:text-base md:text-lg text-text-muted">días</span>
+              <span className="text-sm sm:text-base md:text-lg text-gray-800 dark:text-white">días</span>
             </div>
             
-            <span className="text-text-muted text-base sm:text-lg">:</span>
+            <span className="text-gray-800 dark:text-white text-base sm:text-lg">:</span>
             
             <div className="flex items-baseline gap-0.5 sm:gap-1">
               <span className="text-3xl sm:text-4xl md:text-5xl font-serif text-accent font-light">{timeLeft.hours.toString().padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm md:text-base text-text-muted">h</span>
+              <span className="text-xs sm:text-sm md:text-base text-gray-800 dark:text-white">h</span>
             </div>
             
-            <span className="text-text-muted text-base sm:text-lg">:</span>
+            <span className="text-gray-800 dark:text-white text-base sm:text-lg">:</span>
             
             <div className="flex items-baseline gap-0.5 sm:gap-1">
               <span className="text-3xl sm:text-4xl md:text-5xl font-serif text-accent font-light">{timeLeft.minutes.toString().padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm md:text-base text-text-muted">m</span>
+              <span className="text-xs sm:text-sm md:text-base text-gray-800 dark:text-white">m</span>
             </div>
             
-            <span className="text-text-muted text-base sm:text-lg">:</span>
+            <span className="text-gray-800 dark:text-white text-base sm:text-lg">:</span>
             
             <div className="flex items-baseline gap-0.5 sm:gap-1">
               <span className="text-3xl sm:text-4xl md:text-5xl font-serif text-accent font-light">{timeLeft.seconds.toString().padStart(2, '0')}</span>
-              <span className="text-xs sm:text-sm md:text-base text-text-muted">s</span>
+              <span className="text-xs sm:text-sm md:text-base text-gray-800 dark:text-white">s</span>
             </div>
           </div>
           
-          <p className="text-base text-text-muted mt-4">El gran día se acerca</p>
+          <p className="text-base text-gray-800 dark:text-white mt-4">El gran día se acerca</p>
         </div>
       </motion.div>
     </div>

@@ -24,7 +24,7 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="mb-8"
         >
@@ -36,7 +36,7 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: inView ? 1 : 0, scale: inView ? 1 : 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="bg-card-bg/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-card-border mb-12"
         >
@@ -53,7 +53,7 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="space-y-6"
         >

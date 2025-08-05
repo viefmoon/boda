@@ -28,9 +28,8 @@ export const WeddingDetailsCard = ({
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-foreground mb-4 font-light">
@@ -45,15 +44,14 @@ export const WeddingDetailsCard = ({
         {/* Date Card - Compact Elegant Design */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative bg-card-bg rounded-2xl shadow-xl p-8 mb-8 border border-card-border"
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 0.1 }}
+          className="relative bg-white dark:bg-card-bg rounded-2xl shadow-xl p-8 mb-8 border border-gray-200 dark:border-card-border"
         >
           <div className="text-center">
             {/* Date Header */}
             <div className="mb-6">
-              <span className="text-xs font-light text-text-muted tracking-[0.3em] uppercase">
+              <span className="text-sm sm:text-base font-medium text-gray-800 dark:text-warm-white tracking-[0.2em] uppercase">
                 Guarda la Fecha
               </span>
             </div>
@@ -62,26 +60,26 @@ export const WeddingDetailsCard = ({
             <div className="space-y-4 mb-8">
               {/* Main Date */}
               <div className="flex items-center justify-center gap-3">
-                <h3 className="text-4xl md:text-5xl font-serif text-foreground">
+                <h3 className="text-4xl md:text-5xl font-serif text-gray-900 dark:text-warm-white">
                   {date.getDate()}
                 </h3>
                 <div className="text-left">
-                  <p className="text-xl font-serif text-soft-gray">
+                  <p className="text-xl font-serif text-gray-700 dark:text-warm-white">
                     {date.toLocaleDateString('es-ES', { month: 'long' })}
                   </p>
-                  <p className="text-sm text-text-muted">
+                  <p className="text-sm text-gray-600 dark:text-warm-white/80">
                     {date.getFullYear()}
                   </p>
                 </div>
               </div>
 
               {/* Day and Time */}
-              <div className="flex items-center justify-center gap-6 text-sm text-text-muted">
-                <span className="capitalize">
+              <div className="flex items-center justify-center gap-6 text-sm text-gray-700 dark:text-warm-white/90">
+                <span className="capitalize font-medium">
                   {date.toLocaleDateString('es-ES', { weekday: 'long' })}
                 </span>
-                <span>•</span>
-                <span className="flex items-center gap-1">
+                <span className="text-gray-400">•</span>
+                <span className="flex items-center gap-1 font-medium">
                   <Clock className="w-4 h-4" />
                   {formatWeddingTime(date, 'es-ES')}
                 </span>
@@ -106,9 +104,8 @@ export const WeddingDetailsCard = ({
         {/* Additional Info Grid */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 0.15 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto"
         >
           {/* Dress Code */}
@@ -129,13 +126,13 @@ export const WeddingDetailsCard = ({
                 />
               </div>
             </div>
-            <h4 className="font-medium text-foreground mb-1">
+            <h4 className="font-medium text-lg text-gray-900 dark:text-foreground mb-1">
               Código de Vestimenta
             </h4>
-            <p className="text-sm text-text-muted font-medium">
+            <p className="text-base text-gray-800 dark:text-warm-white font-medium">
               All Black
             </p>
-            <p className="text-xs text-text-muted/60 mt-1">
+            <p className="text-sm text-gray-700 dark:text-warm-white/80 mt-1">
               (Blanco prohibido)
             </p>
           </div>
@@ -143,16 +140,16 @@ export const WeddingDetailsCard = ({
           {/* Ceremony */}
           <div className="bg-card-bg rounded-xl p-6 border border-card-border">
             <div className="text-3xl mb-3 text-center">⛪</div>
-            <h4 className="font-medium text-foreground mb-2 text-center">
+            <h4 className="font-medium text-lg text-gray-900 dark:text-foreground mb-2 text-center">
               Ceremonia
             </h4>
-            <p className="text-xs text-text-muted mb-1 text-center font-medium">
+            <p className="text-sm text-gray-800 dark:text-warm-white mb-1 text-center font-medium">
               {WEDDING_CONFIG.venue.ceremony.name}
             </p>
-            <p className="text-xs text-text-muted mb-3 text-center">
+            <p className="text-sm text-gray-700 dark:text-warm-white/90 mb-3 text-center">
               {WEDDING_CONFIG.venue.ceremony.address}
             </p>
-            <div className="flex items-center justify-center gap-1 text-xs text-text-muted mb-3">
+            <div className="flex items-center justify-center gap-1 text-sm text-gray-700 dark:text-warm-white/90 mb-3">
               <Clock className="w-3 h-3" />
               <span>{WEDDING_CONFIG.venue.ceremony.time}</span>
             </div>
@@ -160,7 +157,7 @@ export const WeddingDetailsCard = ({
               href={WEDDING_CONFIG.venue.ceremony.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-center text-xs bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors"
+              className="block w-full text-center text-sm bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors"
             >
               Ver en mapa
             </a>
@@ -169,16 +166,16 @@ export const WeddingDetailsCard = ({
           {/* Reception */}
           <div className="bg-card-bg rounded-xl p-6 border border-card-border">
             <PartyPopper className="w-8 h-8 text-text-muted mx-auto mb-3" />
-            <h4 className="font-medium text-foreground mb-2 text-center">
+            <h4 className="font-medium text-lg text-gray-900 dark:text-foreground mb-2 text-center">
               Recepción
             </h4>
-            <p className="text-xs text-text-muted mb-1 text-center font-medium">
+            <p className="text-sm text-gray-800 dark:text-warm-white mb-1 text-center font-medium">
               {WEDDING_CONFIG.venue.reception.name}
             </p>
-            <p className="text-xs text-text-muted mb-3 text-center">
+            <p className="text-sm text-gray-700 dark:text-warm-white/90 mb-3 text-center">
               {WEDDING_CONFIG.venue.reception.address}
             </p>
-            <div className="flex items-center justify-center gap-1 text-xs text-text-muted mb-3">
+            <div className="flex items-center justify-center gap-1 text-sm text-gray-700 dark:text-warm-white/90 mb-3">
               <Clock className="w-3 h-3" />
               <span>{WEDDING_CONFIG.venue.reception.time}</span>
             </div>
@@ -186,7 +183,7 @@ export const WeddingDetailsCard = ({
               href={WEDDING_CONFIG.venue.reception.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-center text-xs bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors"
+              className="block w-full text-center text-sm bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors"
             >
               Ver en mapa
             </a>
@@ -197,27 +194,26 @@ export const WeddingDetailsCard = ({
         {/* Gift Registry */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 0.2 }}
           className="max-w-2xl mx-auto mt-8"
         >
           <div className="bg-card-bg rounded-xl p-6 border border-card-border">
             <Gift className="w-8 h-8 text-text-muted mx-auto mb-3" />
-            <h4 className="font-medium text-foreground mb-2 text-center">
+            <h4 className="font-medium text-lg text-gray-900 dark:text-foreground mb-2 text-center">
               Mesa de Regalos
             </h4>
-            <p className="text-xs text-text-muted mb-1 text-center font-medium">
+            <p className="text-sm text-gray-800 dark:text-warm-white mb-1 text-center font-medium">
               Tu presencia es nuestro mejor regalo
             </p>
-            <p className="text-xs text-text-muted mb-3 text-center">
+            <p className="text-sm text-gray-700 dark:text-warm-white/90 mb-3 text-center">
               Si deseas obsequiarnos algo, hemos preparado una lista de regalos en Amazon
             </p>
             <a
               href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-center text-xs bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors"
+              className="block w-full text-center text-sm bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors"
             >
               Ver Mesa de Regalos
             </a>

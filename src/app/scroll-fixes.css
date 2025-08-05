@@ -1,0 +1,70 @@
+/* Z-index hierarchy para evitar conflictos */
+:root {
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-notification: 60;
+  --z-tooltip: 70;
+}
+
+/* Aplicar z-index a elementos específicos */
+.floating-navigation {
+  z-index: var(--z-fixed);
+}
+
+.music-player {
+  z-index: var(--z-fixed);
+}
+
+.modal-backdrop {
+  z-index: var(--z-modal-backdrop);
+}
+
+.modal-content {
+  z-index: var(--z-modal);
+}
+
+/* Optimización de scroll para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Momentum scrolling en iOS */
+  .scroll-container {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+  }
+  
+  /* Prevenir zoom no deseado en inputs */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Mejora del rendimiento de animaciones durante el scroll */
+.is-scrolling .fixed {
+  will-change: auto;
+}
+
+/* Smooth scroll con soporte para reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

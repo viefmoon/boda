@@ -25,7 +25,7 @@ export default function FloatingNavigation({
     >
       <motion.div
         whileHover={{ y: -2 }}
-        className="bg-white/10 backdrop-blur-md rounded-full px-2 sm:px-3 py-2 sm:py-2.5 shadow-lg border border-white/20 hover:bg-white/15 transition-all duration-300"
+        className="bg-white/90 dark:bg-gray-900/80 backdrop-blur-md rounded-full px-2 sm:px-3 py-2 sm:py-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.1)] border border-gray-200 dark:border-white/20 hover:bg-white dark:hover:bg-gray-900/90 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_12px_40px_rgba(255,255,255,0.15)] transition-all duration-300"
       >
         <div className="flex items-center space-x-4 sm:space-x-6">
           {NAVIGATION_SECTIONS.map((section, index) => (

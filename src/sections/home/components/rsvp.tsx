@@ -62,7 +62,7 @@ export const RSVP = () => {
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mb-4">
               ¡Gracias!
             </h3>
-            <p className="text-foreground/70 text-base sm:text-lg md:text-xl">
+            <p className="text-gray-800 dark:text-white text-base sm:text-lg md:text-xl">
               Hemos recibido tu confirmación. ¡Nos vemos pronto!
             </p>
             <div className="mt-6 text-2xl text-accent">♥</div>
@@ -81,7 +81,7 @@ export const RSVP = () => {
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-8"
         >
@@ -89,7 +89,7 @@ export const RSVP = () => {
             Confirmación de Asistencia
           </h2>
           <div className="w-16 h-px bg-accent/30 mx-auto mb-3"></div>
-          <p className="text-sm text-text-muted max-w-xl mx-auto font-light">
+          <p className="text-sm text-gray-800 dark:text-white max-w-xl mx-auto font-light">
             Por favor, confírmanos tu asistencia para nuestro gran día
           </p>
         </motion.div>
@@ -98,14 +98,14 @@ export const RSVP = () => {
           {/* RSVP Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : -50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="bg-card-bg rounded-3xl p-8 shadow-lg border border-card-border">
               <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-3 text-center">
                 Confirma tu Asistencia
               </h3>
-              <p className="text-sm text-foreground/70 text-center mb-6">
+              <p className="text-sm text-gray-800 dark:text-white text-center mb-6">
                 Fecha límite: <span className="font-medium text-accent">15 de mayo de 2025</span>
               </p>
 
@@ -114,7 +114,7 @@ export const RSVP = () => {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
+                    className="block text-xs sm:text-sm font-medium text-gray-800 dark:text-white mb-2"
                   >
                     Nombre completo *
                   </label>
@@ -125,7 +125,7 @@ export const RSVP = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
+                    className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                     placeholder="Nombre completo"
                   />
                 </div>
@@ -133,7 +133,7 @@ export const RSVP = () => {
                 <div>
                   <label
                     htmlFor="attendance"
-                    className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
+                    className="block text-xs sm:text-sm font-medium text-gray-800 dark:text-white mb-2"
                   >
                     ¿Asistirás? *
                   </label>
@@ -143,7 +143,7 @@ export const RSVP = () => {
                     value={formData.attendance}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
+                    className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                   >
                     <option value="">Selecciona una opción</option>
                     <option value="yes">Sí, ahí estaré</option>
@@ -155,7 +155,7 @@ export const RSVP = () => {
                   <div>
                     <label
                       htmlFor="guests"
-                      className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
+                      className="block text-xs sm:text-sm font-medium text-gray-800 dark:text-white mb-2"
                     >
                       Número de invitados
                     </label>
@@ -164,7 +164,7 @@ export const RSVP = () => {
                       name="guests"
                       value={formData.guests}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
+                      className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                     >
                       <option value="1">1 persona</option>
                       <option value="2">2 personas</option>
@@ -188,7 +188,7 @@ export const RSVP = () => {
           {/* Info Side */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : 50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="space-y-8"
           >

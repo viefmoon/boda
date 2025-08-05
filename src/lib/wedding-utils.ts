@@ -52,3 +52,53 @@ const formatDateForGoogle = (date: Date): string => {
 export const generateMapLink = (address: string): string => {
   return `https://maps.google.com/maps?q=${encodeURIComponent(address)}`;
 };
+
+// Generate .ics file content for calendar apps
+export const generateICSFile = (event: {
+  title: string;
+  start: Date;
+  end: Date;
+  description?: string;
+  location?: string;
+}): string => {
+  const formatICSDate = (date: Date): string => {
+    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  };
+  
+  const icsContent = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Wedding App//ES',
+    'CALSCALE:GREGORIAN',
+    'METHOD:REQUEST',
+    'BEGIN:VEVENT',
+    `UID:${Date.now()}@wedding-app`,
+    `DTSTART:${formatICSDate(event.start)}`,
+    `DTEND:${formatICSDate(event.end)}`,
+    `SUMMARY:${event.title}`,
+    `DESCRIPTION:${event.description || ''}`,
+    `LOCATION:${event.location || ''}`,
+    'STATUS:CONFIRMED',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].join('\r\n');
+  
+  return icsContent;
+};
+
+// Detect device type
+export const getDeviceType = (): 'ios' | 'android' | 'desktop' => {
+  const userAgent = navigator.userAgent || navigator.vendor;
+  
+  // iOS detection
+  if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
+    return 'ios';
+  }
+  
+  // Android detection
+  if (/android/i.test(userAgent)) {
+    return 'android';
+  }
+  
+  return 'desktop';
+};

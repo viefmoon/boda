@@ -1,12 +1,10 @@
 'use client';
 
 import { motion } from 'motion/react';
-import {
-  formatWeddingTime,
-  generateGoogleCalendarLink,
-} from '@/lib/wedding-utils';
-import { Calendar, Clock, PartyPopper, Gift, Hotel } from 'lucide-react';
+import { formatWeddingTime } from '@/lib/wedding-utils';
+import { Clock, PartyPopper, Gift, Hotel } from 'lucide-react';
 import { WEDDING_CONFIG } from '@/constants/wedding';
+import { CalendarButton } from '@/components/calendar-button';
 
 interface WeddingDetailsCardProps {
   date: Date;
@@ -87,17 +85,12 @@ export const WeddingDetailsCard = ({
             </div>
 
             {/* Calendar Button */}
-            <motion.a
-              href={generateGoogleCalendarLink(calendarEvent)}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3 rounded-full font-medium text-sm shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Agregar al Calendario</span>
-            </motion.a>
+            <CalendarButton 
+              event={{
+                ...calendarEvent,
+                location: `${WEDDING_CONFIG.venue.ceremony.name}, ${WEDDING_CONFIG.venue.ceremony.address}`
+              }} 
+            />
           </div>
         </motion.div>
 
@@ -111,18 +104,18 @@ export const WeddingDetailsCard = ({
           {/* Dress Code */}
           <div className="bg-card-bg rounded-xl p-6 text-center border border-card-border">
             <div className="flex justify-center gap-3 mb-3">
-              <div className="bg-white/10 dark:bg-white/5 p-2 rounded-lg backdrop-blur-sm">
+              <div className="bg-stone-100 dark:bg-stone-800 p-2 rounded-lg">
                 <img 
                   src="/images/tuxedo.png" 
                   alt="Tuxedo" 
-                  className="w-12 h-12 object-contain dark:opacity-90 dark:filter dark:brightness-125"
+                  className="w-12 h-12 object-contain"
                 />
               </div>
-              <div className="bg-white/10 dark:bg-white/5 p-2 rounded-lg backdrop-blur-sm">
+              <div className="bg-stone-100 dark:bg-stone-800 p-2 rounded-lg">
                 <img 
                   src="/images/dress.png" 
                   alt="Dress" 
-                  className="w-12 h-12 object-contain dark:opacity-90 dark:filter dark:brightness-125"
+                  className="w-12 h-12 object-contain"
                 />
               </div>
             </div>
@@ -283,7 +276,7 @@ export const WeddingDetailsCard = ({
                   Transferencia bancaria
                 </p>
                 <p className="text-sm font-mono text-text-primary dark:text-warm-white text-center select-all">
-                  4152 3135 8254 1004
+                  4152 3136 9121 8288
                 </p>
               </div>
             </div>

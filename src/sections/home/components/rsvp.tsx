@@ -14,7 +14,7 @@ export const RSVP = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [ref, inView] = useInView({
+  const [ref] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });

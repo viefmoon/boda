@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 export const GalleryPreview = () => {
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
 
-  const [ref, inView] = useInView({
+  const [ref] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });

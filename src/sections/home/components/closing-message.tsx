@@ -10,7 +10,7 @@ interface ClosingMessageProps {
 
 export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
 
-  const [ref, inView] = useInView({
+  const [ref] = useInView({
     triggerOnce: true,
     threshold: 0.2,
   });

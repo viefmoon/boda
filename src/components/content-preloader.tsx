@@ -20,17 +20,18 @@ export const ContentPreloader = () => {
 
     criticalImages.forEach((src) => {
       const img = new Image();
+
       img.src = src;
     });
 
     // Precargar fuentes si es necesario
-    const fonts = [
-      'var(--font-lato)',
-      'var(--font-cormorant)',
-    ];
+    // const fonts = [
+    //   'var(--font-lato)',
+    //   'var(--font-cormorant)',
+    // ];
 
     // Forzar el cálculo de layout para prevenir reflows
-    document.body.offsetHeight;
+    void document.body.offsetHeight;
   }, []);
 
   return null;

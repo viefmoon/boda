@@ -4,16 +4,52 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useSearchParams } from 'next/navigation';
 import { Sparkles } from 'lucide-react';
 import { WEDDING_CONFIG } from '@/constants/wedding';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface WelcomeModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+interface InvitationData {
+  guest_name: string;
+  max_guests: number;
+}
+
 export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
   const searchParams = useSearchParams();
-  const guestName = searchParams.get('to') || searchParams.get('toName') || 'Invitado Especial';
+  const invitationCode = searchParams.get('invitation');
+  const [invitationData, setInvitationData] = useState<InvitationData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [dataFetched, setDataFetched] = useState(false);
+  
+  useEffect(() => {
+    if (invitationCode && !dataFetched) {
+      fetchInvitationData();
+    }
+  }, [invitationCode, dataFetched]);
+  
+  const fetchInvitationData = async () => {
+    if (!invitationCode) {
+      setLoading(false);
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/invitations/${invitationCode}`);
+      const data = await response.json();
+      
+      if (response.ok && data.invitation) {
+        setInvitationData(data.invitation);
+      }
+    } catch (error) {
+      console.error('Error fetching invitation:', error);
+    } finally {
+      setLoading(false);
+      setDataFetched(true);
+    }
+  };
   
   // Prevenir scroll cuando el modal está abierto
   useEffect(() => {
@@ -35,6 +71,11 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
       document.body.style.top = '';
     };
   }, [isOpen]);
+
+  // No mostrar el modal hasta que los datos estén listos
+  if (loading && invitationCode) {
+    return null;
+  }
 
   return (
     <AnimatePresence>
@@ -72,17 +113,33 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
                   transition={{ delay: 0.3 }}
                 >
                   <h2 className="text-2xl sm:text-3xl font-serif text-text-primary dark:text-foreground mb-3">
-                    ¡Bienvenido!
+                    {invitationData && invitationData.max_guests === 1 ? '¡Bienvenido!' : '¡Bienvenidos!'}
                   </h2>
-                  <p className="text-lg text-text-secondary dark:text-warm-white mb-2">
-                    Querido/a <span className="font-medium text-accent-hover dark:text-accent">{guestName}</span>
-                  </p>
-                  <p className="text-text-muted dark:text-warm-white/90 mb-6">
-                    Nos complace invitarte a celebrar nuestra boda
-                  </p>
+                  
+                  {invitationData ? (
+                    <>
+                      <p className="text-lg text-text-secondary dark:text-warm-white mb-2">
+                        <span className="font-medium text-accent-hover dark:text-accent">{invitationData.guest_name}</span>
+                      </p>
+                      <p className="text-text-muted dark:text-warm-white/90 mb-6">
+                        {invitationData.max_guests === 1 
+                          ? 'Nos complace invitarte a celebrar nuestra boda'
+                          : 'Nos complace invitarles a celebrar nuestra boda'}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-lg text-text-secondary dark:text-warm-white mb-2">
+                        Invitado Especial
+                      </p>
+                      <p className="text-text-muted dark:text-warm-white/90 mb-6">
+                        Nos complace invitarte a celebrar nuestra boda
+                      </p>
+                    </>
+                  )}
 
                   {/* Couple names */}
-                  <div className="mb-8">
+                  <div className="mb-6">
                     <p className="text-xl sm:text-2xl font-serif text-accent-hover dark:text-accent">
                       {WEDDING_CONFIG.bride.name} & {WEDDING_CONFIG.groom.name}
                     </p>
@@ -93,10 +150,17 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={onClose}
-                    className="px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 mx-auto bg-accent hover:bg-accent-hover text-white border-2 border-accent hover:border-accent-hover"
+                    className="px-8 py-3 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300 mx-auto bg-accent hover:bg-accent-hover text-white border-2 border-accent hover:border-accent-hover mb-4"
                   >
                     <span>Ver invitación</span>
                   </motion.button>
+
+                  {/* Guest info - moved below button */}
+                  {invitationData && (
+                    <p className="text-xs text-text-primary/60 dark:text-white/60">
+                      Invitación válida para {invitationData.max_guests} {invitationData.max_guests === 1 ? 'persona' : 'personas'}
+                    </p>
+                  )}
                 </motion.div>
 
                 {/* Decorative elements */}

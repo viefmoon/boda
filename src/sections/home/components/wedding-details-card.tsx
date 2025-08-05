@@ -262,17 +262,31 @@ export const WeddingDetailsCard = ({
             <p className="text-sm text-text-primary dark:text-warm-white mb-1 text-center font-medium">
               Tu presencia es nuestro mejor regalo
             </p>
-            <p className="text-sm text-text-secondary dark:text-warm-white/90 mb-3 text-center">
+            <p className="text-sm text-text-secondary dark:text-warm-white/90 mb-4 text-center">
               Si deseas obsequiarnos algo, hemos preparado una lista de regalos en Amazon
             </p>
             <a
               href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full text-center text-sm bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors"
+              className="block w-full text-center text-sm bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors mb-4"
             >
               Ver Mesa de Regalos
             </a>
+            
+            <div className="border-t border-border-light dark:border-stone-700 pt-4 mt-4">
+              <p className="text-xs text-text-muted dark:text-warm-white/70 text-center mb-2">
+                También puedes contribuir a nuestra nueva vida juntos
+              </p>
+              <div className="bg-stone-50 dark:bg-stone-800/20 p-3 rounded-lg">
+                <p className="text-xs text-text-muted dark:text-warm-white/60 text-center mb-1">
+                  Transferencia bancaria
+                </p>
+                <p className="text-sm font-mono text-text-primary dark:text-warm-white text-center select-all">
+                  4152 3135 8254 1004
+                </p>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>

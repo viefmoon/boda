@@ -106,7 +106,7 @@ export const RSVP = () => {
                 Confirma tu Asistencia
               </h3>
               <p className="text-sm text-text-primary dark:text-white text-center mb-6">
-                Fecha límite: <span className="font-medium text-accent">15 de mayo de 2025</span>
+                Fecha límite: <span className="font-medium text-accent">16 de septiembre de 2025</span>
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">

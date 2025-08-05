@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: 'La Boda de Sofia y Oswaldo',
   description:
     'Únete a nosotros para celebrar la unión de Sofia y Oswaldo. Descubre nuestra historia de amor, detalles de la boda y más.',
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({

@@ -46,11 +46,6 @@ export const NAVIGATION_SECTIONS = [
     icon: 'Calendar',
   },
   {
-    id: 'venue',
-    label: 'Lugar',
-    icon: 'MapPin',
-  },
-  {
     id: 'gallery',
     label: 'Galería',
     icon: 'Camera',

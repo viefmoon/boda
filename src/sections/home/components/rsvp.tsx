@@ -55,16 +55,16 @@ export const RSVP = () => {
 
   if (isSubmitted) {
     return (
-      <div className="py-20 px-4 bg-background dark:bg-background">
+      <div className="py-8 px-4 bg-cream dark:bg-background">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-50 dark:bg-gray-900 rounded-3xl p-12 shadow-lg border border-gray-200 dark:border-gray-800"
+            className="bg-card-bg rounded-3xl p-12 shadow-lg border border-card-border"
           >
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-4xl">✅</span>
+            <div className="w-20 h-20 bg-beige-light rounded-full flex items-center justify-center mx-auto mb-6">
+              <span className="text-4xl">✨</span>
             </div>
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground mb-4">
               ¡Gracias!
@@ -72,7 +72,7 @@ export const RSVP = () => {
             <p className="text-foreground/70 text-base sm:text-lg md:text-xl">
               Hemos recibido tu confirmación. ¡Nos vemos pronto!
             </p>
-            <div className="mt-6 text-2xl">💕</div>
+            <div className="mt-6 text-2xl text-accent">♥</div>
           </motion.div>
         </div>
       </div>
@@ -82,7 +82,7 @@ export const RSVP = () => {
   return (
     <div
       ref={ref}
-      className="py-20 px-4 bg-background"
+      className="py-8 px-4 bg-cream dark:bg-background"
     >
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -90,13 +90,13 @@ export const RSVP = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-4 font-light">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-3 font-light">
             Confirmación de Asistencia
           </h2>
-          <div className="w-24 h-px bg-gray-300 dark:bg-gray-700 mx-auto mb-6"></div>
-          <p className="text-base sm:text-lg md:text-xl text-soft-gray max-w-2xl mx-auto font-light">
+          <div className="w-16 h-px bg-accent/30 mx-auto mb-3"></div>
+          <p className="text-sm text-text-muted max-w-xl mx-auto font-light">
             Por favor, confírmanos tu asistencia para nuestro gran día
           </p>
         </motion.div>
@@ -108,7 +108,7 @@ export const RSVP = () => {
             animate={{ opacity: inView ? 1 : 0, x: inView ? 0 : -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-card-bg rounded-3xl p-8 shadow-lg border border-card-border">
               <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-6 text-center">
                 Confirma tu Asistencia
               </h3>
@@ -129,7 +129,7 @@ export const RSVP = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
+                    className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
                     placeholder="Nombre completo"
                   />
                 </div>
@@ -148,7 +148,7 @@ export const RSVP = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
+                    className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
                     placeholder="Correo electrónico"
                   />
                 </div>
@@ -166,7 +166,7 @@ export const RSVP = () => {
                     value={formData.attendance}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
+                    className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
                   >
                     <option value="">Selecciona una opción</option>
                     <option value="yes">Sí, ahí estaré</option>
@@ -187,7 +187,7 @@ export const RSVP = () => {
                       name="guests"
                       value={formData.guests}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
+                      className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
                     >
                       <option value="1">1 persona</option>
                       <option value="2">2 personas</option>
@@ -211,7 +211,7 @@ export const RSVP = () => {
                       name="dietaryRestrictions"
                       value={formData.dietaryRestrictions}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
+                      className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
                       placeholder="Vegetariano, alergias, etc."
                     />
                   </div>
@@ -238,7 +238,7 @@ export const RSVP = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black py-4 px-6 rounded-full font-light text-base sm:text-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 tracking-wider"
+                  className="w-full bg-accent hover:bg-accent-hover text-white py-4 px-6 rounded-full font-light text-base sm:text-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 tracking-wider"
                 >
                   Enviar Confirmación
                 </button>
@@ -254,10 +254,10 @@ export const RSVP = () => {
             className="space-y-8"
           >
             {/* RSVP Deadline */}
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 shadow-md border border-gray-200 dark:border-gray-800">
+            <div className="bg-card-bg rounded-2xl p-6 shadow-md border border-card-border">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-gray-600 dark:text-gray-400 text-xl">⏰</span>
+                <div className="w-12 h-12 bg-beige-light dark:bg-beige-dark rounded-full flex items-center justify-center mr-4">
+                  <span className="text-accent dark:text-accent text-xl">⏰</span>
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground text-sm sm:text-base">
@@ -273,32 +273,12 @@ export const RSVP = () => {
               </p>
             </div>
 
-            {/* Contact Info */}
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-2xl p-6 shadow-md border border-gray-200 dark:border-gray-800">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-blue-600 text-xl">📞</span>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground text-sm sm:text-base">
-                    ¿Preguntas?
-                  </h4>
-                  <p className="text-foreground/70 text-xs sm:text-sm">
-                    Estamos aquí para ayudarte
-                  </p>
-                </div>
-              </div>
-              <div className="space-y-2 text-xs sm:text-sm text-foreground/70">
-                <p>📧 bodaoswaldsofiaM@gmail.com</p>
-                <p>📱 +52 123 456 7890</p>
-              </div>
-            </div>
 
             {/* Gift Registry */}
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-800">
+            <div className="bg-gradient-to-br from-cream to-warm-white dark:from-warm-white dark:to-cream rounded-2xl p-6 shadow-lg border border-beige-light/50 dark:border-beige-dark/50">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center mr-4">
-                  <Gift className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                <div className="w-12 h-12 bg-beige-light dark:bg-beige-dark rounded-full flex items-center justify-center mr-4">
+                  <Gift className="w-6 h-6 text-accent dark:text-accent" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground text-sm sm:text-base">
@@ -316,7 +296,7 @@ export const RSVP = () => {
                 href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full gap-2 bg-gray-800 dark:bg-gray-200 hover:bg-black dark:hover:bg-white text-white dark:text-gray-900 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center w-full gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
               >
                 <Gift className="w-5 h-5" />
                 Ver Mesa de Regalos en Amazon

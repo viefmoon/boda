@@ -54,20 +54,20 @@ export const GalleryPreview = () => {
   return (
     <div
       ref={ref}
-      className="py-20 px-4 bg-background dark:bg-background"
+      className="py-8 px-4 bg-background dark:bg-background"
     >
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-4 font-light">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-3 font-light">
             Nuestra Historia de Amor
           </h2>
-          <div className="w-24 h-px bg-gray-300 dark:bg-gray-700 mx-auto mb-6"></div>
-          <p className="text-base sm:text-lg md:text-xl text-foreground/70 max-w-2xl mx-auto font-light">
+          <div className="w-16 h-px bg-accent/30 mx-auto mb-4"></div>
+          <p className="text-sm text-text-muted max-w-xl mx-auto font-light">
             Un vistazo a los momentos que nos han traído hasta aquí
           </p>
         </motion.div>
@@ -79,7 +79,7 @@ export const GalleryPreview = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: inView ? 1 : 0, scale: inView ? 1 : 0.8 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group relative aspect-square bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              className="group relative aspect-square bg-card-bg rounded-xl shadow-md overflow-hidden border border-card-border hover:shadow-lg transition-all duration-300 cursor-pointer"
             >
               {/* Image placeholder with emoji */}
               <div className="absolute inset-0 bg-gradient-to-br from-gray-100/50 to-gray-200/50 dark:from-gray-700/50 dark:to-gray-800/50 flex items-center justify-center">

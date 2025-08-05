@@ -13,6 +13,8 @@ const config: Config = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        'card-bg': 'var(--card-bg)',
+        'card-border': 'var(--card-border)',
         beige: {
           light: 'var(--beige-light)',
           DEFAULT: 'var(--beige)',
@@ -21,7 +23,11 @@ const config: Config = {
         cream: 'var(--cream)',
         'soft-gray': 'var(--soft-gray)',
         'warm-white': 'var(--warm-white)',
-        accent: 'var(--accent)',
+        accent: {
+          DEFAULT: 'var(--accent)',
+          hover: 'var(--accent-hover)',
+        },
+        'text-muted': 'var(--text-muted)',
       },
       fontFamily: {
         sans: ['var(--font-lato)', 'sans-serif'],

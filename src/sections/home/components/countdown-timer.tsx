@@ -46,99 +46,54 @@ export const CountdownTimer = ({ targetDate }: CountdownTimerProps) => {
     return () => clearInterval(timer);
   }, [targetDate]);
 
-  const timeUnits = [
-    {
-      label: 'Días',
-      value: timeLeft.days,
-    },
-    {
-      label: 'Horas',
-      value: timeLeft.hours,
-    },
-    {
-      label: 'Minutos',
-      value: timeLeft.minutes,
-    },
-    {
-      label: 'Segundos',
-      value: timeLeft.seconds,
-    },
-  ];
-
   return (
     <div
       ref={ref}
-      className="py-16 px-4 bg-background dark:bg-background"
+      className="py-8 px-4 bg-cream dark:bg-background"
     >
-      <div className="max-w-4xl mx-auto text-center">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
-          transition={{ duration: 0.8 }}
-          className="mb-12"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif text-foreground mb-4 font-light">
-            Cuenta Regresiva
-          </h2>
-          <div className="w-24 h-px bg-gray-300 dark:bg-gray-700 mx-auto mb-4"></div>
-          <p className="text-foreground/70 text-base sm:text-lg md:text-xl font-light">
-            El gran día se acerca
-          </p>
-        </motion.div>
-
-        {/* Countdown Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {timeUnits.map((unit, index) => (
-            <motion.div
-              key={unit.label}
-              initial={{ opacity: 0, scale: 0.8, y: 50 }}
-              animate={{
-                opacity: inView ? 1 : 0,
-                scale: inView ? 1 : 0.8,
-                y: inView ? 0 : 50,
-              }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.1 + 0.2,
-                type: 'spring',
-                stiffness: 100,
-              }}
-              className="relative group"
-            >
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                {/* Content */}
-                <div className="text-5xl lg:text-6xl font-serif font-light text-gray-700 dark:text-gray-300 mb-2">
-                  {unit.value.toString().padStart(2, '0')}
-                </div>
-                <div className="text-foreground/60 font-sans text-sm uppercase tracking-[0.2em]">
-                  {unit.label}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Message */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-12"
-        >
-          <div className="inline-block bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-full px-6 py-3 shadow-sm border border-gray-200/20 dark:border-gray-700/20">
-            <p className="text-foreground font-light text-sm sm:text-base md:text-lg">
-              {timeLeft.days > 0
-                ? `${timeLeft.days} días para el gran día`
-                : timeLeft.hours > 0
-                ? `${timeLeft.hours} horas para el gran día`
-                : timeLeft.minutes > 0
-                ? `${timeLeft.minutes} minutos para el gran día`
-                : '¡El momento ha llegado!'}
-            </p>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+        transition={{ duration: 0.6 }}
+        className="max-w-3xl mx-auto"
+      >
+        {/* Compact Countdown Display */}
+        <div className="bg-card-bg rounded-2xl p-6 md:p-8 shadow-lg border border-card-border text-center">
+          <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-4">Cuenta Regresiva</h3>
+          <div className="w-16 h-px bg-accent/30 mx-auto mb-6"></div>
+          
+          {/* Single Line Display */}
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-4">
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl sm:text-4xl md:text-5xl font-serif text-accent font-light">{timeLeft.days}</span>
+              <span className="text-sm sm:text-base md:text-lg text-text-muted">días</span>
+            </div>
+            
+            <span className="text-text-muted text-base sm:text-lg">:</span>
+            
+            <div className="flex items-baseline gap-0.5 sm:gap-1">
+              <span className="text-3xl sm:text-4xl md:text-5xl font-serif text-accent font-light">{timeLeft.hours.toString().padStart(2, '0')}</span>
+              <span className="text-xs sm:text-sm md:text-base text-text-muted">h</span>
+            </div>
+            
+            <span className="text-text-muted text-base sm:text-lg">:</span>
+            
+            <div className="flex items-baseline gap-0.5 sm:gap-1">
+              <span className="text-3xl sm:text-4xl md:text-5xl font-serif text-accent font-light">{timeLeft.minutes.toString().padStart(2, '0')}</span>
+              <span className="text-xs sm:text-sm md:text-base text-text-muted">m</span>
+            </div>
+            
+            <span className="text-text-muted text-base sm:text-lg">:</span>
+            
+            <div className="flex items-baseline gap-0.5 sm:gap-1">
+              <span className="text-3xl sm:text-4xl md:text-5xl font-serif text-accent font-light">{timeLeft.seconds.toString().padStart(2, '0')}</span>
+              <span className="text-xs sm:text-sm md:text-base text-text-muted">s</span>
+            </div>
           </div>
-        </motion.div>
-      </div>
+          
+          <p className="text-base text-text-muted mt-4">El gran día se acerca</p>
+        </div>
+      </motion.div>
     </div>
   );
 };

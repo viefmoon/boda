@@ -8,14 +8,11 @@ import {
   CoupleIntroduction,
   WeddingDetailsCard,
   CountdownTimer,
-  VenueInformation,
-  EventSchedule,
   WeddingParty,
   RSVP,
   GalleryPreview,
   ClosingMessage,
   FloatingNavigation,
-  NavigationFAB,
   MusicPlayer,
   ScrollProgressIndicator,
 } from '../components';
@@ -97,11 +94,6 @@ export default function HomeView() {
         <CountdownTimer targetDate={WEDDING_CONFIG.date} />
       </section>
 
-      {/* Venue Information */}
-      <section id="venue" className="relative">
-        <VenueInformation venue={WEDDING_CONFIG.venue} />
-        <EventSchedule />
-      </section>
 
       {/* Wedding Party */}
       <section id="wedding-party" className="relative">
@@ -129,11 +121,6 @@ export default function HomeView() {
       {/* Music Player */}
       <MusicPlayer />
 
-      {/* Mobile Navigation FAB */}
-      <NavigationFAB
-        activeSection={activeSection}
-        onScrollToSection={scrollToSection}
-      />
 
       {/* Scroll Progress Indicator */}
       <ScrollProgressIndicator activeSection={activeSection} />

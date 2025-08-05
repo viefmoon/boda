@@ -19,26 +19,26 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
   return (
     <div
       ref={ref}
-      className="py-20 px-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
+      className="py-8 px-4 bg-gradient-to-br from-cream to-warm-white dark:from-background dark:to-warm-white"
     >
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
           transition={{ duration: 0.8 }}
-          className="mb-12"
+          className="mb-8"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-foreground mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-3">
             Con Amor y Gratitud
           </h2>
-          <div className="w-24 h-px bg-gray-300 dark:bg-gray-700 mx-auto mb-8"></div>
+          <div className="w-16 h-px bg-accent/30 mx-auto mb-4"></div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: inView ? 1 : 0, scale: inView ? 1 : 0.9 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white/60 dark:bg-gray-900/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-gray-200/40 dark:border-gray-700/40 mb-12"
+          className="bg-card-bg/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-xl border border-card-border mb-12"
         >
           <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-foreground/90 leading-relaxed mb-6 font-light">
             &quot;El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección&quot;
@@ -58,15 +58,24 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
           className="space-y-6"
         >
           <div className="flex justify-center space-x-4">
-            <span className="animate-bounce">
-              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-gray-600 dark:text-gray-400 fill-current" />
-            </span>
-            <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>
-              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-foreground fill-current" />
-            </span>
-            <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>
-              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-gray-600 dark:text-gray-400 fill-current" />
-            </span>
+            <motion.span
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-beige dark:text-beige fill-current" />
+            </motion.span>
+            <motion.span
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            >
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-accent dark:text-accent fill-current" />
+            </motion.span>
+            <motion.span
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+            >
+              <Heart className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-beige dark:text-beige fill-current" />
+            </motion.span>
           </div>
 
           <p className="text-sm sm:text-base text-foreground/60">
@@ -74,17 +83,6 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
           </p>
         </motion.div>
 
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: inView ? 1 : 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 pt-8 border-t border-gray-200/40 dark:border-gray-700/40"
-        >
-          <p className="text-xs sm:text-sm text-foreground/60">
-            ¿Preguntas? Contáctanos en bodaoswaldsofiaM@gmail.com
-          </p>
-        </motion.div>
       </div>
     </div>
   );

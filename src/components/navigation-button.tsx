@@ -19,12 +19,12 @@ export function NavigationButton({
 }: NavigationButtonProps) {
 
   const baseClasses =
-    'relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 group overflow-hidden cursor-pointer';
+    'relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all duration-300 group cursor-pointer';
 
   const activeClasses = 'text-white';
 
   const inactiveClasses =
-    'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800';
+    'text-white/70 hover:text-white';
 
   return (
     <motion.button
@@ -44,7 +44,7 @@ export function NavigationButton({
             animate={NAVIGATION_ANIMATIONS.background.animate}
             exit={NAVIGATION_ANIMATIONS.background.exit}
             transition={NAVIGATION_ANIMATIONS.background.transition}
-            className="absolute inset-0 bg-gray-800 dark:bg-gray-200 rounded-lg sm:rounded-xl"
+            className="absolute inset-0 bg-white/20 rounded-full"
           />
         )}
       </AnimatePresence>
@@ -52,10 +52,10 @@ export function NavigationButton({
 
       {/* Icon with Bounce Animation */}
       <motion.span
-        className="text-sm sm:text-base relative z-10"
-        animate={isActive ? NAVIGATION_ANIMATIONS.icon.active : {}}
-        transition={NAVIGATION_ANIMATIONS.icon.transition}
-        whileHover={NAVIGATION_ANIMATIONS.icon.hover}
+        className="relative z-10"
+        animate={isActive ? { scale: 1.1 } : { scale: 1 }}
+        transition={{ duration: 0.2 }}
+        whileHover={{ scale: 1.2 }}
       >
         {(() => {
           const iconMap = {
@@ -69,38 +69,35 @@ export function NavigationButton({
 
           const IconComponent = iconMap[section.icon as keyof typeof iconMap];
 
-          return IconComponent ? <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" /> : null;
+          return IconComponent ? <IconComponent className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} /> : null;
         })()}
       </motion.span>
 
-      {/* Label with Slide Animation */}
-      <motion.span
-        className="hidden sm:inline-block whitespace-nowrap relative z-10 text-xs sm:text-sm"
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.3, delay: 0.1 * index }}
-      >
-        {section.label}
-      </motion.span>
 
-      {/* Active Indicator Dot with Pulse */}
+      {/* Active Indicator - Subtle glow */}
       <AnimatePresence>
         {isActive && (
           <motion.div
-            initial={NAVIGATION_ANIMATIONS.background.initial}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={NAVIGATION_ANIMATIONS.background.exit}
-            transition={NAVIGATION_ANIMATIONS.background.transition}
-            className="absolute -bottom-0.5 sm:-bottom-1 left-1/2 -translate-x-1/2 w-0.5 sm:w-1 h-0.5 sm:h-1 bg-white rounded-full shadow-lg z-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 rounded-full"
           >
-            <motion.div
-              animate={NAVIGATION_ANIMATIONS.pulse.animate}
-              transition={NAVIGATION_ANIMATIONS.pulse.transition}
-              className="w-full h-full bg-white rounded-full"
-            />
+            <div className="absolute inset-0 bg-white/10 rounded-full blur-xl" />
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Tooltip on hover */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileHover={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
+        className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none"
+      >
+        {section.label}
+      </motion.div>
 
     </motion.button>
   );

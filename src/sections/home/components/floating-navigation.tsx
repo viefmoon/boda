@@ -2,7 +2,6 @@
 
 import { motion } from 'motion/react';
 import {
-  FloatingParticles,
   NavigationButton,
 } from '@/components';
 import { NAVIGATION_SECTIONS } from '@/constants';
@@ -22,13 +21,13 @@ export default function FloatingNavigation({
       initial={NAVIGATION_ANIMATIONS.navigation.initial}
       animate={NAVIGATION_ANIMATIONS.navigation.animate}
       transition={NAVIGATION_ANIMATIONS.navigation.transition}
-      className="fixed top-3 sm:top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300"
+      className="fixed top-4 sm:top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300"
     >
       <motion.div
-        whileHover={{ scale: 1.02 }}
-        className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl rounded-xl sm:rounded-2xl px-1.5 sm:px-2 py-1.5 sm:py-2 shadow-xl border border-gray-200/40 dark:border-gray-700/40 hover:shadow-2xl transition-all duration-300"
+        whileHover={{ y: -2 }}
+        className="bg-white/10 backdrop-blur-md rounded-full px-2 sm:px-3 py-2 sm:py-2.5 shadow-lg border border-white/20 hover:bg-white/15 transition-all duration-300"
       >
-        <div className="flex items-center space-x-0.5 sm:space-x-1">
+        <div className="flex items-center space-x-4 sm:space-x-6">
           {NAVIGATION_SECTIONS.map((section, index) => (
             <NavigationButton
               key={section.id}
@@ -40,8 +39,6 @@ export default function FloatingNavigation({
           ))}
 
         </div>
-
-        <FloatingParticles />
       </motion.div>
     </motion.nav>
   );

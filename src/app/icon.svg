@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFE4B5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Dos anillos entrelazados -->
+  <g transform="translate(16,16)">
+    <!-- Primer anillo -->
+    <circle cx="-4" cy="0" r="7" fill="none" stroke="url(#gold)" stroke-width="2.5" opacity="0.9"/>
+    <!-- Segundo anillo -->
+    <circle cx="4" cy="0" r="7" fill="none" stroke="url(#gold)" stroke-width="2.5" opacity="0.9"/>
+  </g>
+</svg>

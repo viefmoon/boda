@@ -3,18 +3,24 @@
 :root {
   --background: #ffffff;
   --foreground: #1a1a1a;
-  --beige: #666666;
-  --beige-light: #e5e5e5;
-  --beige-dark: #333333;
-  --cream: #fafafa;
-  --soft-gray: #4a4a4a;
-  --warm-white: #f8f8f8;
-  --accent: #808080;
+  --card-bg: #fdfbf7;
+  --card-border: rgba(229, 231, 235, 0.5);
+  --beige: #e5d1bf;
+  --beige-light: #f5ebe3;
+  --beige-dark: #d4b8a3;
+  --cream: #fdfcfa;
+  --soft-gray: #6b7280;
+  --warm-white: #fdfbf7;
+  --accent: #b8956d;
+  --accent-hover: #a17f5a;
+  --text-muted: #9ca3af;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card-bg: var(--card-bg);
+  --color-card-border: var(--card-border);
   --color-beige: var(--beige);
   --color-beige-light: var(--beige-light);
   --color-beige-dark: var(--beige-dark);
@@ -22,6 +28,8 @@
   --color-soft-gray: var(--soft-gray);
   --color-warm-white: var(--warm-white);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-text-muted: var(--text-muted);
   --font-lato: var(--font-lato);
   --font-cormorant: var(--font-cormorant);
 }
@@ -29,14 +37,18 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #f5f5f5;
-    --beige: #d4d4d4;
-    --beige-light: #3a3a3a;
-    --beige-dark: #e5e5e5;
+    --foreground: #f0f0f0;
+    --card-bg: #1a1a1a;
+    --card-border: rgba(139, 115, 85, 0.4);
+    --beige: #a68b73;
+    --beige-light: #b39a87;
+    --beige-dark: #8a7360;
     --cream: #1a1a1a;
-    --soft-gray: #cccccc;
-    --warm-white: #181818;
-    --accent: #a0a0a0;
+    --soft-gray: #9ca3af;
+    --warm-white: #1a1a1a;
+    --accent: #b8956d;
+    --accent-hover: #a17f5a;
+    --text-muted: #6b7280;
   }
 }
 

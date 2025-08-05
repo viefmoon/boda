@@ -200,7 +200,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
           initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -20, scale: 0.9 }}
-          className="fixed bottom-44 right-6 z-50 bg-beige text-white px-4 py-3 rounded-lg shadow-xl backdrop-blur-sm max-w-xs"
+          className="fixed bottom-20 right-6 z-50 bg-beige text-white px-4 py-3 rounded-lg shadow-xl backdrop-blur-sm max-w-xs"
         >
           <div className="flex items-center space-x-2">
             <motion.div
@@ -236,7 +236,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
           type: 'spring',
           stiffness: 200,
         }}
-        className={`fixed bottom-24 right-6 z-50 ${className}`}
+        className={`fixed bottom-6 right-6 z-50 ${className}`}
       >
         {/* Hidden audio element */}
         <audio

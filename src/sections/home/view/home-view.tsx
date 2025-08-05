@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useScrollSpy } from '@/hooks/use-scroll-spy';
-import { LetterAnimation } from '@/components';
 import {
   HeroSection,
   CoupleIntroduction,
@@ -15,14 +14,17 @@ import {
   FloatingNavigation,
   MusicPlayer,
   ScrollProgressIndicator,
+  WelcomeModal,
 } from '../components';
 import { NAVIGATION_SECTIONS, WEDDING_CONFIG } from '@/constants';
 
+import type { MusicPlayerRef } from '../components/music-player';
+
 export default function HomeView() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showLetter, setShowLetter] = useState(true);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(true);
+  const musicPlayerRef = useRef<MusicPlayerRef>(null);
 
-  // Auto-detect active section using scroll spy
   const activeSection = useScrollSpy(
     NAVIGATION_SECTIONS.map((section) => section.id)
   );
@@ -46,23 +48,21 @@ export default function HomeView() {
     }
   };
 
-  const handleLetterOpen = () => {
-    setShowLetter(false);
-    setTimeout(() => setIsLoaded(true), 300);
+  const handleWelcomeModalClose = async () => {
+    setShowWelcomeModal(false);
+    if (musicPlayerRef.current) {
+      await musicPlayerRef.current.startMusic();
+    }
   };
-
-  // Show letter animation first
-  if (showLetter) {
-    return (
-      <LetterAnimation
-        onOpen={handleLetterOpen}
-        coupleName={`${WEDDING_CONFIG.bride.name} & ${WEDDING_CONFIG.groom.name}`}
-      />
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Welcome Modal */}
+      <WelcomeModal 
+        isOpen={showWelcomeModal} 
+        onClose={handleWelcomeModalClose} 
+      />
+
       <FloatingNavigation
         activeSection={activeSection}
         onScrollToSection={scrollToSection}
@@ -94,7 +94,6 @@ export default function HomeView() {
         <CountdownTimer targetDate={WEDDING_CONFIG.date} />
       </section>
 
-
       {/* Wedding Party */}
       <section id="wedding-party" className="relative">
         <WeddingParty />
@@ -119,8 +118,7 @@ export default function HomeView() {
       </section>
 
       {/* Music Player */}
-      <MusicPlayer />
-
+      <MusicPlayer ref={musicPlayerRef} />
 
       {/* Scroll Progress Indicator */}
       <ScrollProgressIndicator activeSection={activeSection} />

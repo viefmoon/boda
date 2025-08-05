@@ -19,7 +19,7 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
   return (
     <div
       ref={ref}
-      className="py-8 px-4 bg-gradient-to-br from-cream to-warm-white dark:from-background dark:to-warm-white"
+      className="py-4 px-4 bg-gradient-to-br from-cream to-warm-white dark:from-background dark:to-warm-white"
     >
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
@@ -79,7 +79,7 @@ export const ClosingMessage = ({ bride, groom }: ClosingMessageProps) => {
           </div>
 
           <p className="text-sm sm:text-base text-foreground/60">
-            #SofiaYOswaldo2025 #AmorVerdadero #JuntosParaSiempre
+            #SofiaYBayo2025 #AmorVerdadero #JuntosParaSiempre
           </p>
         </motion.div>
 

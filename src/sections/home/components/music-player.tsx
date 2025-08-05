@@ -1,26 +1,42 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { useState, useRef, useEffect } from 'react';
-import { Music, Play, Settings } from 'lucide-react';
+import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
+import { Music, Play } from 'lucide-react';
 
 interface MusicPlayerProps {
   className?: string;
 }
 
-export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
+export interface MusicPlayerRef {
+  startMusic: () => Promise<void>;
+}
+
+const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = '' }, ref) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
-  const [showAutoplayModal, setShowAutoplayModal] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const startMusic = async () => {
+    const audio = audioRef.current;
+    if (!audio || isPlaying) return;
+
+    try {
+      audio.volume = 0.5;
+      await audio.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.error('Error al iniciar música:', error);
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    startMusic
+  }));
 
   useEffect(() => {
     const audio = audioRef.current;
-
     if (!audio) return;
 
     const updateTime = () => setCurrentTime(audio.currentTime);
@@ -31,228 +47,66 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
     audio.addEventListener('loadedmetadata', updateDuration);
     audio.addEventListener('ended', handleEnded);
 
-    // Auto-play attempt
-    const attemptAutoPlay = async () => {
-      try {
-        await audio.play();
-        setIsPlaying(true);
-        setAutoplayBlocked(false);
-        setHasInteracted(true);
-      } catch {
-        setIsPlaying(false);
-        setAutoplayBlocked(true);
-        setHasInteracted(false);
-        // Show autoplay modal when blocked
-        setShowAutoplayModal(true);
-      }
-    };
-
-    // Try autoplay after a short delay
-    const timer = setTimeout(() => {
-      attemptAutoPlay();
-
-      // Show welcome message if autoplay fails after a delay
-      const welcomeTimer = setTimeout(() => {
-        setShowWelcomeMessage(true);
-        // Hide welcome message after 5 seconds
-        setTimeout(() => setShowWelcomeMessage(false), 5000);
-      }, 2000);
-
-      return () => clearTimeout(welcomeTimer);
-    }, 1500);
+    audio.volume = 0.5;
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', handleEnded);
-      clearTimeout(timer);
     };
-  }, []); // Empty dependency array is correct here
+  }, []);
 
   const togglePlayPause = async () => {
     const audio = audioRef.current;
-
     if (!audio) return;
 
-    // Hide welcome message and modal when user interacts
-    setShowWelcomeMessage(false);
-    setShowAutoplayModal(false);
-
-    try {
-      if (isPlaying) {
-        audio.pause();
-        setIsPlaying(false);
-      } else {
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      try {
+        audio.volume = 0.5;
         await audio.play();
         setIsPlaying(true);
-        setAutoplayBlocked(false);
-        setHasInteracted(true);
+      } catch (error) {
+        console.error('Error al reproducir:', error);
+        setIsPlaying(false);
       }
-    } catch {
-      // Audio play failed - could be network issue or browser policy
-      setAutoplayBlocked(true);
-      setIsPlaying(false);
     }
-  };
-
-  const handleAllowAutoplay = () => {
-    setShowAutoplayModal(false);
-    // Attempt to play after user acknowledges
-    togglePlayPause();
-  };
-
-  const handleDismissModal = () => {
-    setShowAutoplayModal(false);
-    setShowWelcomeMessage(true);
   };
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
     <>
-      {/* Autoplay Modal */}
-      {showAutoplayModal && !hasInteracted && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative overflow-hidden"
-          >
-            {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-beige-light/20 to-beige/20 opacity-50"></div>
-
-            {/* Content */}
-            <div className="relative z-10">
-              {/* Header */}
-              <div className="text-center mb-6">
-                <motion.div
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="mb-4"
-                >
-                  <Music className="w-12 h-12 text-beige mx-auto" />
-                </motion.div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Habilitar Música
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Tu navegador ha bloqueado la reproducción automática
-                </p>
-              </div>
-
-              {/* Browser Settings Guide */}
-              <div className="bg-beige-light/20 rounded-lg p-4 mb-6">
-                <h4 className="font-light text-foreground mb-2 flex items-center">
-                  <Settings className="w-4 h-4 mr-2" />
-                  Cómo habilitar la reproducción automática:
-                </h4>
-                <div className="text-soft-gray text-sm space-y-1">
-                  <p>
-                    • <strong>Chrome/Edge:</strong> Configuración → Sitio → Permitir sonido
-                  </p>
-                  <p>
-                    • <strong>Firefox:</strong> Haz clic en el ícono del candado → Permitir audio
-                  </p>
-                  <p>
-                    • <strong>Safari:</strong> Safari → Configuración para este sitio → Permitir todo
-                  </p>
-                </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="flex gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleAllowAutoplay}
-                  className="flex-1 bg-beige hover:bg-beige-dark text-white font-light py-3 px-4 rounded-full shadow-md hover:shadow-lg transition-all duration-200"
-                >
-                  Reproducir Música
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleDismissModal}
-                  className="px-4 py-3 bg-gray-100 text-gray-600 font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
-                >
-                  Más tarde
-                </motion.button>
-              </div>
-
-              {/* Footer note */}
-              <p className="text-xs text-gray-500 text-center mt-4">
-                La música se reproducirá automáticamente en tu próxima visita
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-
-      {/* Welcome message for autoplay blocked */}
-      {showWelcomeMessage && !hasInteracted && (
-        <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -20, scale: 0.9 }}
-          className="fixed bottom-20 right-6 z-50 bg-beige text-white px-4 py-3 rounded-lg shadow-xl backdrop-blur-sm max-w-xs"
-        >
-          <div className="flex items-center space-x-2">
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <Music className="w-5 h-5 text-white" />
-            </motion.div>
-            <div>
-              <div className="font-medium text-sm">
-                Música de Boda
-              </div>
-              <div className="text-xs opacity-90">
-                Haz clic para comenzar
-              </div>
-            </div>
-          </div>
-          <motion.div
-            className="absolute -bottom-1 right-8 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-beige"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3 }}
-          />
-        </motion.div>
-      )}
+      {/* Audio element separado - se carga inmediatamente */}
+      <audio
+        ref={audioRef}
+        loop
+        preload="auto"
+        src="/assets/audio/song.mp3"
+        aria-label="Música de fondo de la boda"
+        style={{ display: 'none' }}
+      >
+        <track
+          kind="captions"
+          src="/assets/audio/song.mp3"
+          label="Sin subtítulos disponibles"
+        />
+        Tu navegador no soporta el elemento de audio.
+      </audio>
 
       <motion.div
         initial={{ opacity: 0, scale: 0, y: 100 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{
           duration: 0.6,
-          delay: 1.0,
+          delay: 0.5,
           type: 'spring',
           stiffness: 200,
         }}
-        className={`fixed bottom-6 right-6 z-50 ${className}`}
+        className={`fixed bottom-6 right-6 z-40 ${className}`}
       >
-        {/* Hidden audio element */}
-        <audio
-          ref={audioRef}
-          loop
-          preload="auto"
-          src="/assets/audio/Valentín Elizalde - La Más Deseada.mp3"
-          aria-label="Música de fondo de la boda"
-        >
-          <track
-            kind="captions"
-            src="/assets/audio/Valentín Elizalde - La Más Deseada.mp3"
-            label="Sin subtítulos disponibles"
-          />
-          Tu navegador no soporta el elemento de audio.
-        </audio>
 
         {/* Progress Ring */}
         <div className="relative">
@@ -307,9 +161,7 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`relative w-14 h-14 bg-white/95 backdrop-blur-md border border-beige-light/20 rounded-full shadow-xl hover:shadow-beige/20 transition-all duration-300 group overflow-hidden ${
-              autoplayBlocked && !hasInteracted ? 'animate-pulse' : ''
-            }`}
+            className="relative w-14 h-14 bg-white/95 backdrop-blur-md border border-beige-light/20 rounded-full shadow-xl hover:shadow-beige/20 transition-all duration-300 group overflow-hidden"
             onClick={togglePlayPause}
           >
             {/* Button background gradient */}
@@ -319,23 +171,15 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-400/20 to-purple-400/20 rounded-full"
               animate={{
-                background:
-                  autoplayBlocked && !hasInteracted
-                    ? [
-                        'linear-gradient(45deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3))',
-                        'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3))',
-                        'linear-gradient(225deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3))',
-                        'linear-gradient(315deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3))',
-                      ]
-                    : [
-                        'linear-gradient(45deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
-                        'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1))',
-                        'linear-gradient(225deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1))',
-                        'linear-gradient(315deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
-                      ],
+                background: [
+                  'linear-gradient(45deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
+                  'linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1))',
+                  'linear-gradient(225deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1))',
+                  'linear-gradient(315deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1))',
+                ],
               }}
               transition={{
-                duration: autoplayBlocked && !hasInteracted ? 2 : 4,
+                duration: 4,
                 repeat: Infinity,
                 ease: 'linear',
               }}
@@ -417,16 +261,10 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
           >
             <div className="font-medium flex items-center gap-1">
               <Music className="w-3 h-3" />
-              {isPlaying
-                ? 'Reproduciendo'
-                : autoplayBlocked && !hasInteracted
-                ? 'Haz clic para comenzar'
-                : 'Pausado'}
+              {isPlaying ? 'Reproduciendo' : 'Pausado'}
             </div>
             <div className="text-gray-300 text-xs">
-              {autoplayBlocked && !hasInteracted
-                ? 'Música de Boda (Autoplay Bloqueado)'
-                : 'Música de Boda'}
+              Música de Boda
             </div>
 
             {/* Tooltip arrow */}
@@ -455,32 +293,12 @@ export default function MusicPlayer({ className = '' }: MusicPlayerProps) {
             </motion.div>
           )}
 
-          {/* Click indicator when autoplay is blocked */}
-          {autoplayBlocked && !hasInteracted && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center shadow-lg"
-            >
-              <motion.div
-                animate={{
-                  scale: [1, 1.3, 1],
-                  rotate: [0, 15, -15, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="text-white text-xs font-bold"
-              >
-                !
-              </motion.div>
-            </motion.div>
-          )}
         </div>
       </motion.div>
     </>
   );
-}
+});
+
+MusicPlayer.displayName = 'MusicPlayer';
+
+export default MusicPlayer;

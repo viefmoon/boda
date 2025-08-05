@@ -3,17 +3,14 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { useInView } from 'react-intersection-observer';
-import { Gift } from 'lucide-react';
+import React from 'react';
 
 export const RSVP = () => {
 
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     attendance: '',
     guests: '1',
-    dietaryRestrictions: '',
-    message: '',
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,11 +30,8 @@ export const RSVP = () => {
       setIsSubmitted(false);
       setFormData({
         name: '',
-        email: '',
         attendance: '',
         guests: '1',
-        dietaryRestrictions: '',
-        message: '',
       });
     }, 3000);
   };
@@ -109,9 +103,12 @@ export const RSVP = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="bg-card-bg rounded-3xl p-8 shadow-lg border border-card-border">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-6 text-center">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-3 text-center">
                 Confirma tu Asistencia
               </h3>
+              <p className="text-sm text-foreground/70 text-center mb-6">
+                Fecha límite: <span className="font-medium text-accent">15 de mayo de 2025</span>
+              </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
@@ -131,25 +128,6 @@ export const RSVP = () => {
                     required
                     className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
                     placeholder="Nombre completo"
-                  />
-                </div>
-                {/* Email */}
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
-                  >
-                    Correo electrónico *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
-                    placeholder="Correo electrónico"
                   />
                 </div>
                 {/* Attendance */}
@@ -196,44 +174,6 @@ export const RSVP = () => {
                     </select>
                   </div>
                 )}
-                {/* Dietary Restrictions */}
-                {formData.attendance === 'yes' && (
-                  <div>
-                    <label
-                      htmlFor="dietaryRestrictions"
-                      className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
-                    >
-                      Restricciones alimentarias
-                    </label>
-                    <input
-                      type="text"
-                      id="dietaryRestrictions"
-                      name="dietaryRestrictions"
-                      value={formData.dietaryRestrictions}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-card-border rounded-xl focus:ring-2 focus:ring-accent/50 focus:border-accent outline-none transition-all duration-300 bg-white dark:bg-card-bg text-foreground placeholder-text-muted"
-                      placeholder="Vegetariano, alergias, etc."
-                    />
-                  </div>
-                )}
-                {/* Message */}
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-xs sm:text-sm font-medium text-foreground/80 mb-2"
-                  >
-                    Mensaje para los novios
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-gray-500 dark:focus:border-gray-400 outline-none transition-all duration-300 resize-none bg-white dark:bg-gray-800 text-foreground placeholder-gray-400 dark:placeholder-gray-600"
-                    placeholder="Comparte tus buenos deseos..."
-                  />
-                </div>
 
                 {/* Submit Button */}
                 <button
@@ -253,55 +193,7 @@ export const RSVP = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="space-y-8"
           >
-            {/* RSVP Deadline */}
-            <div className="bg-card-bg rounded-2xl p-6 shadow-md border border-card-border">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-beige-light dark:bg-beige-dark rounded-full flex items-center justify-center mr-4">
-                  <span className="text-accent dark:text-accent text-xl">⏰</span>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground text-sm sm:text-base">
-                    Fecha límite RSVP
-                  </h4>
-                  <p className="text-foreground/70 text-xs sm:text-sm">
-                    15 de mayo de 2025
-                  </p>
-                </div>
-              </div>
-              <p className="text-foreground/70 text-xs sm:text-sm">
-                Por favor confirma antes de esta fecha para ayudarnos con la organización
-              </p>
-            </div>
 
-
-            {/* Gift Registry */}
-            <div className="bg-gradient-to-br from-cream to-warm-white dark:from-warm-white dark:to-cream rounded-2xl p-6 shadow-lg border border-beige-light/50 dark:border-beige-dark/50">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-beige-light dark:bg-beige-dark rounded-full flex items-center justify-center mr-4">
-                  <Gift className="w-6 h-6 text-accent dark:text-accent" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground text-sm sm:text-base">
-                    Mesa de Regalos
-                  </h4>
-                  <p className="text-foreground/70 text-xs sm:text-sm">
-                    Tu presencia es nuestro mejor regalo
-                  </p>
-                </div>
-              </div>
-              <p className="text-foreground/70 text-xs sm:text-sm mb-4">
-                Si deseas obsequiarnos algo, hemos preparado una lista de regalos en Amazon
-              </p>
-              <a
-                href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full gap-2 bg-accent hover:bg-accent-hover text-white px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-              >
-                <Gift className="w-5 h-5" />
-                Ver Mesa de Regalos en Amazon
-              </a>
-            </div>
           </motion.div>
         </div>
       </div>

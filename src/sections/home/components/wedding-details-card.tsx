@@ -5,9 +5,8 @@ import {
   formatWeddingTime,
   generateGoogleCalendarLink,
 } from '@/lib/wedding-utils';
-import { Calendar, Clock, MapPin, Church, GlassWater } from 'lucide-react';
+import { Calendar, Clock, PartyPopper, Gift } from 'lucide-react';
 import { WEDDING_CONFIG } from '@/constants/wedding';
-import { generateMapLink } from '@/lib/wedding-utils';
 
 interface WeddingDetailsCardProps {
   date: Date;
@@ -63,7 +62,7 @@ export const WeddingDetailsCard = ({
             <div className="space-y-4 mb-8">
               {/* Main Date */}
               <div className="flex items-center justify-center gap-3">
-                <h3 className="text-4xl md:text-5xl font-serif text-gray-900 dark:text-gray-100">
+                <h3 className="text-4xl md:text-5xl font-serif text-foreground">
                   {date.getDate()}
                 </h3>
                 <div className="text-left">
@@ -130,13 +129,13 @@ export const WeddingDetailsCard = ({
                 />
               </div>
             </div>
-            <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-1">
+            <h4 className="font-medium text-foreground mb-1">
               Código de Vestimenta
             </h4>
             <p className="text-sm text-text-muted font-medium">
               All Black
             </p>
-            <p className="text-xs text-text-muted mt-1">
+            <p className="text-xs text-text-muted/60 mt-1">
               (Blanco prohibido)
             </p>
           </div>
@@ -144,7 +143,7 @@ export const WeddingDetailsCard = ({
           {/* Ceremony */}
           <div className="bg-card-bg rounded-xl p-6 border border-card-border">
             <div className="text-3xl mb-3 text-center">⛪</div>
-            <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2 text-center">
+            <h4 className="font-medium text-foreground mb-2 text-center">
               Ceremonia
             </h4>
             <p className="text-xs text-text-muted mb-1 text-center font-medium">
@@ -169,8 +168,8 @@ export const WeddingDetailsCard = ({
 
           {/* Reception */}
           <div className="bg-card-bg rounded-xl p-6 border border-card-border">
-            <GlassWater className="w-8 h-8 text-text-muted mx-auto mb-3" />
-            <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2 text-center">
+            <PartyPopper className="w-8 h-8 text-text-muted mx-auto mb-3" />
+            <h4 className="font-medium text-foreground mb-2 text-center">
               Recepción
             </h4>
             <p className="text-xs text-text-muted mb-1 text-center font-medium">
@@ -193,6 +192,36 @@ export const WeddingDetailsCard = ({
             </a>
           </div>
 
+        </motion.div>
+
+        {/* Gift Registry */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="max-w-2xl mx-auto mt-8"
+        >
+          <div className="bg-card-bg rounded-xl p-6 border border-card-border">
+            <Gift className="w-8 h-8 text-text-muted mx-auto mb-3" />
+            <h4 className="font-medium text-foreground mb-2 text-center">
+              Mesa de Regalos
+            </h4>
+            <p className="text-xs text-text-muted mb-1 text-center font-medium">
+              Tu presencia es nuestro mejor regalo
+            </p>
+            <p className="text-xs text-text-muted mb-3 text-center">
+              Si deseas obsequiarnos algo, hemos preparado una lista de regalos en Amazon
+            </p>
+            <a
+              href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center text-xs bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors"
+            >
+              Ver Mesa de Regalos
+            </a>
+          </div>
         </motion.div>
       </div>
     </div>

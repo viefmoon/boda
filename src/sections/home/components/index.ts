@@ -9,3 +9,4 @@ export { ClosingMessage } from './closing-message';
 export { default as FloatingNavigation } from './floating-navigation';
 export { default as MusicPlayer } from './music-player';
 export { default as ScrollProgressIndicator } from './scroll-progress-indicator';
+export { WelcomeModal } from './welcome-modal';

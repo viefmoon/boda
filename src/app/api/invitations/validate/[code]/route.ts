@@ -29,7 +29,6 @@ export async function GET(
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error validating invitation:', error);
     return NextResponse.json(
       { valid: false },
       { status: 200 }

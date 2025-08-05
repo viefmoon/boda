@@ -55,14 +55,12 @@ export const RSVP = () => {
   }, [invitationCode]);
   
   useEffect(() => {
-    // Pre-llenar el formulario con el nombre de la invitación
     if (invitation && !existingRsvp) {
       setFormData(prev => ({
         ...prev,
         name: invitation.guest_name
       }));
     }
-    // Si ya existe RSVP, pre-llenar con esos datos
     if (existingRsvp) {
       setFormData({
         name: existingRsvp.name,
@@ -135,7 +133,6 @@ export const RSVP = () => {
       return;
     }
     
-    // Verificar fecha límite
     const deadline = new Date('2025-09-16');
     if (new Date() > deadline) {
       setError('Lo sentimos, la fecha límite para confirmar asistencia ha pasado');
@@ -201,7 +198,6 @@ export const RSVP = () => {
     }));
   };
 
-  // Si ya respondió esta invitación y no está editando
   if (existingRsvp && !isEditing) {
     return (
       <div className="py-8 px-4 bg-cream dark:bg-background">
@@ -224,7 +220,6 @@ export const RSVP = () => {
                 : 'Confirmaste que no podrás asistir'}
             </p>
             
-            {/* Botones para editar o eliminar */}
             <div className="flex gap-4 justify-center mt-6">
               <button
                 onClick={() => setIsEditing(true)}
@@ -245,10 +240,8 @@ export const RSVP = () => {
             </p>
           </motion.div>
 
-          {/* Delete Confirmation Modal */}
           {showDeleteModal && (
             <>
-              {/* Backdrop */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -257,7 +250,6 @@ export const RSVP = () => {
                 onClick={() => setShowDeleteModal(false)}
               />
 
-              {/* Modal */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -265,22 +257,18 @@ export const RSVP = () => {
                 className="fixed inset-0 z-50 flex items-center justify-center p-4"
               >
                 <div className="bg-white dark:bg-card-bg rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
-                  {/* Icon */}
                   <div className="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-3xl">⚠️</span>
                   </div>
 
-                  {/* Title */}
                   <h3 className="text-xl sm:text-2xl font-serif text-foreground mb-3 text-center">
                     ¿Eliminar confirmación?
                   </h3>
 
-                  {/* Message */}
                   <p className="text-text-primary dark:text-white/80 text-center mb-6">
                     Esta acción no se puede deshacer. Tendrás que confirmar nuevamente tu asistencia si cambias de opinión.
                   </p>
 
-                  {/* Buttons */}
                   <div className="flex gap-3">
                     <button
                       onClick={() => setShowDeleteModal(false)}
@@ -331,7 +319,6 @@ export const RSVP = () => {
     );
   }
 
-  // Si no hay código de invitación
   if (!invitationCode) {
     return (
       <div className="py-8 px-4 bg-cream dark:bg-background">
@@ -358,7 +345,6 @@ export const RSVP = () => {
       className="py-8 px-4 bg-cream dark:bg-background"
     >
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -385,7 +371,6 @@ export const RSVP = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* RSVP Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -400,7 +385,6 @@ export const RSVP = () => {
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name - Bloqueado con el nombre de la invitación */}
                 <div>
                   <label
                     htmlFor="name"
@@ -420,7 +404,6 @@ export const RSVP = () => {
                     Esta invitación es personal e intransferible
                   </p>
                 </div>
-                {/* Attendance */}
                 <div>
                   <label
                     htmlFor="attendance"
@@ -441,7 +424,6 @@ export const RSVP = () => {
                     <option value="no">No podré asistir</option>
                   </select>
                 </div>
-                {/* Number of Guests */}
                 {formData.attendance === 'yes' && invitation && (
                   <div>
                     <label
@@ -468,14 +450,12 @@ export const RSVP = () => {
 
 
 
-                {/* Error Message */}
                 {error && (
                   <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl text-sm">
                     {error}
                   </div>
                 )}
 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={loading}
@@ -484,13 +464,11 @@ export const RSVP = () => {
                   {loading ? 'Enviando...' : (isEditing ? 'Actualizar Confirmación' : 'Enviar Confirmación')}
                 </button>
                 
-                {/* Botón cancelar si está editando */}
                 {isEditing && (
                   <button
                     type="button"
                     onClick={() => {
                       setIsEditing(false);
-                      // Restaurar datos originales
                       if (existingRsvp) {
                         setFormData({
                           name: existingRsvp.name,
@@ -510,7 +488,6 @@ export const RSVP = () => {
             </div>
           </motion.div>
 
-          {/* Info Side */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}

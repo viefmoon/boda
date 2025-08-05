@@ -41,7 +41,6 @@ export default function AdminDashboard() {
   const router = useRouter();
   const supabase = createClient();
 
-  // Form para nueva invitación
   const [newInvitation, setNewInvitation] = useState({
     guest_name: '',
     max_guests: ''
@@ -54,7 +53,6 @@ export default function AdminDashboard() {
   const loadData = async () => {
     setLoading(true);
     try {
-      // Cargar invitaciones
       const { data: invitationsData, error: invError } = await supabase
         .from('invitations')
         .select('*')
@@ -64,7 +62,6 @@ export default function AdminDashboard() {
         setInvitations(invitationsData);
       }
 
-      // Cargar RSVPs con información de invitaciones
       const { data: rsvpsData, error: rsvpError } = await supabase
         .from('rsvps')
         .select('*, invitation:invitations!inner(*)')
@@ -74,7 +71,6 @@ export default function AdminDashboard() {
         setRsvps(rsvpsData);
       }
     } catch (error) {
-      console.error('Error loading data:', error);
     } finally {
       setLoading(false);
     }
@@ -86,7 +82,6 @@ export default function AdminDashboard() {
     
     const maxGuests = parseInt(newInvitation.max_guests);
     
-    // Validaciones
     if (!newInvitation.guest_name.trim()) {
       alert('Por favor ingresa el nombre del invitado');
       return;
@@ -134,10 +129,8 @@ export default function AdminDashboard() {
       .eq('id', invitationToDelete);
 
     if (!error) {
-      // Remove the invitation from state
       setInvitations(invitations.filter(inv => inv.id !== invitationToDelete));
       
-      // Also remove any associated RSVPs from state
       setRsvps(rsvps.filter(rsvp => rsvp.invitation_id !== invitationToDelete));
       
       setShowDeleteModal(false);
@@ -170,7 +163,6 @@ export default function AdminDashboard() {
   const handleCopyWhatsApp = async (invitation: Invitation) => {
     const success = await copyWhatsAppMessage(invitation.guest_name, invitation.invitation_code, invitation.max_guests);
     
-    // Mostrar feedback visual
     const button = document.getElementById(`message-${invitation.invitation_code}`);
     if (button && success) {
       button.textContent = '✓ Copiado';
@@ -217,7 +209,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream to-beige-light dark:from-background dark:to-card-bg pb-20">
-      {/* Success Modal */}
       <AnimatePresence>
         {showSuccessModal && lastCreatedInvitation && (
           <motion.div
@@ -275,7 +266,6 @@ export default function AdminDashboard() {
         )}
       </AnimatePresence>
 
-      {/* Delete Confirmation Modal */}
       <AnimatePresence>
         {showDeleteModal && invitationToDelete && (() => {
           const invitation = getInvitationById(invitationToDelete);
@@ -297,7 +287,6 @@ export default function AdminDashboard() {
                 className="bg-white dark:bg-card-bg rounded-2xl shadow-2xl max-w-md w-full p-8 relative"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Icon - Different based on confirmation status */}
                 <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
                   hasRSVP 
                     ? 'bg-red-100 dark:bg-red-900/20' 
@@ -306,12 +295,10 @@ export default function AdminDashboard() {
                   <span className="text-3xl">{hasRSVP ? '🚨' : '⚠️'}</span>
                 </div>
 
-                {/* Title */}
                 <h3 className="text-xl sm:text-2xl font-serif text-foreground mb-3 text-center">
                   {hasRSVP ? '¡Advertencia!' : '¿Eliminar invitación?'}
                 </h3>
 
-                {/* Invitation Details */}
                 {invitation && (
                   <div className="bg-gray-50 dark:bg-background rounded-xl p-3 mb-4">
                     <p className="text-sm font-medium text-foreground mb-1">
@@ -323,7 +310,6 @@ export default function AdminDashboard() {
                   </div>
                 )}
 
-                {/* Message - Different based on confirmation status */}
                 {hasRSVP ? (
                   <div className="space-y-3 mb-6">
                     <p className="text-text-primary dark:text-white/80 text-center font-medium">
@@ -350,7 +336,6 @@ export default function AdminDashboard() {
                   </p>
                 )}
 
-                {/* Buttons */}
                 <div className="flex gap-3">
                   <button
                     onClick={() => {
@@ -379,7 +364,6 @@ export default function AdminDashboard() {
         })()}
       </AnimatePresence>
 
-      {/* Header */}
       <div className="sticky top-0 bg-white/80 dark:bg-card-bg/80 backdrop-blur-lg z-40 border-b border-card-border">
         <div className="px-4 py-3">
           <div className="flex justify-between items-center">
@@ -397,7 +381,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Stats Cards - Horizontal Scroll */}
       <div className="px-4 py-4">
         <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
           <motion.div 
@@ -440,7 +423,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Tabs - Fixed Bottom Navigation Style */}
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-card-bg border-t border-card-border z-40">
         <div className="flex justify-around">
           <button
@@ -497,10 +479,8 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Content */}
       <div className="px-4">
         <AnimatePresence mode="wait">
-          {/* Create Invitation Tab */}
           {activeTab === 'create' && (
             <motion.div
               key="create"
@@ -538,7 +518,6 @@ export default function AdminDashboard() {
                       value={newInvitation.max_guests}
                       onChange={(e) => {
                         const value = e.target.value;
-                        // Solo permitir números positivos
                         if (value === '' || (parseInt(value) > 0 && parseInt(value) <= 20)) {
                           setNewInvitation({...newInvitation, max_guests: value});
                         }
@@ -566,7 +545,6 @@ export default function AdminDashboard() {
             </motion.div>
           )}
 
-          {/* Invitations List Tab */}
           {activeTab === 'invitations' && (
             <motion.div
               key="invitations"
@@ -640,7 +618,6 @@ export default function AdminDashboard() {
             </motion.div>
           )}
 
-          {/* RSVPs List Tab */}
           {activeTab === 'rsvps' && (
             <motion.div
               key="rsvps"

@@ -44,14 +44,12 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
         setInvitationData(data.invitation);
       }
     } catch (error) {
-      console.error('Error fetching invitation:', error);
     } finally {
       setLoading(false);
       setDataFetched(true);
     }
   };
   
-  // Prevenir scroll cuando el modal está abierto
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('modal-open');
@@ -72,7 +70,6 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
     };
   }, [isOpen]);
 
-  // No mostrar el modal hasta que los datos estén listos
   if (loading && invitationCode) {
     return null;
   }
@@ -81,7 +78,6 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -90,7 +86,6 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
             onClick={(e) => e.stopPropagation()}
           />
 
-          {/* Modal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -100,13 +95,10 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-white dark:bg-card-bg rounded-2xl shadow-2xl max-w-md w-full mx-auto relative overflow-hidden">
-              {/* Decorative background */}
               <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-accent-hover/5 dark:from-accent/5 dark:to-accent-hover/5"></div>
               
-              {/* Content */}
               <div className="relative p-8 sm:p-10 text-center">
 
-                {/* Welcome text */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -138,14 +130,12 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
                     </>
                   )}
 
-                  {/* Couple names */}
                   <div className="mb-6">
                     <p className="text-xl sm:text-2xl font-serif text-accent-hover dark:text-accent">
                       {WEDDING_CONFIG.bride.name} & {WEDDING_CONFIG.groom.name}
                     </p>
                   </div>
 
-                  {/* Button */}
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -155,7 +145,6 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
                     <span>Ver invitación</span>
                   </motion.button>
 
-                  {/* Guest info - moved below button */}
                   {invitationData && (
                     <p className="text-xs text-text-primary/60 dark:text-white/60">
                       Invitación válida para {invitationData.max_guests} {invitationData.max_guests === 1 ? 'persona' : 'personas'}
@@ -163,7 +152,6 @@ export const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
                   )}
                 </motion.div>
 
-                {/* Decorative elements */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

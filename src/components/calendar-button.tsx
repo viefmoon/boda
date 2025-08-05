@@ -34,6 +34,7 @@ export function CalendarButton({ event }: CalendarButtonProps) {
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
+    
     link.href = url;
     link.download = 'boda-sofia-oswaldo.ics';
     

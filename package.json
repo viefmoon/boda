@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node scripts/dev-with-ip.js",
     "build": "next build",
+    "build:prod": "next build --no-lint",
     "start": "next start",
     "lint": "next lint"
   },

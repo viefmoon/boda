@@ -13,7 +13,7 @@ export const NAVIGATION_ANIMATIONS = {
     initial: { scale: 0, opacity: 0 },
     animate: { scale: 1, opacity: 1 },
     exit: { scale: 0, opacity: 0 },
-    transition: { duration: 0.3, type: 'spring', stiffness: 300 },
+    transition: { duration: 0.3, type: 'spring' as const, stiffness: 300 },
   },
   icon: {
     active: {

@@ -108,14 +108,16 @@ export const WeddingDetailsCard = ({
                 <img 
                   src="/images/tuxedo.png" 
                   alt="Tuxedo" 
-                  className="w-12 h-12 object-contain"
+                  className="w-12 h-12 object-contain dark:invert-0"
+                  style={{ filter: 'none' }}
                 />
               </div>
               <div className="bg-stone-100 dark:bg-stone-800 p-2 rounded-lg">
                 <img 
                   src="/images/dress.png" 
                   alt="Dress" 
-                  className="w-12 h-12 object-contain"
+                  className="w-12 h-12 object-contain dark:invert-0"
+                  style={{ filter: 'none' }}
                 />
               </div>
             </div>

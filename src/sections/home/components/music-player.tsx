@@ -58,6 +58,48 @@ const MusicPlayer = forwardRef<MusicPlayerRef, MusicPlayerProps>(({ className = 
     };
   }, []);
 
+  // Pausar música cuando se oculta la página o se apaga la pantalla
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    // Detectar cuando la página se oculta/muestra
+    const handleVisibilityChange = () => {
+      if (document.hidden && isPlaying) {
+        audio.pause();
+        setIsPlaying(false);
+      }
+    };
+
+    // Detectar cuando la página pierde/gana foco
+    const handleBlur = () => {
+      if (isPlaying) {
+        audio.pause();
+        setIsPlaying(false);
+      }
+    };
+
+    // Detectar cuando el usuario cambia de pestaña o cierra la app
+    const handleBeforeUnload = () => {
+      if (isPlaying) {
+        audio.pause();
+        setIsPlaying(false);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('blur', handleBlur);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('pagehide', handleBeforeUnload);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('blur', handleBlur);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('pagehide', handleBeforeUnload);
+    };
+  }, [isPlaying]);
+
   const togglePlayPause = async () => {
     const audio = audioRef.current;
     

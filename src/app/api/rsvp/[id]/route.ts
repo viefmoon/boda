@@ -18,14 +18,6 @@ export async function PUT(
     message 
   } = body;
   
-  // Verificar fecha límite
-  const deadline = new Date('2025-09-16');
-  if (new Date() > deadline) {
-    return NextResponse.json(
-      { error: 'La fecha límite para modificar confirmaciones ha pasado' },
-      { status: 400 }
-    );
-  }
   
   // Obtener el RSVP actual para verificar que existe
   const { data: currentRsvp, error: fetchError } = await supabase
@@ -82,14 +74,6 @@ export async function DELETE(
   const { id } = await params;
   const supabase = await createServerAdminClient();
   
-  // Verificar fecha límite
-  const deadline = new Date('2025-09-16');
-  if (new Date() > deadline) {
-    return NextResponse.json(
-      { error: 'La fecha límite para modificar confirmaciones ha pasado' },
-      { status: 400 }
-    );
-  }
   
   // Obtener el RSVP para conocer el invitation_id
   const { data: rsvp, error: fetchError } = await supabase

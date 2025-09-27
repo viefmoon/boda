@@ -133,11 +133,6 @@ export const RSVP = () => {
       return;
     }
     
-    const deadline = new Date('2025-09-16');
-    if (new Date() > deadline) {
-      setError('Lo sentimos, la fecha límite para confirmar asistencia ha pasado');
-      return;
-    }
     
     setLoading(true);
     setError('');
@@ -235,9 +230,6 @@ export const RSVP = () => {
               </button>
             </div>
             
-            <p className="text-xs text-text-primary/50 dark:text-white/50 mt-4">
-              Fecha límite: 16 de septiembre de 2025
-            </p>
           </motion.div>
 
           {showDeleteModal && (
@@ -380,9 +372,6 @@ export const RSVP = () => {
               <h3 className="text-xl sm:text-2xl md:text-3xl font-serif text-foreground mb-3 text-center">
                 Confirmación de Asistencia
               </h3>
-              <p className="text-sm text-text-primary dark:text-white text-center mb-6">
-                Fecha límite: <span className="font-medium text-accent">16 de septiembre de 2025</span>
-              </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>

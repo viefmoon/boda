@@ -94,11 +94,54 @@ export const WeddingDetailsCard = ({
           </div>
         </motion.div>
 
-        {/* Additional Info Grid */}
+        {/* Gift Registry */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2, delay: 0.15 }}
+          className="max-w-2xl mx-auto mb-8"
+        >
+          <div className="bg-card-bg rounded-xl p-6 border border-card-border">
+            <Gift className="w-8 h-8 text-text-muted mx-auto mb-3" />
+            <h4 className="font-medium text-lg text-stone-900 dark:text-foreground mb-2 text-center">
+              Mesa de Regalos
+            </h4>
+            <p className="text-sm text-text-primary dark:text-warm-white mb-1 text-center font-medium">
+              Tu presencia es nuestro mejor regalo
+            </p>
+            <p className="text-sm text-text-secondary dark:text-warm-white/90 mb-4 text-center">
+              Si deseas obsequiarnos algo, hemos preparado una lista de regalos en Amazon
+            </p>
+            <a
+              href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full text-center text-sm bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors mb-4"
+            >
+              Ver Mesa de Regalos
+            </a>
+
+            <div className="border-t border-border-light dark:border-stone-700 pt-4 mt-4">
+              <p className="text-xs text-text-muted dark:text-warm-white/70 text-center mb-2">
+                También puedes contribuir a nuestra nueva vida juntos
+              </p>
+              <div className="bg-stone-50 dark:bg-stone-800/20 p-3 rounded-lg">
+                <p className="text-xs text-text-muted dark:text-warm-white/60 text-center mb-1">
+                  Transferencia bancaria
+                </p>
+                <p className="text-sm font-mono text-text-primary dark:text-warm-white text-center select-all">
+                  4152 3136 9121 8288
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Additional Info Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2, delay: 0.2 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto"
         >
           {/* Dress Code */}
@@ -238,49 +281,6 @@ export const WeddingDetailsCard = ({
                 <p className="text-sm font-medium text-text-primary dark:text-warm-white mb-1">Hotel Pabela</p>
                 <p className="text-xs text-accent group-hover:text-accent-hover">Ver ubicación →</p>
               </a>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Gift Registry */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2, delay: 0.2 }}
-          className="max-w-2xl mx-auto mt-8"
-        >
-          <div className="bg-card-bg rounded-xl p-6 border border-card-border">
-            <Gift className="w-8 h-8 text-text-muted mx-auto mb-3" />
-            <h4 className="font-medium text-lg text-stone-900 dark:text-foreground mb-2 text-center">
-              Mesa de Regalos
-            </h4>
-            <p className="text-sm text-text-primary dark:text-warm-white mb-1 text-center font-medium">
-              Tu presencia es nuestro mejor regalo
-            </p>
-            <p className="text-sm text-text-secondary dark:text-warm-white/90 mb-4 text-center">
-              Si deseas obsequiarnos algo, hemos preparado una lista de regalos en Amazon
-            </p>
-            <a
-              href="https://www.amazon.com.mx/wedding/registry/FUM15LPMHE1K"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full text-center text-sm bg-accent/10 hover:bg-accent/20 text-accent py-2 rounded-lg transition-colors mb-4"
-            >
-              Ver Mesa de Regalos
-            </a>
-            
-            <div className="border-t border-border-light dark:border-stone-700 pt-4 mt-4">
-              <p className="text-xs text-text-muted dark:text-warm-white/70 text-center mb-2">
-                También puedes contribuir a nuestra nueva vida juntos
-              </p>
-              <div className="bg-stone-50 dark:bg-stone-800/20 p-3 rounded-lg">
-                <p className="text-xs text-text-muted dark:text-warm-white/60 text-center mb-1">
-                  Transferencia bancaria
-                </p>
-                <p className="text-sm font-mono text-text-primary dark:text-warm-white text-center select-all">
-                  4152 3136 9121 8288
-                </p>
-              </div>
             </div>
           </div>
         </motion.div>
